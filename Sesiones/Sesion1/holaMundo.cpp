@@ -1,3 +1,7 @@
+/*
+Version del string en espanol
+*/
+
 // Biblioteca para manejar entrada y salida
 #include <iostream>
 
