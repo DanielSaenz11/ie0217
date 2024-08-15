@@ -10,4 +10,3 @@ Para ejecutar la tarea 1, sírvase en correr los siguientes:
 cd repo
 make run
 ```
-
