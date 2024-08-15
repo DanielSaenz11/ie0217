@@ -1,4 +1,7 @@
-// Primer programa en C++
+/*
+Primer programa en C++
+String en ingles
+*/
 
 #include <iostream>
 
