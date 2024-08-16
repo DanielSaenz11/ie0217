@@ -1,5 +1,5 @@
 /*
-Se coloco un string extra para mostrar el funcionamiento
+Se coloco un string extra para mostrar el funcionamiento de git diff y checkout
 */
 
 // Biblioteca para manejar entrada y salida
