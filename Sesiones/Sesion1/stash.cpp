@@ -1,5 +1,8 @@
 /*
 Modificacion de holaMundo.cpp para probar el comando stash
+
+Comando: git stash
+Almacena los archivos rastreados temporalmente
 */
 
 // Biblioteca para manejar entrada y salida
