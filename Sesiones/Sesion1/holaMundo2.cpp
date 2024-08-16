@@ -1,5 +1,6 @@
 /*
 Version del string modificado
+
 Comando: git diff
 Observar la diferencia entre los cambios realizados al archivo y su version previa guardada
 */
