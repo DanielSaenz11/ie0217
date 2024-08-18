@@ -16,7 +16,7 @@ int main() {
      * Caso True: var2 = 15 
      * Caso False: var2 = 27
      */
-    var2 = (var1 == 0) ? 15 : 27; // Uso de operador ternario
+    var2 = (var1 == 0) ? 15 : 27; // Resultado: 15
 
     std::cout << "var2: \n" << var2 << ""; // Imprimir el valor de var2
 
