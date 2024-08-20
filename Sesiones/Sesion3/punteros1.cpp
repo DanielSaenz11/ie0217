@@ -18,12 +18,12 @@ int main() {
 
     // Imprimir el contenido de var y su direccion
     cout << "var = " << var << endl;
-    cout << "Adress of var (&var) = " << &var << endl
+    cout << "Address of var (&var) = " << &var << endl
          << endl;
 
     // Imprimir el contenido del puntero (memoria) y el valor al desreferenciarlo
     cout << "pointVar = " << pointVar << endl;
-    cout << "Content of the adress pointed to by pointVar (*pointVar) = " << *pointVar << endl;
+    cout << "Content of the address pointed to by pointVar (*pointVar) = " << *pointVar << endl;
 
     return 0;
 }
