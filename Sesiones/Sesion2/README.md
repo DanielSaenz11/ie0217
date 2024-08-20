@@ -49,3 +49,9 @@ En cuanto a los archivos `extern1.cpp` y `extern2.cpp`, se deben de compilar amb
 g++ -o extern.exe extern1.cpp extern2.cpp
 ```
 
+En el caso de `forLoop2.cpp`, se tiene que se requiere utilizar el comando de ejecución:
+
+```
+g++ -o forLoop2.exe -std=c++11 for loop2.cpp
+```
+Pues se emplea un `for` loop en su forma iteradora. 
