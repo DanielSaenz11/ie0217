@@ -13,13 +13,13 @@ int main() {
     int var3 = 17;
 
     // Imprimir la direccion de var1
-    cout << "Adress of var1: " << &var1 << endl;
+    cout << "Address of var1: " << &var1 << endl;
 
     // Imprimir la direccion de var2
-    cout << "Adress of var2: " << &var2 << endl;
+    cout << "Address of var2: " << &var2 << endl;
 
     // Imprimir la direccion de var3
-    cout << "Adress of var3: " << &var3 << endl;
+    cout << "Address of var3: " << &var3 << endl;
 
     return 0;
 }
