@@ -24,3 +24,18 @@ El proyecto contiene dentro del directorio `./ie0217/Laboratorios/Laboratorio2/s
 
 * `main.cpp`: Contiene la función `main()` que corresponde al punto de entrada de ejecución del proyecto. Dentro de esta, se ejecuta un menú para el ingreso y validación de las entradas del usuario, así como las llamadas de las funciones en cada caso requerido.
 
+## Ejemplo de ejecución
+
+### Inicio del programa
+
+### Agregar libro
+
+### Buscar un libro por título
+
+### Buscar un libro por ISBN
+
+### Mostrar todos los libros
+
+### Eliminar un libro
+
+### Salir del programa
