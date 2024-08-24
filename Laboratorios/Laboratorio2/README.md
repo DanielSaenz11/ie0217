@@ -28,14 +28,16 @@ El proyecto contiene dentro del directorio `./ie0217/Laboratorios/Laboratorio2/s
 
 ### Agregar libro
 Se muestra la ejecución donde se agrega un libro al sistema de almacenamiento.
-![Alt text](./images/agregarLibro.png)
+<img src="./images/agregarLibro.png" width="300"/>
 
 ### Buscar un libro por título
+![Alt text](./images/buscarTitulo.png)
 
 ### Buscar un libro por ISBN
+![Alt text](./images/buscarISBN.png)
 
 ### Mostrar todos los libros
+![Alt text](./images/mostrarLibros.png)
 
 ### Eliminar un libro
-
-### Salir del programa
+![Alt text](./images/eliminarLibro.png)
