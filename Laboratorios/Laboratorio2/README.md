@@ -28,7 +28,8 @@ El proyecto contiene dentro del directorio `./ie0217/Laboratorios/Laboratorio2/s
 
 ### Agregar libro
 Se muestra la ejecución donde se agrega un libro al sistema de almacenamiento.
-<img src="./images/agregarLibro.png" width="300"/>
+
+<img src="./images/agregarLibro.png" width="500"/>
 
 ### Buscar un libro por título
 ![Alt text](./images/buscarTitulo.png)
