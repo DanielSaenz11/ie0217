@@ -32,13 +32,13 @@ Se muestra la ejecución donde se agrega un libro al sistema de almacenamiento.
 <img src="./images/agregarLibro.png" width="500"/>
 
 ### Buscar un libro por título
-![Alt text](./images/buscarTitulo.png)
+<img src="./images/buscarTitulo.png" width="500"/>
 
 ### Buscar un libro por ISBN
-![Alt text](./images/buscarISBN.png)
+<img src="./images/buscarISBN.png" width="500"/>
 
 ### Mostrar todos los libros
-![Alt text](./images/mostrarLibros.png)
+<img src="./images/mostrarLibros.png" width="500"/>
 
 ### Eliminar un libro
-![Alt text](./images/eliminarLibro.png)
+<img src="./images/eliminarLibro.png" width="500"/>
