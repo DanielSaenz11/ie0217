@@ -26,9 +26,9 @@ El proyecto contiene dentro del directorio `./ie0217/Laboratorios/Laboratorio2/s
 
 ## Ejemplo de ejecución
 
-### Inicio del programa
-
 ### Agregar libro
+Se muestra la ejecución donde se agrega un libro al sistema de almacenamiento.
+![Alt text](./images/agregarLibro.png)
 
 ### Buscar un libro por título
 
