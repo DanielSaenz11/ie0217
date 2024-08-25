@@ -6,6 +6,7 @@
 // Incluir libreria y header file
 #include <iostream>
 #include "funciones.hpp"
+#include "student.hpp"
 
 using namespace std;
 
