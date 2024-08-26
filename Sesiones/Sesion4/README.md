@@ -81,3 +81,5 @@ Con respecto a `./ejemplo_student`, el comando sugerido corresponde:
 ```
 g++ -o ejemplo_student.exe ./ejemplo_student/main.cpp ./ejemplo_student/funciones.cpp ./ejemplo_student/student.cpp
 ```
+
+__Nota__: Si se compilan los archivos en el sistema operativo Windows, es posible que al ejecutar o especificar direcciones de archivos, se requiera utilizar `\` en lugar de `/`.
