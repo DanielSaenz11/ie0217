@@ -110,23 +110,172 @@ La sobrecarga de funciones es una característica de C++ que permite definir fun
 
 ### 10. ¿Cuál es la diferencia entre una variable local y una local estática?
 
+Primero, se tiene que la variable local se declara dentro de una función o bloque de código, tal que su _scope_ está limitado a ese bloque (no se puede acceder fuera de él). Respecto a su ciclo de vida, al terminar la ejecución de la función/bloque de código, la variable muere (se libera su memoria).
+
+En segundo lugar, las variables locales estáticas comparten el mismo _scope_ de las locales regulares. Sin embargo, su tiempo de vida difiere, pues conserva su valor en las siguientes llamadas de la función, por ejemplo. Se inicializa y vive hasta que termine la ejecución del programa.
+
 ### 11. ¿Qué es el type casting? ¿Cuáles existen? Brinde un ejemplo de cada uno.
+
+El _type casting_ consiste en el proceso de convertir una variable de un data type a otro en programación. En el caso de C++ existen 4 tipos principales:
+
+1) `static_cast`
+
+Este corresponde al más usado en C++ y se utiliza para realizar castings seguros de tipos de datos relacionados. La sintaxis es la siguiente:
+
+```
+static_cast<new_type> (expression);
+```
+
+2) `dynamic_cast`
+
+Se utiliza para hacer casting downcasting; es decir, convertir de un puntero de una clase base a una clase derivada.
+
+```
+dynamic_cast<new_type> (expression);
+```
+
+3) `const_cast`
+
+Este casting es empleado para modificar el prefijo de __const__ o __volatile__ de una variable. Normalmente, se utiliza temporalmente para modificar los valores de las variables. Sin embargo, se debe usar con cuidado porque pueden provocar indefiniciones.
+
+```
+const_cast<new_type> (expression);
+```
+
+4) `reinterpret_cast`
+
+Este tipo de casting se utiliza para cambiar el tipo de un puntero a otro.
+
+```
+reinterpret_cast<new_type> (expression);
+```
+
+Como tipo adicional, se encuentra el casting implícito que ocurre cuando no va a haber pérdida de información al hacerlo.
+
+```
+int a = 1;
+double b = a;
+```
+
+También está el casting clásico de C, que se utilizan los paréntesis __()__ antes de la variable para hacer el casting. 
+
+```
+int a = 1;
+double b = (double)a;
+```
+
+Obtenido de: [Casting Operators in C++](https://www.geeksforgeeks.org/casting-operators-in-cpp/).
 
 ### 12. ¿Cuál es la principal diferencia entre un bucle _do-while_ y un bucle _while_?
 
+El bucle _do-while_ realiza una ejecución del código dentro de llaves y luego se ejecuta cada repetición mientras se cumpla la condición en el _while_.
+
+En cuanto al bucle _while_, desde el inicio, este se ejecuta únicamente si la condición se cumple; es decir, si la condición antes de entrar al loop no se cumple, no se ejecuta ninguna repetición del _while_.
+
 ### 13. Explique por qué es útil y común dividir el código en archivos `.hpp`, `.cpp` y `main.cpp` en C++. Describa el propósito específico de cada tipo de archivo.
+
+La utilidad de dividir el código en archivos `.hpp`, `.cpp` y `main.cpp` radica en la modularidad del código. Al diseñar el proyecto de esta forma, se facilita la organización, el mantenimiento y la colaboración. Además, se separa la implementación del código en el archivo `.cpp`, mientras que se proporciona una interfaz del código en el `.hpp`.
+
+Entonces, el propósito del archivo `main.cpp` consiste en que este es el punto de entrada y guía de ejecución del código (contiene las instrucciones principales). Se incluyen los archivos de encabezado creados.
+
+Los archivos de encabezado `.hpp` contienen la __declaración__ de las funciones, variables globales, clases y estructuras de datos, entre otros, que se utilizan en los archivos del programa. Por esta razón, este corresponde a la interfaz del proyecto. Para utilizarlos, se necesita incluirlos por medio de `#include`.
+
+Los archivos `.cpp` contienen la definición e implementación de las funciones, clases y demás código fuente, para ser accesados por medio del _header file_ en los archivos donde es incluido. También se conocen como _source files_ por esta razón.
+
 
 ### 14. ¿Qué hace la sentencia `goto` y por qué es considerada una mala práctica en la programación moderna? ¿Qué alternativas se pueden usar en su lugar?
 
+La sentencia `goto` funciona de manera que permite saltarse código y dirigirse a una etiqueta definida. Es decir, cambia el flujo de ejecución del código y dependiendo de la complejidad del programa, resulta confusa de seguir el código y difícil de mantener. Además, existen casos donde puede que no se declaren o liberen datos correctamente por estos saltos entre código.
+
+Entre las alternativas a esta secuencia, se encuentran los loops conocidos `for` y `while`, así como el uso de estructuras condicionales como `if-else`. Para manejar la interrupción de código, se recomienda utilizar los keywords `break` (para salir del loop), `continue` (para saltar una iteración del loop) y `return` (para salir de funciones). De esta forma, no se presentan saltos directos en el código, se sigue el flujo regular de ejecución.
+
 ### 15. ¿Para qué se utiliza la directiva `#ifndef` y por qué es importante?
+
+`#ifndef` significa _si no se ha definido_ y consiste en una directiva de preprocesador que se utiliza en los _header files_ o archivos de cabecera para evitar la inclusión del archivo varias veces.
+
+Su importancia radica en que así, se evita un uso de memoria innecesario, así como la redefinición de elementos que pueden generar errores y conflictos.
+
+Funciona de tal forma que, si se no ha definido lo que se encuentra dentro de `#ifndef` y `#endif`, se define. En posteriores inclusiones, si ya se definió, esta parte es omitida.
 
 ### 16. ¿Qué es un puntero y para qué es útil? ¿Cómo se declara e inicializa?
 
+Un puntero en C++ es una variable que almacena la dirección de memoria de otra variable. Las variables regulares contienen valores, pero los punteros contienen direcciones.
+
+La forma de declararlos se muestra a continuación:
+
+```
+int num1 = 1;
+int* ptr = &num1; // data_type* ptr_name = &var
+int num2 = *ptr;
+```
+
+En el ejemplo anterior, se evidencia el uso de `*` después del _data type_ para indicar que se trata de un puntero, luego se escribe el nombre del variable puntero, esta es la declaración del puntero. En cuanto a la asignación de un valor (inicialización), se utiliza el operador `&` para acceder a la memoria de la variable `num`. Entonces, se guarda en el puntero la dirección de memoria de num.
+
+También, se utiliza nuevamente el `*` para acceder a la memoria a la que apunta el puntero. Por eso, en el ejemplo, se le asigna a `num2` el contenido de la dirección a la apunta `ptr`, que sería el valor de `num1`.
+
+La utilidad de los punteros consiste en que se puede acceder directamente al valor en memoria de la variable. Por lo tanto, es usado ampliamente en funciones donde se requiere modificar el valor de la variable fuera del _scope_ de la función. Otra aplicación de los punteros corresponde a la manipulación de memoria dinámica y estructuras dinámicas de datos. 
+
+
 ### 17. ¿Cuál es la diferencia entre pasar parámetros por valor, por referencia y por puntero?
+
+Al pasar parámetros por valor, se crea una copia del valor fuera de la función, por ejemplo. Por lo tanto, se utiliza memoria adicional para la copia, la cual es la utilizada dentro de la función (se modifica la copia, no el valor fuera de la función).
+
+```
+// Los cambios no se realizan fuera de la funcion
+void duplicar(int n) {
+    n *= 2;
+}
+```
+
+En cuanto al paso de parámetros por referencia, la función recibe la dirección de la variable argumento. Por lo tanto, al modificar la variable, los cambios se reflejan también en la variable original. 
+
+```
+// Se modifica n fuera de la funcion pues se recibe su direccion
+void duplicar(int &n) {
+    n *= 2;
+}
+```
+
+Finalmente, en el paso de parámetros por puntero, se utilizan punteros para modificar variables o estructuras de datos que se encuentran fuera de la función. Los cambios también se reflejan en estos pues se recibió un puntero hacia ellos, no una copia de su valor.
+
+```
+// Modifica el valor al que apunta n
+void duplicar(int* n) {
+    *n *= 2;
+}
+```
 
 ### 18. Cuando se usa un puntero para apuntar a un arreglo en C++, ¿a qué valor o dirección apunta inicialmente? Describa cómo sería la forma de acceder a todos los datos de ese arreglo mediante el puntero.
 
+Al utilizar punteros en un arreglo, no se apunta a todo el arreglo. Por la naturaleza de esta estructura, cada elemento de los índices se encuentra en memoria contigua. Por lo tanto, al apuntar con un puntero a un arreglo se apunta al primer índice de este.
+
+La forma de declarar un puntero a un arreglo es la siguiente:
+
+```
+int arr[10];
+
+// Forma 1
+int* ptr = arr;
+
+// Forma 2
+int* ptr = arr[0];
+```
+
+Posteriormente, para acceder a las demás entradas del arreglo por medio del puntero, se debe de sumar el índice de interés al puntero, para moverse esa cantidad de espacios en memoria.
+
+```
+int arr[10];
+int* ptr = arr;
+
+// Indice 5
+*(ptr + 5);
+```
+
+Por ejemplo, en el bloque de código anterior, se declaró un arreglo con 10 entradas. El puntero se asignó de la forma mencionada anteriormente. Ahora bien, para acceder a la entrada 5 del arreglo, se aumenta la dirección del puntero en 5. También, se utiliza el operador `*` para acceder a la dirección del primer elemento más 5, de ahí que se utilicen los paréntesis.
+
 ### 19. ¿En qué caso es conveniente usar el operador `->` en punteros y por qué es beneficioso?
+
+
 
 ### 20. ¿Cuál es la manera de implementar punteros dobles, triples, etc? Brinde un ejemplo de en qué caso sería beneficioso usar esta implementación.
 
