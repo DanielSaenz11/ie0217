@@ -1,4 +1,4 @@
-# Sesion 4: Clases y Objetos
+# Sesión 4: Clases y Objetos
 
 Esta sesión corresponde a la realizada para el 27 de agosto del 2024. C++ es un lenguaje de programación orientado a objetos. Por lo tanto, en esta sesión se trata este tema.
 
