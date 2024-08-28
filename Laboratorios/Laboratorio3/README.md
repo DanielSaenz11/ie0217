@@ -37,4 +37,4 @@ El proyecto contiene dentro del directorio `./ie0217/Laboratorios/Laboratorio3/s
 ## Ejemplo de ejecución
 En la siguiente imagen se evidencia la correcta ejecución del código realizado en el laboratorio.
 
-<img src="./images/ejemploEjecucion.png" width="500"/>
+<img src="./images/ejemploEjecucion.png" width="750"/>
