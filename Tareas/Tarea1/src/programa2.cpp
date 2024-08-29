@@ -1,3 +1,20 @@
+/**
+ * @file programa2.cpp
+ * @brief Archivo que contiene las implementaciones para el programa 2.
+ * 
+ * @details Este archivo contiene la definición de las funciones para calcular las estadísticas del arreglo
+ * ingresado: suma total, promedio, valor máximo y valor mínimo. Además, posee la definición de la
+ * búsqueda de un número en el arreglo ingresado.
+ * 
+ * Software bajo la licencia de MIT.
+ * En términos generales, se concede permiso para utilizar este Software sin ninguna restricción, pero se proporciona sin
+ * ninguna garantía. 
+ * El aviso de copyright anterior y este aviso de permiso deberán incluirse en todas
+ * las copias o partes sustanciales del Software.
+ * 
+ * @author Daniel Alberto Sáenz Obando
+ * @date 30/08/2024
+ */
 
 #include "programa2.hpp"
 
