@@ -1,7 +1,25 @@
+/**
+ * @file main2.hpp
+ * @brief Archivo que contiene la función main() .
+ * 
+ * En este archivo se valida el ingreso de argumentos por la línea de comandos, se muestra
+ * el menú del programa y se llaman las funciones correspondientes.
+ * 
+ * @author Daniel Alberto Sáenz Obando
+ * @date 30/08/2024
+ */
+
 #include "programa2.hpp"
 
 using namespace std;
 
+/**
+ * @brief Punto de entrada principal del programa.
+ * 
+ * Esta función inicializa el programa y gestiona el ciclo principal de ejecución.
+ * 
+ * @return Código de estado del programa.
+ */
 int main(int argc, char* argv[]) {
 
     // Se verifica que se hayan ingresado 2 o mas argumentos en la linea de comando
@@ -12,10 +30,11 @@ int main(int argc, char* argv[]) {
 
     int largo = argc-1; // Quitar el nombre del programa en argc
     int array[largo]; // Declaracion de arreglo de enteros
+    int* ptrArray = array; // Puntero que apunta al primer elemento del array
 
-    // Asignar al arreglo cada entrada de argv (excluyendo el nombre argv[0])
+    // Asignar al arreglo cada entrada de argv por medio de un puntero (excluyendo el nombre argv[0])
     for (int i = 0; i < largo; i++) {
-        array[i] = stoi(argv[i+1]); // Convertir a enteros cada entrada de argv
+        *(ptrArray+i) = stoi(argv[i+1]); // Convertir a enteros cada entrada de argv
     }
 
     // Declaracion de variable para escoger opciones en el menu
@@ -34,18 +53,18 @@ int main(int argc, char* argv[]) {
 
         // Validacion de opcion
         switch (opcion) {
-            case MostrarEstadisticas:
+            case MOSTRAR_ESTADISTICAS:
                 // Caso 1: Mostrar estadisticas
                 cout << "Suma total: " << calcularSuma(array, largo) << endl;
                 cout << "Promedio: " << calcularPromedio(array, largo) << endl;
                 cout << "Número máximo: " << calcularMaximo(array, largo) << endl;
                 cout << "Número mínimo: " << calcularMinimo(array, largo) << endl;
                 break;
-            case BuscarNumero:
+            case BUSCAR_NUMERO:
                 // Caso 2: Buscar numero en el arreglo
                 buscarNumero(array, largo);
                 break;
-            case SalirPrograma:
+            case SALIR_PROGRAMA:
                 // Salir del programa
                 cout << "Saliendo del programa..." << endl;
                 break;
@@ -54,7 +73,7 @@ int main(int argc, char* argv[]) {
                 cout << "Opción inválida. Digite una opción de las mostradas en el menú.";
         }
 
-    } while (opcion != SalirPrograma); // Se repite el loop hasta que se ingrese la opcion de salir
+    } while (opcion != SALIR_PROGRAMA); // Se repite el loop hasta que se ingrese la opcion de salir
 
     return 0;
 }
