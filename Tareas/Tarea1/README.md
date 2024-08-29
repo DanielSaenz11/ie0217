@@ -35,9 +35,6 @@ Los derivados como su nombre lo indica derivan de los primitivos, como coleccion
 Finalmente, los definidos por el usuario son los tipos que permiten agrupar datos primitivos y derivados para realizar nuevos tipos y adaptar a las necesidades del programa en cuestión, por ejemplo. Entre los tipos definidos por el usuario, se encuentran las __clases__ y los _structs_.
 
 
-
-
-
 ### 3. Explique qué es un linker en el contexto de un lenguaje de programación compilado. ¿Cuál es su función principal y por qué es esencial en el proceso de compilación?
 
 ### 4. ¿Cuál es la diferencia entre usar el operador `=` y `==`? Brinde un ejemplo para cada uno.
@@ -80,6 +77,50 @@ int main() {
 }
 ```
 
+Para responder a esta pregunta, primero se puede ejecutar el código una modificación para rastrear el número de repetición y el resultado obtenido, luego se analiza por qué el resultado fue este. 
+
+Entonces, el código utilizado fue el que se muestra a continuación. Se agregó una impresión del número de repetición del loop antes del resultado.
+```
+#include <iostream>
+int main() {
+    int sum = 0;
+    int result = 0;
+
+    for (int i=0; i <= 10; i++) {
+        sum += i;
+
+        result = (i % 3 == 0) ? sum : 0;
+        std::cout << i+1 << ". " << result << std::endl;
+    }
+    return 0;
+}
+```
+
+Inicialmente, en el código se inicializan las variables `sum` y `result` en 0. Luego, se emplea un _for_ loop, tal que la variable `i` del ciclo tome valores desde 0 hasta 10, inclusive, con un incremento de una unidad en cada repetición.
+
+Dentro del ciclo, se incrementa el valor de la variable almacenado en `sum` en `i` unidades. Posteriormente, se utiliza el operador ternario `?` para determinar el valor que se almacena en `result`. La operación a realizar es si `i` es divisible por 3, entonces `result` contiene al valor de `sum`; en caso contrario, es 0.
+
+Si se observa la salida de la ejecución del programa anterior, se tiene lo siguiente:
+
+```
+1. 0
+2. 0
+3. 0
+4. 6
+5. 0
+6. 0
+7. 21
+8. 0
+9. 0
+10. 45
+11. 0
+```
+
+El _output_ coincide con el resultado esperado. Como se inicia en 0, entonces los valores de `i` divisibles por 3 corresponden a los que poseen la forma __3n+1__; es decir, 4, 7 y 10. En estos casos, es que se guarda en `result` la suma de todos los números desde 0 hasta el número en cuestión, lo cual se modela con la suma de Gauss. 
+
+Para ejemplificar el párrafo anterior, cuando `i` toma el valor de 6, en la sétima repetición, se tiene que es divisible por 3. Por lo tanto, toma el valor de la suma de los números desde 0 hasta 6, que por la fórmula de Gauss es: `6*7/2 = 21`.
+
+
 ### 6. Explique el proceso de pasar argumentos a la función principal. ¿Cuál es el primer elemento de `argv[ ]`?
 
 El proceso para pasar argumentos a la función `main()` consiste en indicar en la función los parámetros a recibir, la sintaxis es la siguiente:
@@ -106,7 +147,19 @@ Obtenido de: [C++ Type Modifiers - GeeksForGeeks](https://www.geeksforgeeks.org/
 
 ### 9. ¿Qué es la sobrecarga de funciones en C++ y cómo se utiliza?
 
-La sobrecarga de funciones es una característica de C++ que permite definir funciones con el mismo nombre y tipo de retorno, pero con distinto número y tipo de parámetros. Esto es realmente útil para la simplificación del código y aumentar su legibilidad y comprensión. El compilador se encarga de entender cuál definición de la función utilizar basándose en las características mencionadas anteriormente.  
+La sobrecarga de funciones es una característica de C++ que permite definir funciones con el mismo nombre y tipo de retorno, pero con distinto número y tipo de parámetros. Esto es realmente útil para la simplificación del código y aumentar su legibilidad y comprensión. El compilador se encarga de entender cuál definición de la función utilizar basándose en las características mencionadas anteriormente.
+
+Un ejemplo de su uso es el siguiente, donde se tienen definidas dos funciones de `sumar()`, con la diferncia en el número de parámetros que recibe cada una.
+
+```
+int sumar(int a, int b) {
+    return a + b;
+}
+
+int sumar(int a, int b, int c) {
+    return a + b + c;
+}
+```
 
 ### 10. ¿Cuál es la diferencia entre una variable local y una local estática?
 
@@ -123,7 +176,10 @@ El _type casting_ consiste en el proceso de convertir una variable de un data ty
 Este corresponde al más usado en C++ y se utiliza para realizar castings seguros de tipos de datos relacionados. La sintaxis es la siguiente:
 
 ```
-static_cast<new_type> (expression);
+// static_cast<new_type> (expression);
+
+int num = 10;
+double numDouble = static_cast<double>(num);
 ```
 
 2) `dynamic_cast`
@@ -131,7 +187,10 @@ static_cast<new_type> (expression);
 Se utiliza para hacer casting downcasting; es decir, convertir de un puntero de una clase base a una clase derivada.
 
 ```
-dynamic_cast<new_type> (expression);
+// dynamic_cast<new_type> (expression);
+
+Animal* animalPtr = new Dog(); // base class ptr
+Dog* dogPtr = dynamic_cast<Dog*>(animalPtr); // downcasting
 ```
 
 3) `const_cast`
@@ -139,7 +198,12 @@ dynamic_cast<new_type> (expression);
 Este casting es empleado para modificar el prefijo de __const__ o __volatile__ de una variable. Normalmente, se utiliza temporalmente para modificar los valores de las variables. Sin embargo, se debe usar con cuidado porque pueden provocar indefiniciones.
 
 ```
-const_cast<new_type> (expression);
+// const_cast<new_type> (expression);
+
+const int number = 5;
+const int* ptr = &number;
+int* nonConstPtr = const_cast<int*>(ptr); // const casting
+*nonConstPtr = 10; // modificar el valor constante
 ```
 
 4) `reinterpret_cast`
@@ -147,7 +211,12 @@ const_cast<new_type> (expression);
 Este tipo de casting se utiliza para cambiar el tipo de un puntero a otro.
 
 ```
-reinterpret_cast<new_type> (expression);
+// reinterpret_cast<new_type> (expression);
+
+int* numberPointer = &number;
+
+// cambio de tipo de ptr
+char* charPointer = reinterpret_cast<char*>(numberPointer);
 ```
 
 Como tipo adicional, se encuentra el casting implícito que ocurre cuando no va a haber pérdida de información al hacerlo.
@@ -275,24 +344,88 @@ Por ejemplo, en el bloque de código anterior, se declaró un arreglo con 10 ent
 
 ### 19. ¿En qué caso es conveniente usar el operador `->` en punteros y por qué es beneficioso?
 
+El operador `->` en C++ se utiliza principalmente con punteros a estructuras _structs_ o clases para acceder a los miembros de esos objetos. Note que este operador combina la desreferencia del puntero junto con el acceso al miembro, por lo que, es lo mismo que utilizar `*(ptr).`. 
 
+Su beneficio radica en la practicidad de escribir y leer este operador en comparación con la sintaxis análoga mencionada.
 
 ### 20. ¿Cuál es la manera de implementar punteros dobles, triples, etc? Brinde un ejemplo de en qué caso sería beneficioso usar esta implementación.
 
+Para implementar punteros dobles, triples o múltiples en general, se utiliza la agrupación de asteriscos `*` luego de colocar el _data type_ de la variable puntero. Por ejemplo, si se refiere a un puntero triple, se utilizan tres asteriscos para indicar este nivel de indirección.
+
+Un ejemplo de uso se muestra a continuación:
+
+```
+int n = 20;
+int *ptr = &n;
+int **ptr_ptr = &ptr;
+int ***ptr_ptr_ptr = &ptr_ptr;
+```
+
+Entonces, el puntero triple guarda la dirección del puntero doble (apunta al doble), el doble apunta al simple y así sucesivamente.
+
+Esto es especialmente útil cuando se trabaja con matrices multidimensionales con memoria dinámica. En este caso, el arreglo de filas (puntero doble) contiene punteros simples que corresponden a las entradas de las columnas.
+
 ### 21. ¿Qué es el puntero `this` en C++?
+
+Antes de explicar el concepto del puntero `this` resulta importante comprender que cuando se crea un objeto a partir de una clase, este posee una copia de cada uno de los miembros de la clase. Entonces, este puntero está disponible para los métodos no estáticos de una clase y apunta a la dirección de la instancia del objeto que llamó al método.
+
+Un ejemplo de uso corresponde al siguiente:
+
+```
+class Coordenadas {
+    private:
+        int x, y;
+
+    public:
+        Coordenadas(int x, int y) {
+            this->x = x;
+            this->y = y;
+        }
+}
+```
+
+Obtenido de: ['this' pointer in C++ - GeeksForGeeks](https://www.geeksforgeeks.org/this-pointer-in-c/).
 
 ### 22. ¿Qué es un puntero `nullptr`?
 
+Un puntero `nullptr` corresponde a puntero que, como su nombre lo indica, contiene apunta a una dirección nula o no válida. Usualmente, es utilizado cuando un puntero no está inicializado o cuando se dejó de utilizar y se indica que no apunta a nada.
+
+Es una buena práctica al trabajar con punteros que estos sean inicializados como un `nullptr` y que al utilizarlos, se compruebe antes que no sean nulos para evitar errores.
+
 ### 23. ¿Qué es una función prototipo?
+
+Una función prototipo corresponde a la declaración de una función. No se incluye la definición o implementación de la función, únicamente contiene el tipo de dato de retorno y los parámetros con su tipo; es decir, la firma de la función.
+
+Estas son utilizadas en el diseño de código modular en archivos de encabezado con terminación `.hpp`.
 
 ### 24. ¿Dónde y cómo se guardan las variables que se crean en C++? Explique la diferencia entre el almacenamiento de variables locales y globales.
 
-### 25. Investigue qué es un memory leak.
+El lugar donde se guardan las variables locales, globales, estáticas y dinámicas se guardan en sitios distintos dependiendo de su tipo. Por esta razón, se va a dividir la respuesta basándose en estos, principalmente entre las locales y globales, como lo indica el enunciado. En las preguntas 25 y 26 se responden para las dinámicas y estáticas.
+
+- Variables locales: Al llamar la función, se crea un nuevo _stack frame_ en el _stack_, donde se guardan las variables locales. Estas variables son almacenadas durante el tiempo de vida de la función dentro de la cual fueron declaradas.
+
+- Variables globales: Los globales son guardados en el _data segment_. Cuando el programa se ejecuta, son colocados allí, hasta que finaliza el tiempo de ejecución de este. Se subdividen en la _sección de datos inicializados_ y la _sección de datos no inicializados_.
+
+
+Obtenido de: [Memory and C++ - Stanford CS](https://cs.stanford.edu/people/eroberts/courses/cs106b/handouts/21-MemoryAndC++.pdf)
+
+### 25. Investigue qué es un _memory leak_.
+
+Un _memory leak_ corresponde a un error en el manejo de la memoria al programar. En lenguajes de programación como C++, se puede reservar y liberar memoria del _heap_ para tener estructuras de datos dinámicas, por ejemplo. Sin embargo, siempre que se reserva memoria, debe de liberarse cuando se deja de utilizar.
+
+En el caso en que no se libera la memoria y termina el programa, se pierde la dirección de la memoria reservada, pero esta sigue ocupando ese espacio. Lo anterior significa que resulta imposible volver a acceder a ella para liberarla. Esto afecta negativamente el rendimiento del programa.
 
 ### 26. ¿Qué es memoria dinámica?
 
+La memoria dinámica es una clase de memoria que es reservada manualmente por el programador, esta proviene del _heap_ y se realiza __durante el tiempo de ejecución__ del programa. Entre las ventajas de su uso, corresponde a que como se reserva en tiempo de ejecución, permite tener un tamaño variable para las estructuras de datos dinámicas, por ejemplo.
+
+Para reservar memoria dinámica, se utiliza la palabra clave `new`. Mientras que, para liberar esta memoria, se utiliza `delete`.
+
 ### 27. ¿Qué es memoria estática?
 
+La memoria estática es una clase de memoria que es manejada por el compilador durante la compilación, tal que esta se encuentra reservada durante __todo__ el tiempo de ejecución del programa, la cantidad de memoria no se modifica durante la ejecución (diferencia con la memoria dinámica).
+
+Entre los usos de la memoria estática, se encuentra: variables globales, variables estáticas, miembros de clase estáticos. 
 
 ## Conversión de Unidades
 
