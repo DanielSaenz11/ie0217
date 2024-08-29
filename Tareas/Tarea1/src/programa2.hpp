@@ -4,7 +4,7 @@
 #include <iostream>
 
 enum CASOS_MENU {
-    MostrarEstadisticas,
+    MostrarEstadisticas = 1,
     BuscarNumero,
     SalirPrograma
 };
