@@ -61,6 +61,12 @@ int main(int argc, char* argv[]) {
         // Ingreso de opcion por usuario
         cin >> opcion;
 
+        // Validar entrada valida de las opciones (se indico que se podia asumir que las entradas siempre serian correctas en este caso)
+        if (cin.fail()) {
+            cin.clear(); // Limpiar el cin
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el resto de la entrada
+        }
+
         // Validacion de opcion
         switch (opcion) {
             case MOSTRAR_ESTADISTICAS:
