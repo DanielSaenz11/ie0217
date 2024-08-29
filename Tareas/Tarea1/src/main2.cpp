@@ -2,8 +2,14 @@
  * @file main2.hpp
  * @brief Archivo que contiene la función main() .
  * 
- * En este archivo se valida el ingreso de argumentos por la línea de comandos, se muestra
+ * @details En este archivo se valida el ingreso de argumentos por la línea de comandos, se muestra
  * el menú del programa y se llaman las funciones correspondientes.
+ * 
+ * Software bajo la licencia de MIT.
+ * En términos generales, se concede permiso para utilizar este Software sin ninguna restricción, pero se proporciona sin
+ * ninguna garantía. 
+ * El aviso de copyright anterior y este aviso de permiso deberán incluirse en todas
+ * las copias o partes sustanciales del Software.
  * 
  * @author Daniel Alberto Sáenz Obando
  * @date 30/08/2024
@@ -16,7 +22,11 @@ using namespace std;
 /**
  * @brief Punto de entrada principal del programa.
  * 
- * Esta función inicializa el programa y gestiona el ciclo principal de ejecución.
+ * Esta función inicializa el programa y gestiona el ciclo principal de ejecución. Recibe argumentos
+ * de la línea de comandos.
+ * 
+ * @param argc Cantidad de argumentos de la línea de comandos
+ * @param argv Array de punteros de tipo caracter que contiene los argumentos de la línea de comandos
  * 
  * @return Código de estado del programa.
  */
@@ -25,7 +35,7 @@ int main(int argc, char* argv[]) {
     // Se verifica que se hayan ingresado 2 o mas argumentos en la linea de comando
     if (argc < 2) {
         cout << "Ingrese al menos un número en la línea de comando" << endl;
-        return -1;
+        return 1;
     }
 
     int largo = argc-1; // Quitar el nombre del programa en argc
