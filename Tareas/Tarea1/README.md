@@ -9,7 +9,7 @@ Esta corresponde a la _Tarea 1_ del curso IE-0217, en la cual se tratan los prin
 
 Las secciones mencionadas se desarrollan a continuación.
 
-Además, para acceder a documentación detallada en Doxygen sobre ambos programadas realizados, ingrese a este [link]().
+Además, para acceder a documentación detallada en Doxygen sobre ambos programadas realizados, ingrese a este [link](https://tarea1-ie0217.netlify.app).
 
 A lo largo de todos los programas creados para esta asignación, se utilizó la convención de variables descrita en el siguiente enlace: [Naming Convention in C++ - GeeksForGeeks](https://www.geeksforgeeks.org/naming-convention-in-c/). En las indicaciones, se mencionó que se utilizara la convención para el nombramiento de variables más común. Sin embargo, al investigar en distintas fuentes se encontraron contradicciones sobre la convención más utilizada, especialmente entre _snake\_case_ y _camelCase_, pues la elección entre estas dos se menciona que es por preferencia y depende de la dinámica del grupo de trabajo o proyecto en cuestión.
 
