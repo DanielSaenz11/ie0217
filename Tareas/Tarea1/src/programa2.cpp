@@ -20,61 +20,61 @@
 
 using namespace std;
 
-int calcularSuma(int* arr, int largo) {
+int calcularSuma(int *pArr, int largo) {
     int sumaTotal = 0; // Variable que guarda la suma total del arreglo
 
     // Recorrido del arreglo
     for (int i = 0; i < largo; i++) {
-        sumaTotal += *(arr + i); // Sumar cada indice del arreglo por medio del puntero arr
+        sumaTotal += *(pArr + i); // Sumar cada indice del arreglo por medio del puntero pArr
     }
 
     return sumaTotal; // Retornar sumaTotal
 }
 
-double calcularPromedio(int* arr, int largo) {
+double calcularPromedio(int *pArr, int largo) {
 
     /* 
     El promedio consiste en la suma total entre la cantidad de elementos
     Se llama calcularSuma() y se divide entre el largo
      */
-    double promedio = (double)calcularSuma(arr, largo) / largo;
+    double promedio = static_cast<double>((pArr, largo)) / largo;
 
     return promedio; // Retornar promedio calculado
 }
 
-int calcularMaximo(int* arr, int largo) {
+int calcularMaximo(int *pArr, int largo) {
     
     // Se coloca inicialmente el numero maximo como el primer elemento del arreglo
-    int numMax = *arr;
+    int numMax = *pArr;
     
     // Recorrido del arreglo desde el segundo elemento al final
     for (int i = 1; i < largo; i++) {
         // Si se encuentra un numero mayor, se cambia el valor de numMax
-        if (numMax < *(arr + i)) {
-            numMax = *(arr + i);
+        if (numMax < *(pArr + i)) {
+            numMax = *(pArr + i);
         }
     }
 
     return numMax; // Se retorna el numero maximo del array
 }
 
-int calcularMinimo(int* arr, int largo) {
+int calcularMinimo(int *pArr, int largo) {
     
     // Se coloca inicialmente el numero maximo como el primer elemento del arreglo
-    int numMin = *arr;
+    int numMin = *pArr;
     
     // Recorrido del arreglo desde el segundo elemento al final
     for (int i = 1; i < largo; i++) {
         // Si se encuentra un numero menor, se cambia el valor de numMin
-        if (numMin > *(arr + i)) {
-            numMin = *(arr + i);
+        if (numMin > *(pArr + i)) {
+            numMin = *(pArr + i);
         }
     }
     
     return numMin; // Se retorna el numero minimo del arreglo
 }
 
-void buscarNumero(int* arr, int largo) {
+void buscarNumero(int *pArr, int largo) {
 
     // Declaracion de numero a buscar
     int numBusqueda;
@@ -86,7 +86,7 @@ void buscarNumero(int* arr, int largo) {
     // Recorrido del arreglo
     for (int i = 0; i < largo; i++) {
         // Verificar si hubo coincidencia entre el numero a buscar y uno en el arreglo
-        if (numBusqueda == *(arr + i)) {
+        if (numBusqueda == *(pArr + i)) {
             // Mostrar mensaje con detalles del numero encontrado
             cout << "Se encontró el número " << numBusqueda << " en el índice "
             << i << " del arreglo." << endl;

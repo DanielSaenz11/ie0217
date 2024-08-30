@@ -40,11 +40,11 @@ int main(int argc, char* argv[]) {
 
     int largo = argc-1; // Quitar el nombre del programa en argc
     int array[largo]; // Declaracion de arreglo de enteros
-    int* ptrArray = array; // Puntero que apunta al primer elemento del array
+    int* pArray = array; // Puntero que apunta al primer elemento del array
 
     // Asignar al arreglo cada entrada de argv por medio de un puntero (excluyendo el nombre argv[0])
     for (int i = 0; i < largo; i++) {
-        *(ptrArray+i) = stoi(argv[i+1]); // Convertir a enteros cada entrada de argv
+        *(pArray+i) = stoi(argv[i+1]); // Convertir a enteros cada entrada de argv
     }
 
     // Declaracion de variable para escoger opciones en el menu
