@@ -126,7 +126,7 @@ void mostrarMenu() {
         cout << "Seleccione la unidad de origen (1: Metro, 2: Kilometro, 3: Centimetro, 4: Milla, 5: Pulgada): ";
         cin >> origen;
 
-        if (origen < 0 || origen > 5) {
+        if (origen < 0 || origen > CANTIDAD_LONGITUDES) {
             cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
             mostrarMenu();
             return;
@@ -135,7 +135,7 @@ void mostrarMenu() {
         cout << "Seleccione la unidad de destino (1: Metro, 2: Kilometro, 3: Centimetro, 4: Milla, 5: Pulgada): ";
         cin >> destino;
 
-        if (destino < 0 || destino > 5) {
+        if (destino < 0 || destino > CANTIDAD_LONGITUDES) {
             cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
             mostrarMenu();
             return;
@@ -146,8 +146,8 @@ void mostrarMenu() {
 
         // Asignar valores a struct
         // Se disminuyen en 1 para ajustar a indices del enum
-        conversionL.unidadOrigen = static_cast<longitud>(origen-1);
-        conversionL.unidadDestino = static_cast<longitud>(destino-1);
+        conversionL.unidadOrigen = static_cast<Longitud>(origen-1);
+        conversionL.unidadDestino = static_cast<Longitud>(destino-1);
 
         // Imprimir el resultado
         cout << "El resultado es: " << convertir(conversionL, valor) << endl;
@@ -161,7 +161,7 @@ void mostrarMenu() {
         cout << "Seleccione la unidad de origen (1: Gramo, 2: Kilogramo, 3: Libra, 4: Onza): ";
         cin >> origen;
 
-        if (origen < 0 || origen > 4) {
+        if (origen < 0 || origen > CANTIDAD_PESOS) {
             cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
             mostrarMenu();
             return;
@@ -170,7 +170,7 @@ void mostrarMenu() {
         cout << "Seleccione la unidad de destino (1: Gramo, 2: Kilogramo, 3: Libra, 4: Onza): ";
         cin >> destino;
 
-        if (destino < 0 || destino > 4) {
+        if (destino < 0 || destino > CANTIDAD_PESOS) {
             cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
             mostrarMenu();
             return;
@@ -181,8 +181,8 @@ void mostrarMenu() {
 
         // Asignar valores a struct
         // Se disminuyen en 1 para ajustar a indices del enum
-        conversionP.unidadOrigen = static_cast<peso>(origen-1);
-        conversionP.unidadDestino = static_cast<peso>(destino-1);
+        conversionP.unidadOrigen = static_cast<Peso>(origen-1);
+        conversionP.unidadDestino = static_cast<Peso>(destino-1);
 
         // Imprimir resultado de la conversion
         cout << "El resultado es: " << convertir(conversionP, valor) << endl;
@@ -197,7 +197,7 @@ void mostrarMenu() {
         cout << "Seleccione la unidad de origen (1: Celsius, 2: Fahrenheit, 3: Kelvin): ";
         cin >> origen;
 
-        if (origen < 0 || origen > 3) {
+        if (origen < 0 || origen > CANTIDAD_TEMPERATURAS) {
             cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
             mostrarMenu();
             return;
@@ -206,7 +206,7 @@ void mostrarMenu() {
         cout << "Seleccione la unidad de destino (1: Celsius, 2: Fahrenheit, 3: Kelvin): ";
         cin >> destino;
 
-        if (destino < 0 || destino > 3) {
+        if (destino < 0 || destino > CANTIDAD_TEMPERATURAS) {
             cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
             mostrarMenu();
             return;
@@ -217,8 +217,8 @@ void mostrarMenu() {
  
         // Asignar valores a struct
         // Se disminuyen en 1 para ajustar a indices del enum
-        conversionT.unidadOrigen = static_cast<temperatura>(origen-1);
-        conversionT.unidadDestino = static_cast<temperatura>(destino-1);
+        conversionT.unidadOrigen = static_cast<Temperatura>(origen-1);
+        conversionT.unidadDestino = static_cast<Temperatura>(destino-1);
 
         // Imprimir el resultado de la conversion
         cout << "El resultado es: " << convertir(conversionT, valor) << endl;

@@ -22,10 +22,29 @@
 #include <iostream>
 
 /**
- * @enum opciones_menu
+ * @def CANTIDAD_LONGITUDES
+ * @brief Define la cantidad de unidades de longitud que abarca el programa
+ */
+
+#define CANTIDAD_LONGITUDES 5
+/**
+ * @def CANTIDAD_PESOS
+ * @brief Define la cantidad de unidades de peso que abarca el programa
+ */
+
+#define CANTIDAD_PESOS 4
+
+/**
+ * @def CANTIDAD_TEMPERATURAS
+ * @brief Define la cantidad de unidades de temperatura que abarca el programa
+ */
+#define CANTIDAD_TEMPERATURAS 3
+
+/**
+ * @enum OpcionesMenu
  * @brief Contiene las opciones del menu del programa.
  */
-enum opciones_menu {
+enum OpcionesMenu {
     MENU_LONGITUD = 1,
     MENU_PESO,
     MENU_TEMPERATURA,
@@ -33,10 +52,10 @@ enum opciones_menu {
 };
 
 /**
- * @enum longitud
+ * @enum Longitud
  * @brief Contiene los tipos de conversión para las unidades de longitud.
  */
-enum longitud {
+enum Longitud {
     METRO,
     KILOMETRO,
     CENTIMETRO,
@@ -45,10 +64,10 @@ enum longitud {
 };
 
 /**
- * @enum peso
+ * @enum Peso
  * @brief Contiene los tipos de conversión para las unidades de peso.
  */
-enum peso {
+enum Peso {
     GRAMO,
     KILOGRAMO,
     LIBRA,
@@ -56,10 +75,10 @@ enum peso {
 };
 
 /**
- * @enum temperatura
+ * @enum Temperatura
  * @brief Contiene los tipos de conversión para las unidades de temperatura.
  */
-enum temperatura {
+enum Temperatura {
     CELSIUS,
     FAHRENHEIT,
     KELVIN
@@ -73,8 +92,8 @@ enum temperatura {
  * unidades de longitud.
  */
 struct ConversionLongitud {
-    longitud unidadOrigen;
-    longitud unidadDestino;
+    Longitud unidadOrigen;
+    Longitud unidadDestino;
 };
 
 /**
@@ -85,8 +104,8 @@ struct ConversionLongitud {
  * unidades de peso.
  */
 struct ConversionPeso {
-    peso unidadOrigen;
-    peso unidadDestino;
+    Peso unidadOrigen;
+    Peso unidadDestino;
 };
 
 /**
@@ -97,8 +116,8 @@ struct ConversionPeso {
  * unidades de temperatura.
  */
 struct ConversionTemperatura {
-    temperatura unidadOrigen;
-    temperatura unidadDestino;
+    Temperatura unidadOrigen;
+    Temperatura unidadDestino;
 };
 
 /**
