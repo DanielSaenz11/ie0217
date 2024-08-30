@@ -20,6 +20,7 @@
 #define PROGRAMA1_HPP
 
 #include <iostream>
+#include <limits> // Para std::numeric_limits
 
 /**
  * @def CANTIDAD_LONGITUDES

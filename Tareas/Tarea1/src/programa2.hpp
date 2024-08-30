@@ -19,6 +19,7 @@
 #define PROGRAMA2_HPP
 
 #include <iostream>
+#include <limits> // Para std::numeric_limits
 
 /**
  * @enum casos_menu
