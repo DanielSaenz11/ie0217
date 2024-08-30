@@ -62,14 +62,14 @@ double convertir(ConversionPeso conversion, double valor) {
 double convertir(ConversionTemperatura conversion, double valor) {
 
     // Declaracion de variable para almacenar el resultado de la conversion
-    double resultado;
+    double resultado = valor;
 
     // Pasar unidad de origen a Celsius
     if (conversion.unidadOrigen == CELSIUS) {
         // No hay que hacer nada
     }
     else if (conversion.unidadOrigen == FAHRENHEIT) {
-        resultado = 5/9 * (valor - 32);
+        resultado = 5.0/9.0 * (valor - 32);
     }
     else if (conversion.unidadOrigen == KELVIN) {
         resultado = valor - 273.15;
@@ -80,7 +80,7 @@ double convertir(ConversionTemperatura conversion, double valor) {
         // No hay que hacer nada
     }
     else if (conversion.unidadDestino == FAHRENHEIT) {
-        resultado = 9/5 * resultado + 32;
+        resultado = 9.0/5.0 * resultado + 32;
     }
     else if (conversion.unidadDestino == KELVIN) {
         resultado += 273.15;
@@ -125,8 +125,22 @@ void mostrarMenu() {
         // Menu de ingreso de unidades
         cout << "Seleccione la unidad de origen (1: Metro, 2: Kilometro, 3: Centimetro, 4: Milla, 5: Pulgada): ";
         cin >> origen;
+
+        if (origen < 0 || origen > 5) {
+            cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
+            mostrarMenu();
+            return;
+        }
+
         cout << "Seleccione la unidad de destino (1: Metro, 2: Kilometro, 3: Centimetro, 4: Milla, 5: Pulgada): ";
         cin >> destino;
+
+        if (destino < 0 || destino > 5) {
+            cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
+            mostrarMenu();
+            return;
+        }
+
         cout << "Ingrese el valor a convertir: ";
         cin >> valor;
 
@@ -146,8 +160,22 @@ void mostrarMenu() {
         // Menu de ingreso de unidades
         cout << "Seleccione la unidad de origen (1: Gramo, 2: Kilogramo, 3: Libra, 4: Onza): ";
         cin >> origen;
+
+        if (origen < 0 || origen > 4) {
+            cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
+            mostrarMenu();
+            return;
+        }
+
         cout << "Seleccione la unidad de destino (1: Gramo, 2: Kilogramo, 3: Libra, 4: Onza): ";
         cin >> destino;
+
+        if (destino < 0 || destino > 4) {
+            cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
+            mostrarMenu();
+            return;
+        }
+
         cout << "Ingrese el valor a convertir: ";
         cin >> valor;
 
@@ -168,8 +196,22 @@ void mostrarMenu() {
         // Menu de ingreso de unidades
         cout << "Seleccione la unidad de origen (1: Celsius, 2: Fahrenheit, 3: Kelvin): ";
         cin >> origen;
+
+        if (origen < 0 || origen > 3) {
+            cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
+            mostrarMenu();
+            return;
+        }
+
         cout << "Seleccione la unidad de destino (1: Celsius, 2: Fahrenheit, 3: Kelvin): ";
         cin >> destino;
+
+        if (destino < 0 || destino > 3) {
+            cout << "Escoja una opcion del menu. Intente de nuevo." << endl;
+            mostrarMenu();
+            return;
+        }
+
         cout << "Ingrese el valor a convertir: ";
         cin >> valor;
  
