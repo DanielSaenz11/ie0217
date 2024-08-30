@@ -37,7 +37,7 @@ double calcularPromedio(int *pArr, int largo) {
     El promedio consiste en la suma total entre la cantidad de elementos
     Se llama calcularSuma() y se divide entre el largo
      */
-    double promedio = static_cast<double>((pArr, largo)) / largo;
+    double promedio = static_cast<double>(calcularSuma(pArr, largo)) / largo;
 
     return promedio; // Retornar promedio calculado
 }
