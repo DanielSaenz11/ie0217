@@ -2,11 +2,51 @@
 
 Esta corresponde a la _Tarea 1_ del curso IE-0217, en la cual se tratan los principios del lenguaje de programación C++. La asignación está dividida en tres partes:
 
-1) Preguntas teóricas sobre C++.
-2) Ejercicio de __Conversión de unidades__.
-3) Ejercicio de __Calculadora de Estadísticas y Búsqueda en un Arreglo__.
+1) Modo de uso
+2) Preguntas teóricas sobre C++.
+3) Descripción del ejercicio de __Conversión de unidades__.
+4) Descripción del ejercicio de __Calculadora de Estadísticas y Búsqueda en un Arreglo__.
 
 Las secciones mencionadas se desarrollan a continuación.
+
+Además, para acceder a documentación detallada en Doxygen sobre ambos programadas realizados, ingrese a este [link]().
+
+## Modo de uso
+
+El proceso de compilación se utilizó a partir de la herramienta Makefile y se utiliza el compilador g++. Por lo tanto, es importante que se tenga instalado en el dispositivo para la ejecución.
+
+La compilación de ambos programas está dada por el siguiente comando:
+```
+make
+```
+Asegúrese de estar en el directorio `./ie0217/Tareas/Tarea1/` para ejecutar el comando. Este se encarga de crear un directorio nuevo (si no existe), denominado `./build`, en donde se van a encontrar los archivos ejecutables.
+
+Después de esto, se crean los ejecutables y se ejecutan secuencialmente, de forma que primero se ejecuta `./build/programa1.exe` y luego `./build/programa2.exe`.
+
+Para interactuar con las aplicaciones, siga las instrucciones que se muestran en la terminal al ejecutar. En caso de dudas sobre su uso, puede profundizar sobre el uso en la sección al final de _Conversión de Unidades_ o _Calculadora de Estadísticas y Búsqueda en un Arreglo_.
+
+Para eliminar los archivos ejecutables, utilice el comando a continuación:
+```
+make clean
+```
+
+Si ya compiló los programas previamente y desea volver a ejecutarlos, sírvase del comando:
+```
+make run
+```
+
+Como nota adicional sobre el uso de las aplicaciones, el segundo programa `programa2.exe` está programado de tal forma que recibe argumentos desde la línea de comandos, pues fue diseñado para recibir una lista de números para los cuales calcular estadísticas del conjunto y poder buscar si existe o no un número dentro del conjunto. Entonces, el _Makefile_ fue realizado para colocar argumentos predeterminados en caso de que no se especifique nada: `1 2 3 5 10 12 15`.
+
+Sin embargo, si se quiere colocar una serie de números personalizados, utilice el siguiente comando:
+```
+make ARGS2="1 2 ..."
+```
+Si ya compiló los archivos, utilice:
+```
+make run ARGS2="1 2 ..."
+```
+
+El _Makefile_ fue diseñado de manera que funciona en dispositivos con sistema operativo Windows y Linux.
 
 ## Preguntas teóricas
 
@@ -36,6 +76,10 @@ Finalmente, los definidos por el usuario son los tipos que permiten agrupar dato
 
 
 ### 3. Explique qué es un linker en el contexto de un lenguaje de programación compilado. ¿Cuál es su función principal y por qué es esencial en el proceso de compilación?
+
+El trabajo del linker en la compilación de archivos de C++ corresponde a combinar y vincular los archivos objeto dentro de un archivo ejecutable o en una biblioteca. Se realiza esta combinación a partir de la resolución de referencias entre los archivos objeto; es decir, cuando se declara una función en un header file, se tiene la definición en un archivo `.cpp` y se llama en otro archivo `.cpp`, el linker se encarga de asociar la llamada de la función con la declaración y la definición de esta.
+
+Entonces, a partir de lo anterior, se tiene que el linker es fundamental para poder programar aplicaciones de forma modular. Además, realiza ciertas optimizaciones al unir los archivos objetos en el ejecutable resultante.
 
 ### 4. ¿Cuál es la diferencia entre usar el operador `=` y `==`? Brinde un ejemplo para cada uno.
 
@@ -429,4 +473,55 @@ Entre los usos de la memoria estática, se encuentra: variables globales, variab
 
 ## Conversión de Unidades
 
+El programa _Conversión de Unidades_ consiste en una aplicación en el lenguaje de programación C++, la cual permite realizar conversiones de longitud, peso y temperatura. Este funciona por medio de la terminal.
+
+En cuanto a las conversiones de __unidades de longitud__, se encuentra: metros, kilómetros, centímetros, millas y pulgadas. En las __unidades de peso__, se presenta: gramos, kilogramos, libras y onzas. Finalmente, para la conversión de __unidades de temperatura__, hay: Celsius, Fahrenheit y Kelvin.
+
+Las opciones de conversión colocadas en el párrafo anterior se muestran en un menú al ejecutar el programa. Estas se seleccionan siguiendo el orden en el que fueron mencionadas, al ingresar el número respectivo. Además, la última opción `4`, se termina la ejecución del programa.
+
+### Descripción de la implementación
+
+En el enunciado de la _Tarea 1_, se indica específicamente que se deben utilizar, al menos una vez, los Enums, Structs, la sobrecarga de funciones y la recursividad.
+
+- __Enums__:
+Estos fueron utilizados para tener numeraciones fijas para unidades y así, facilitar su proceso de conversión, pues sus índices coinciden con los índices de los factores de conversión de los arreglos creados para este propósito. 
+
+- __Estructuras y Sobrecarga de funciones__:
+Luego, las estructuras y la sobrecarga de funciones fueron utilizadas en conjunto, pues se crearon _structs_ que contienen las unidades de origen y destino de la conversión (ambos del _data type_ del Enum de la unidad correspondiente). La sección de sobrecarga de funciones está ligada a esto pues se definieron funciones `convertir()` que recibe un tipo de _struct_ (dependiendo de la conversión) y el valor a convertir. De esta forma, se diferencia qué función se usa en cada caso, por la diferencia de tipo de dato de los parámetros.
+
+- __Recursividad__:
+Se empleó recursividad para mostrar el menú después de realizar las conversiones. Se analizaron distintas posibilidades para aplicar recursividad, como en las conversiones, pero para los demás se encontraron mejores maneras de resolver en esos casos. Entonces, finalmente se decidió aplicar recursión en el menú. A pesar de que, no sea la mejor solución para realizar un menú, comparado con loops o similares, fue la mejor aplicación que se encontró dentro del marco del ejercicio.
+
+Ahora bien, en cuanto a la implementación como tal, inicialmente en la función `main()`, se llama a la función `mostrarMenu()`, la cual como se mencionó, se repite recursivamente.
+
+Luego, dentro de esta función, se muestra el menú del programa, el usuario ingresa el tipo de conversión que desea realizar y el valor que quiere convertir. Dependiendo de la opción escogida, se inicializa un struct específico para esa conversión, con la unidad de origen y destino. Entonces, se asignan los valores ingresados por el usuario en el menú a las variables del struct. Después, se pasa este struct junto con el valor a convertir a la función `convertir()`.
+
+La función `convertir()` es una función sobrecargada que se diferencia por el tipo de dato del struct ingresado para realizar la conversión. Esta sigue una lógica intuitiva para simplicar el código que consiste en que para convertir las unidades, se pasan a una _unidad base_ arbitraria (metro en longitud, gramo en peso, Celsius en temperatura) y luego de esta unidad base, se pasa a la unidad destino. Esto hace la implementación del código más sencilla.
+
+Después de realizar la conversión, se imprime el resultado y se vuelve a mostrar el menú. Este proceso se repite hasta que se ingrese la opción de salir y terminar la ejecución del programa.
+
 ## Calculadora de Estadísticas y Búsqueda en un Arreglo
+
+El programa de _Calculadora de Estadísticas y Búsqueda en un Arreglo_ consiste en una aplicación en el lenguaje de programación C++, en la que se puede calcular estadísticas básicas de un conjunto de números (como la suma, promedio, valor máximo y mínimo) y realizar una búsqueda de un número específico dentro de ese conjunto. El __formato de recepción__ del arreglo es desde la línea de comandos del archivo ejecutable.
+
+A rasgos generales, se muestra un menú con las siguientes opciones:
+```
+Calculadora de Estadísticas y Búsqueda en un Arreglo
+Opcion 1: Mostrar Estadística
+Opcion 2: Buscar un número en el arreglo
+Opcion 3: Salir
+```
+
+A partir de esto, se solicita una entrada para escoger una opción. 
+
+### Descripción de la implementación
+
+En cuanto al funcionamiento de la aplicación como tal, se tiene que esta inicialmente verifica que se hayan recibido al menos un argumento por la línea de comandos; en caso contrario, se sale del programa con un código de error.
+
+Posteriormente, se asignan los argumentos de la línea de comandos pertenecientes a `argv` a un arreglo `array` con un largo de `argc - 1`. Para cada asignación, se convierte la entrada a un número entero, por medio de `stoi()`.
+
+Luego, se utiliza un `do-while` loop para mostrar el menú del programa solicitado. Dentro de este, se valida la entrada en el menú por medio de un `switch-case`. Si se accede a la primera opción, se llaman las funciones `calcularSuma()`, `calcularPromedio()`, `calcularMaximo()` y `calcularMinimo()`, que son las funciones que calculan las estadísticas del arreglo de datos ingresado.
+
+En cuanto a la segunda opción, se ejecuta la función `buscarNumero()`, la cual solicita al usuario el ingreso de un número para ser buscado en el arreglo. Para ello, se muestra un mensaje que indica el estado de existencia del número buscado.
+
+Finalmente, si se ingresa la opción de _Salir_, se muestra un mensaje que indica la terminación de la ejecución del programa.
