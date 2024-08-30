@@ -11,6 +11,8 @@ Las secciones mencionadas se desarrollan a continuación.
 
 Además, para acceder a documentación detallada en Doxygen sobre ambos programadas realizados, ingrese a este [link]().
 
+A lo largo de todos los programas creados para esta asignación, se utilizó la convención de variables descrita en el siguiente enlace: [Naming Convention in C++ - GeeksForGeeks](https://www.geeksforgeeks.org/naming-convention-in-c/). En las indicaciones, se mencionó que se utilizara la convención para el nombramiento de variables más común. Sin embargo, al investigar en distintas fuentes se encontraron contradicciones sobre la convención más utilizada, especialmente entre _snake\_case_ y _camelCase_, pues la elección entre estas dos se menciona que es por preferencia y depende de la dinámica del grupo de trabajo o proyecto en cuestión.
+
 ## Modo de uso
 
 El proceso de compilación se utilizó a partir de la herramienta Makefile y se utiliza el compilador g++. Por lo tanto, es importante que se tenga instalado en el dispositivo para la ejecución.
@@ -23,7 +25,7 @@ Asegúrese de estar en el directorio `./ie0217/Tareas/Tarea1/` para ejecutar el 
 
 Después de esto, se crean los ejecutables y se ejecutan secuencialmente, de forma que primero se ejecuta `./build/programa1.exe` y luego `./build/programa2.exe`.
 
-Para interactuar con las aplicaciones, siga las instrucciones que se muestran en la terminal al ejecutar. En caso de dudas sobre su uso, puede profundizar sobre el uso en la sección al final de _Conversión de Unidades_ o _Calculadora de Estadísticas y Búsqueda en un Arreglo_.
+Para interactuar con las aplicaciones, siga las instrucciones que se muestran en la terminal al ejecutar. En caso de dudas sobre su uso, puede profundizar sobre el uso en la sección al final de __Conversión de Unidades__ o __Calculadora de Estadísticas y Búsqueda en un Arreglo__.
 
 Para eliminar los archivos ejecutables, utilice el comando a continuación:
 ```
@@ -451,7 +453,7 @@ El lugar donde se guardan las variables locales, globales, estáticas y dinámic
 - Variables globales: Los globales son guardados en el _data segment_. Cuando el programa se ejecuta, son colocados allí, hasta que finaliza el tiempo de ejecución de este. Se subdividen en la _sección de datos inicializados_ y la _sección de datos no inicializados_.
 
 
-Obtenido de: [Memory and C++ - Stanford CS](https://cs.stanford.edu/people/eroberts/courses/cs106b/handouts/21-MemoryAndC++.pdf)
+Obtenido de: [Memory and C++ - Stanford CS.](https://cs.stanford.edu/people/eroberts/courses/cs106b/handouts/21-MemoryAndC++.pdf)
 
 ### 25. Investigue qué es un _memory leak_.
 
@@ -470,6 +472,35 @@ Para reservar memoria dinámica, se utiliza la palabra clave `new`. Mientras que
 La memoria estática es una clase de memoria que es manejada por el compilador durante la compilación, tal que esta se encuentra reservada durante __todo__ el tiempo de ejecución del programa, la cantidad de memoria no se modifica durante la ejecución (diferencia con la memoria dinámica).
 
 Entre los usos de la memoria estática, se encuentra: variables globales, variables estáticas, miembros de clase estáticos. 
+
+### Comandos generales utilizados para Markdown
+
+En el enunciado, se menciona que hay que investigar y agregar explicaciones para el formato Markdown. Por lo tanto, en esta sección se va a agregar una guía general para la elaboración de archivos con extensión `.md`.
+
+- __Headers (#)__:
+Para colocar títulos en Markdown se utiliza `#`, dependiendo de cuantos caracteres de este tipo se coloquen, indica el nivel del título. Note que `#` indica el encabezado de mayor tamaño (nivel 1), mientras que `######` indica el encabezado de menor tamaño (nivel 6).
+
+- __Listas sin orden__:
+Para colocar listas sin un orden, se utilizó el caracter `-`. Cada ítem de la lista, se encuentra indicado por este. Se pueden usar también otros caracteres como `*` y `+`, los cuales funcionan de la misma forma.
+
+- __Listas ordenadas__:
+El formato para colocar listas ordenadas corresponde a colocar los números del ítem para el cual se está poniendo. Por ejemplo: `1.`, `2.` y así sucesivamente.
+
+- __Itálica__:
+Para colocar palabras en itálica, se rodea la palabra con `_` o `*` en ambos lados. Por ejemplo: `_italica_` o `*italica*`.
+
+- __Negrita__:
+En cuanto a las negritas, funciona de forma similar que itálica, se colocan `_` o `*` dobles alrededor de la palabra. Por ejemplo: `**negrita**` o `__negrita__`.
+
+- __Código__:
+El código multilínea se escribe al rodear el bloque de código con tres caracteres de \`. Mientras que, el código en una línea simple, se escribe al rodearlo con \` una única vez.
+
+- __Hipervínculos__:
+Para agregar enlaces en Markdown, se utiliza el siguiente formato:
+
+```
+[Palabras con hipervinculo](enlace)
+```
 
 ## Conversión de Unidades
 
@@ -525,3 +556,17 @@ Luego, se utiliza un `do-while` loop para mostrar el menú del programa solicita
 En cuanto a la segunda opción, se ejecuta la función `buscarNumero()`, la cual solicita al usuario el ingreso de un número para ser buscado en el arreglo. Para ello, se muestra un mensaje que indica el estado de existencia del número buscado.
 
 Finalmente, si se ingresa la opción de _Salir_, se muestra un mensaje que indica la terminación de la ejecución del programa.
+
+## Ejemplo de ejecución
+
+En esta sección, se muestra un ejemplo de ejecución de los códigos, para evidenciar su correcto funcionamiento.
+
+<img src="./images/ejecucion1.png" width="500"/>
+
+En la imagen superior, se muestra la compilación del programa con el comando `make`. Además, se ejecuta el código de `programa1.exe`. Se evidencia que el menú que se repite funciona como debe, así como el resultado satisfactorio de la conversión realizada para las unidades de longitud.
+
+<img src="./images/ejecucion2.png" width="500"/>
+
+Luego, en esta imagen, se muestra la ejecución después del código de `programa2.exe`. Este programa se ejecute secuencialmente al finalizar el anterior. Note que como no se agregaron argumentos al ejecutar `make`, se ejecutan con los argumentos predefinidos. Observe que el resultado de las estadísticas y de la búsqueda del número 5 en el arreglo se dan correctamente.
+
+Por lo tanto, con esta ejecución, se verifica el funcionamiento de ambos programas, así como del _Makefile_ creado.
