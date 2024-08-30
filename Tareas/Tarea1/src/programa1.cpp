@@ -96,7 +96,7 @@ void mostrarMenu() {
     int origen, destino;
     double valor;
 
-    cout << "\nConversión de Unidades" << endl;
+    cout << "\nConversion de Unidades" << endl;
     cout << "Opcion 1. Convertir entre diferentes unidades de longitud" << endl;
     cout << "Opcion 2. Convertir entre diferentes unidades de peso" << endl;
     cout << "Opcion 3. Convertir entre diferentes unidades de temperatura" << endl;
@@ -227,7 +227,7 @@ void mostrarMenu() {
     
     default:
         // Entrada no valida
-        cout << "Opción inválida. Digite una opción de las mostradas en el menú." << endl;
+        cout << "Opción invalida. Digite una opcion de las mostradas en el menu." << endl;
     }
 
     // Repeticion recursiva del menu

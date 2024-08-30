@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 
     // Se verifica que se hayan ingresado 2 o mas argumentos en la linea de comando
     if (argc < 2) {
-        cout << "Ingrese al menos un número en la línea de comando" << endl;
+        cout << "Ingrese al menos un numero en la línea de comando" << endl;
         return 1;
     }
 
@@ -53,9 +53,9 @@ int main(int argc, char* argv[]) {
     // do-while loop
     do {
         // Imprimir menu
-        cout << "\nCalculadora de Estadísticas y Búsqueda en un Arreglo" << endl;
-        cout << "Opcion 1: Mostrar Estadística" << endl;
-        cout << "Opcion 2: Buscar un número en el arreglo" << endl;
+        cout << "\nCalculadora de Estadisticas y Busqueda en un Arreglo" << endl;
+        cout << "Opcion 1: Mostrar Estadistica" << endl;
+        cout << "Opcion 2: Buscar un numero en el arreglo" << endl;
         cout << "Opcion 3: Salir" << endl;
 
         // Ingreso de opcion por usuario
@@ -73,8 +73,8 @@ int main(int argc, char* argv[]) {
                 // Caso 1: Mostrar estadisticas
                 cout << "Suma total: " << calcularSuma(array, largo) << endl;
                 cout << "Promedio: " << calcularPromedio(array, largo) << endl;
-                cout << "Número máximo: " << calcularMaximo(array, largo) << endl;
-                cout << "Número mínimo: " << calcularMinimo(array, largo) << endl;
+                cout << "Numero maximo: " << calcularMaximo(array, largo) << endl;
+                cout << "Numero minimo: " << calcularMinimo(array, largo) << endl;
                 break;
             case BUSCAR_NUMERO:
                 // Caso 2: Buscar numero en el arreglo
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
                 break;
             default:
                 // Caso por defecto
-                cout << "Opción inválida. Digite una opción de las mostradas en el menú.";
+                cout << "Opcion invalida. Digite una opcion de las mostradas en el menu.";
         }
 
     } while (opcion != SALIR_PROGRAMA); // Se repite el loop hasta que se ingrese la opcion de salir

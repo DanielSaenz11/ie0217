@@ -80,7 +80,7 @@ void buscarNumero(int *pArr, int largo) {
     int numBusqueda;
     
     // Ingreso del usuario del numero a buscar
-    cout << "Ingrese el número para buscar en el arreglo: ";
+    cout << "Ingrese el numero para buscar en el arreglo: ";
     cin >> numBusqueda;
 
     // Recorrido del arreglo
@@ -88,12 +88,12 @@ void buscarNumero(int *pArr, int largo) {
         // Verificar si hubo coincidencia entre el numero a buscar y uno en el arreglo
         if (numBusqueda == *(pArr + i)) {
             // Mostrar mensaje con detalles del numero encontrado
-            cout << "Se encontró el número " << numBusqueda << " en el índice "
+            cout << "Se encontro el numero " << numBusqueda << " en el indice "
             << i << " del arreglo." << endl;
             return; // Salir de la funcion
         }
     }
     // En el caso que no se encontro una coincidencia
-    cout << "No se encontró el número " << numBusqueda << " en el arreglo." << endl;
+    cout << "No se encontro el numero " << numBusqueda << " en el arreglo." << endl;
     
 }
