@@ -1,5 +1,5 @@
 /**
- * @file main2.hpp
+ * @file main2.cpp
  * @brief Archivo que contiene la función main() .
  * 
  * @details En este archivo se valida el ingreso de argumentos por la línea de comandos, se muestra
