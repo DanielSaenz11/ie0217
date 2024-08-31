@@ -17,7 +17,7 @@ int main() {
     int stackVariable = 10;
 
     /* Se almacena en el heap */
-    int* heapVariable = new int(20);
+    int* heapVariable = new int(20); // new: reservar memoria del heap, retorna una direccion
 
     // Imprimir los valores de las variables
     std::cout << "Valor de globalVariable: " << globalVariable << std::endl;
