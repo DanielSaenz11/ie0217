@@ -39,9 +39,11 @@ int main() {
     // Imprimir la lista enlazada por valor
     head = one;
     while (head != NULL) {
-        cout << head->value;
+        cout << head->value << "->"; // Se agrego -> para mejor visualizacion del contenido de los nodos
         head =  head->next;
     }
+
+    cout << "NULL" << endl; // Se agrego un salto de linea al final y la palabra NULL para indicar que se termino
 
     // Error: No se libera la memoria dinamica
     delete one;
