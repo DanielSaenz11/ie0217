@@ -26,7 +26,7 @@ Consiste en una introducción al manejo de memoria dinámica en C++. Se utiliza 
 
 - __realloc.cpp__: Explicación de _re-allocating_ memoria en C++ (cambiar el tamaño de la memoria reservada).
 
-### </ins>Estructuras de datos </ins>
+### <ins>Estructuras de datos </ins>
 
 Se analizan las implementaciones de estructuras de datos básicas, como el stack/pila, el queue/cola, la lista enlazada y el árbol. 
 
