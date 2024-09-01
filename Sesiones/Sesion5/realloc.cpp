@@ -22,7 +22,7 @@ int main() {
     }
 
     /* Inicializando bloque de memoria */
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
         ptr[i] = i * 1.5;
     }
 
