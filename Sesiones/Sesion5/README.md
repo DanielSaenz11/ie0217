@@ -4,13 +4,13 @@ Esta sesión corresponde a la realizada para el 3 de setiembre del 2024, corresp
 
 En el directorio actual, se encuentran los siguientes subtemas desarrollados:
 
-### Almacenamiento de datos en la memoria en C++
+### <ins>Almacenamiento de datos en la memoria en C++ </ins>
 
 Se describe el funcionamiento del _stack_, del _heap_ y de los _data segments_
 
 - __tiposMemoria.cpp__: Este programa contiene la demostración del uso de los tipos de memoria en C++: variables globales, locales (stack) y dinámicas (heap).
 
-### Memoria dinámica
+### <ins>Memoria dinámica </ins>
 
 Consiste en una introducción al manejo de memoria dinámica en C++. Se utiliza el comando `new` para reservarla y `del` para liberarla, respectivamente.
 
@@ -26,7 +26,7 @@ Consiste en una introducción al manejo de memoria dinámica en C++. Se utiliza 
 
 - __realloc.cpp__: Explicación de _re-allocating_ memoria en C++ (cambiar el tamaño de la memoria reservada).
 
-### Estructuras de datos
+### </ins>Estructuras de datos </ins>
 
 Se analizan las implementaciones de estructuras de datos básicas, como el stack/pila, el queue/cola, la lista enlazada y el árbol. 
 
