@@ -50,12 +50,12 @@ int isempty(st *s) {
 void push(st *s, int newitem) {
     // Si esta lleno, no se puede agregar
     if (isfull(s)) {
-        cout << "STACK FULL";
+        cout << "STACK FULL" << endl;
     } else {
         s->top++; // Se aumenta la posicion maxima llena
         s->items[s->top] = newitem; // Agregar el item en la nueva posicion top
+        stack_size++; // Se coloco dentro del else porque sino, disminuia el stack_size aunque estuviera vacia
     }
-    stack_size++; // Aumentar el tamano real ocupado del stack
 }
 
 // Eliminar ultimo elemento del stack
@@ -67,8 +67,8 @@ void pop(st *s) {
         // Imprimir el item en la posicion top
         cout << "Item popped= " << s->items[s->top];
         s->top--; // Disminuir el valor de top (top previo deja de ser accesible)
+        stack_size--; // Se coloco dentro del else porque sino, disminuia el stack_size aunque estuviera vacia
     }
-    stack_size--; // Disminuir el tamano de la pila
     cout << endl;
 }
 
