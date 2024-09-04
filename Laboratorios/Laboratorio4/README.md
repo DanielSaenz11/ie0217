@@ -34,7 +34,7 @@ Ahora bien, el segundo programa de __Árboles binarios de búsqueda__ ubicado en
 
 Este laboratorio consiste de dos programas principales, como se mencionó en la introducción. Ambos programas fueron realizados en el lenguaje de programación C++. Por lo tanto, se requiere que se tenga instalado el compilador `g++` para ejecutarlos.
 
-Para la correcta ejecución de los comandos indicados a continuación, es necesario que se encuentre en el directorio `./ie0217/Laboratorios/Laboratorio4` del presente repositorio.
+Para la correcta ejecución de los comandos indicados a continuación, es necesario que se encuentre en el directorio `./ie0217/Laboratorios/Laboratorio4` del presente repositorio. Asegúrese de tener un directorio `./ie0217/Laboratorios/Laboratorio4/Listas/build` y `./ie0217/Laboratorios/Laboratorio4/Arboles/build` para la compilación de los archivos ejecutables.
 
 ### Comandos para Linux
 
