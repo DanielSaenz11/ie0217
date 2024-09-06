@@ -29,5 +29,5 @@ string ProductoDigital::getId() const {
 }
 
 void ProductoDigital::mostrarInformacion() const {
-    cout << "Producto digital: " << nombre << " (Precio: $" << precio << ", ID: " << id << ")" << endl;
+    cout << "- Producto digital: " << nombre << " (Precio: $" << precio << ", ID: " << id << ")" << endl;
 }
