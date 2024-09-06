@@ -6,9 +6,7 @@ Esta corresponde a la _Tarea 1_ del curso IE-0217, en la cual se tratan los prin
 2) Preguntas teóricas
 3) Sistema de Gestión de Tienda en Línea
 
-Además, para acceder a documentación detallada en Doxygen sobre el código implementado, ingrese a este [link]().
-
-
+Además, para acceder a documentación detallada en Doxygen sobre el código implementado, ingrese a este [link](https://tarea2-ie0217.netlify.app).
 
 ## Modo de uso
 
