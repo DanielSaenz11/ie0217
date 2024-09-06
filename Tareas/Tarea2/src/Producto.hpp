@@ -2,7 +2,7 @@
  * @file Producto.hpp
  * @brief Archivo que contiene la declaración de la clase Producto.
  * 
- * @details En este header file se declara los atributos y miembros de la clase Producto, que
+ * @details En este header file se declara los atributos y miembros de la clase abstracta Producto, que
  * que gestiona el nombre del producto y su precio.
  * Incluye métodos como el constructor, destructor, obtener el precio del Producto y su nombre.
  * 
@@ -24,7 +24,7 @@
 
 /**
  * @class Producto
- * @brief Clase base para productos de la tienda.
+ * @brief Clase abstracta para productos de la tienda.
  * 
  * Esta clase almacena el nombre del producto y su precio como variables miembro privadas.
  * Proporciona métodos para construir un objeto de la clase (constructor), destructor,
@@ -71,6 +71,12 @@ class Producto {
          */
         std::string getNombre() const;
 
+        /**
+         * @brief Muestra en un string la información del producto.
+         * 
+         * Corresponde a un método virtual puro.
+         */
+        virtual void mostrarInformacion() const = 0;
 };
 
 #endif // PRODUCTO_HPP
