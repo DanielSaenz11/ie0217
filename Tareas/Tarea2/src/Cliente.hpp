@@ -59,7 +59,7 @@ class Cliente {
         /**
          * @brief Destructor de la clase Cliente.
          */
-        virtual ~Cliente();
+        virtual ~Cliente() = default;
 
         /**
          * @brief Obtiene el nombre del cliente.

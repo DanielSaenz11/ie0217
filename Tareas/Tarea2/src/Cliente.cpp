@@ -25,14 +25,6 @@ using namespace std;
 // Definición del constructor de Cliente: Asigna los parámetros recibidos a las variables miembro de la clase
 Cliente::Cliente(const string &nombre) : nombre(nombre) {}
 
-// Definicion del destructor de la clase Cliente
-Cliente::~Cliente() {
-    // Libera la memoria de todos los productos dentro del carrito
-    for (Producto *producto : carrito) {
-        delete producto;
-    }
-}
-
 string Cliente::getNombre() const {
     return this->nombre;
 }
