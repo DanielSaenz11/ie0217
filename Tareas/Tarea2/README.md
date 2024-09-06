@@ -6,7 +6,32 @@ Esta corresponde a la _Tarea 1_ del curso IE-0217, en la cual se tratan los prin
 2) Preguntas teóricas
 3) Sistema de Gestión de Tienda en Línea
 
+Además, para acceder a documentación detallada en Doxygen sobre el código implementado, ingrese a este [link]().
+
+
+
 ## Modo de uso
+
+El proceso de compilación se realiza a partir de la herramienta _Makefile_ y se utiliza el compilador `g++`. Por lo tanto, es importante que se tenga instalado en el dispositivo para la ejecución.
+
+La compilación del programa está dada por el siguiente comando:
+```
+make
+```
+
+Asegúrese de estar en el directorio `./ie0217/Tareas/Tarea2/` para ejecutar el comando. Este se encarga de crear un directorio nuevo (si no existe), denominado `./build/`, en donde se va a encontrar el archivo ejecutable. Por lo tanto, el archivo ejecutable se debe encontrar en el directorio `./ie0217/Tareas/Tarea2/build/tienda.exe`.
+
+Para eliminar el archivo ejecutable, utilice el comando a continuación:
+```
+make clean
+```
+
+Si ya compiló el programa previamente y desea volver a ejecutarlo, sírvase del comando:
+```
+make run
+```
+
+El _Makefile_ fue diseñado de manera que funciona en dispositivos con sistema operativo Windows y Linux. Se agregó dentro del archivo el flag de compilación `-std=c++11` para indicarle a `g++` qué versión utilizar (para el `for` loop en el vector).
 
 ## Preguntas teóricas
 
@@ -543,4 +568,125 @@ En el ejemplo anterior, se implementa el polimorfismo con la clase derivada `Per
 
 Si no se colocara el _keyword_ `virtual` en la declaración de la función miembro en la clase base, se mostraría la implementación de la clase base, en vez de la derivada. 
 
+## Explicación Formato Markdown utilizado
+
+En el enunciado, se menciona que hay que investigar y agregar explicaciones para el formato Markdown. Por lo tanto, en esta sección se va a agregar una guía general para la elaboración de archivos con extensión `.md`.
+
+- __Headers (#)__:
+Para colocar títulos en Markdown se utiliza `#`, dependiendo de cuantos caracteres de este tipo se coloquen, indica el nivel del título. Note que `#` indica el encabezado de mayor tamaño (nivel 1), mientras que `######` indica el encabezado de menor tamaño (nivel 6).
+
+- __Listas sin orden__:
+Para colocar listas sin un orden, se utilizó el caracter `-`. Cada ítem de la lista, se encuentra indicado por este. Se pueden usar también otros caracteres como `*` y `+`, los cuales funcionan de la misma forma.
+
+- __Listas ordenadas__:
+El formato para colocar listas ordenadas corresponde a colocar los números del ítem para el cual se está poniendo. Por ejemplo: `1.`, `2.` y así sucesivamente.
+
+- __Itálica__:
+Para colocar palabras en itálica, se rodea la palabra con `_` o `*` en ambos lados. Por ejemplo: `_italica_` o `*italica*`.
+
+- __Negrita__:
+En cuanto a las negritas, funciona de forma similar que itálica, se colocan `_` o `*` dobles alrededor de la palabra. Por ejemplo: `**negrita**` o `__negrita__`.
+
+- __Código__:
+El código multilínea se escribe al rodear el bloque de código con tres caracteres de \`. Mientras que, el código en una línea simple, se escribe al rodearlo con \` una única vez.
+
+- __Hipervínculos__:
+Para agregar enlaces en Markdown, se utiliza el siguiente formato:
+
+```
+[Palabras con hipervinculo](enlace)
+```
+
 ## Sistema de Gestión de Tienda en Línea
+
+La solución programada consiste en la __aplicación de la programación orientada a objetos__ para la implementación del sistema de gestión de tienda en línea. Se realizaron un total de 7 clases, las cuales fueron distribuidas archivos de cabecera (`.hpp`) y archivos de código fuente (`.cpp`), de tal forma que, la declaración de la clase se encuentra en el _header file_ y la definición de los métodos en el _source file_.
+
+Entonces, el contenido de los archivos de código realizado, presenta la siguiente estructura:
+
+1) `Producto.hpp` y `Producto.cpp`: 
+
+Contiene la declaración e implementación de la clase `Producto`. Esta clase corresponde a una clase abstracta que posee los atributos privados de `nombre` y `precio`. Además, incluye el método del constructor, destructor, y funciones miembro para obtener el nombre y el precio, así como, mostrar la información del producto. Este último método de `mostrarInformación()` fue implementado de tal forma, que corresponde a un método virtual puro y convierte a la clase en una clase abstracta (no se pueden instanciar objetos), lo cual obliga a que en las clases derivadas de esta: `ProductoDigital` y `ProductoFisico` se implemente este método.
+
+2) `ProductoDigital.hpp` y `ProductoDigital.cpp`: 
+
+Corresponde a la declaración y definición de la clase `ProductoDigital`. Esta hereda los miembros de la clase abstracta `Producto`. Se implementa también un atributo privado de ID como identificador en línea. Este atributo viene acompañado con una función miembro que retorna su valor. De igual manera, se sobrescribe el método virtual `mostrarInformacion()` para el caso del `ProductoDigital`.
+
+3) `ProductoFisico.hpp` y `ProductoFisico.cpp`: 
+
+Corresponde a la declaración y definición de la clase `ProductoFisico`. Esta hereda los miembros de la clase abstracta `Producto`. Se implementa también un atributo privado de `peso` como característica de los productos físicos. Este atributo viene acompañado con una función miembro que retorna su valor. Además, se sobrescribe el método virtual `mostrarInformacion()` para el caso del `ProductoFisico`.
+
+4) `Cliente.hpp` y `Cliente.cpp`:
+
+Consiste en la implementación de la clase abstracta `Cliente`. Esta representa a los clientes de la tienda. Cada cliente se reconoce por su atributo de `nombre` y su `carrito` de compras. Además, se crearon funciones _getters_ de sus atributos y métodos para calcular el total de la compra, agregar un producto al carrito y un método virtual puro para calcular el descuento en el precio final, el cual se implementa en las clases derivadas.
+
+5) `ClienteRegular.hpp` y `ClienteRegular.cpp`: 
+
+En estos archivos se desarrolló el código para la clase `ClienteRegular`, la cual corresponde a una clase derivada de `Cliente`. Se programó el constructor y la función miembro requerida de la clase base `aplicarDescuento()`.
+
+6) `ClientePremium.hpp` y `ClientePremium.cpp`: 
+
+Corresponde a la declaración y la definición de la clase `ClientePremium`. Al igual que la clase anterior, esta hereda los miembros de la clase `Cliente` e implementa un constructor para inicializar los objetos y la definición del método `aplicarDescuento()` específico para objetos de la clase `ClientePremium`.
+
+7) `Tienda.hpp` y `Tienda.cpp`: 
+
+La clase `Tienda` se define en estos archivos y representa la tienda en línea del ejercicio. Contiene los atributos privados de `productosDisponibles` y `clientes` en la tienda. Aparte de eso, implementa un destructor, métodos para agregar productos y clientes, procesar la compra de un cliente a partir de su nombre, y buscar productos y clientes en el vector donde son almacenados.
+
+8) `main.cpp`:
+
+Finalmente, el archivo `main.cpp` consiste en el punto de entrada del programa. En este se implementa el menú recurrente, la validación de las entradas del programa y el llamado de los métodos de las clases en las situaciones donde es necesario.
+
+## Convención de nombre de variables utilizada
+
+A partir de la investigación de una convención de nombramiento de variables, funciones y clases general, se llegó a la conclusión que no existe una respuesta clara, pues dependiendo del proyecto y gustos personales, los desarrolladores se adaptan a la convención preferida. Sin embargo, se determinó que existen tendencias en el nombramiento de las variables, las cuales fueron implementadas en el código.
+
+* __Nombres de clases__: Se utilizó la convención _PascalCase_ para nombrar las clases. Los nombres de las clases corresponden a sustantivos e inician en mayúscula, cada palabra siguiente también se coloca en mayúscula.
+
+* __Nombres de atributos y métodos__: Los atributos y métodos siguen la convención _camelCase_. Se determinó que los métodos se le debe colocar un nombre de forma que, inicie con un verbo para describir la acción que realiza.
+
+* __Nombres de enum__: Los enum fueron nombrados, de manera que, su nombre sigue la convención _PascalCase_. Además, los elementos dentro del enum son nombrados en mayúscula y cada palabra separada por un guion bajo (`_`).
+
+* __Nombres de archivos__: Los archivos son nombrados con la convención _PascalCase_; es decir, comienzan en mayúscula y para distinguir entre palabras también se coloca la letra en mayúscula.
+
+* __Variables locales__: Las variables locales siguen la convención _camelCase_.
+
+* __Punteros__: Los punteros son declarados de manera que, el `*` está contiguo al nombre de la variable, no al tipo de dato.
+
+## Ejemplo de una ejecución del programa
+
+En esta sección, se muestra un ejemplo de ejecución del programa para dos clientes. Así se verifica el flujo del programa.
+
+### Compilación con comando `make`
+
+Se compila el programa únicamente con el comando `make` como se solicita en las indicaciones de la asignación.
+
+<img src="./images/compilacion.png" width="500"/>
+
+### Agregar productos a la tienda
+
+Se agregan dos productos al vector de `productosDisponibles`: _Videojuego_ (producto digital) y _Camara_ (producto físico). Note que se solicitan los atributos requeridos para cada tipo de producto.
+
+<img src="./images/agregarProductos.png" width="500"/>
+
+### Registrar clientes a la tienda
+
+Se registran dos clientes, uno del tipo regular y otro del tipo premium. De esta forma, se observa que para agregar al cliente premium al registro, se agrega el porcentaje de descuento.
+
+<img src="./images/registrarClientes.png" width="500"/>
+
+### Agregar productos al carrito de clientes
+
+Para agregar productos al carrito, se ingresa el nombre del cliente, seguido del nombre del producto que desea agregar. Si ambos existen, se imprime un mensaje de confirmación.
+
+<img src="./images/agregarCarrito.png" width="500"/>
+
+### Procesar compra
+
+Al procesar la compra con los productos agregados al carrito para los clientes. Inicialmente, se solicita que se ingrese el nombre del cliente. Luego, se muestra el total a pagar, el total con el descuento aplicado y finalmente, la lista de los productos en el carrito con la información de cada uno.
+
+<img src="./images/procesarCompra.png" width="500"/>
+
+### Salir
+
+Al ingresar la opción de salir del programa, se libera la memoria reservada y se imprime un mensaje que indica que se salió.
+
+<img src="./images/salirPrograma.png" width="500"/>
