@@ -62,7 +62,7 @@ void Tienda::procesarCompra(const string &nombreCliente) const {
 
         // Mostrar la información de cada producto en el vector carrito
         for (const Producto* producto : cliente->getCarrito()) {
-            cout << "Producto: " << producto->getNombre() << ", Precio: $" << producto->getPrecio() << endl;
+            producto->mostrarInformacion();
         }
     }
 }
