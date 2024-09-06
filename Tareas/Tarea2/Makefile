@@ -3,7 +3,8 @@ CC = g++
 CFLAGS = -Wall -std=c++11
 
 # Source files
-SRC = src/main.cpp src/Producto.cpp src/ProductoDigital.cpp src/ProductoFisico.cpp src/Cliente.cpp src/ClienteRegular.cpp src/ClientePremium.cpp src/Tienda.cpp
+SRC_DIR = ./src
+SRC = $(SRC_DIR)/main.cpp $(SRC_DIR)/Producto.cpp $(SRC_DIR)/ProductoDigital.cpp $(SRC_DIR)/ProductoFisico.cpp $(SRC_DIR)/Cliente.cpp $(SRC_DIR)/ClienteRegular.cpp $(SRC_DIR)/ClientePremium.cpp $(SRC_DIR)/Tienda.cpp
 
 # Directorio build
 BUILD_DIR = build
@@ -12,7 +13,7 @@ BUILD_DIR = build
 TARGET = $(BUILD_DIR)/tienda.exe
 
 # Header files
-HEADER = src/Producto.hpp src/ProductoDigital.hpp src/ProductoFisico.hpp src/Cliente.hpp src/ClienteRegular.hpp src/ClientePremium.hpp src/Tienda.hpp
+HEADER = $(SRC_DIR)/Producto.hpp $(SRC_DIR)/ProductoDigital.hpp $(SRC_DIR)/ProductoFisico.hpp $(SRC_DIR)/Cliente.hpp $(SRC_DIR)/ClienteRegular.hpp $(SRC_DIR)/ClientePremium.hpp $(SRC_DIR)/Tienda.hpp
 
 # Detectar el sistema operativo para comando de clean
 ifeq ($(OS),Windows_NT)
@@ -28,15 +29,12 @@ endif
 all: $(TARGET)
 	./$(TARGET)
 
-
 # Construccion de directorio build
 $(BUILD_DIR):
 	$(MKDIR)
 
-
 $(TARGET): $(BUILD_DIR) $(SRC) $(HEADER)
 	$(CC) $(CFLAGS) -o ./$(TARGET) $(SRC)
-
 
 # Comando para correr los ejecutables
 run:
