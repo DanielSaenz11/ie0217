@@ -31,7 +31,7 @@
  */
 class ProductoFisico : public Producto {
     private:
-        /// @brief Peso del producto físico.
+        /// @brief Peso del producto físico en kilogramos.
         double peso;
 
     public:
@@ -52,6 +52,13 @@ class ProductoFisico : public Producto {
          * @return El peso del producto físico en cuestión.
          */
         double getPeso() const;
+
+        /**
+         * @brief Muestra en un string la información del producto.
+         * 
+         * Imprime el nombre, precio y peso del producto físico.
+         */
+        void mostrarInformacion() const override;
 };
 
 #endif // PRODUCTO_FISICO_HPP

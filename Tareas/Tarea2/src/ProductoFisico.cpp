@@ -27,3 +27,7 @@ Producto(nombre, precio), peso(peso) {}
 double ProductoFisico::getPeso() const {
     return peso;
 }
+
+void ProductoFisico::mostrarInformacion() const {
+    cout << "Producto digital: " << nombre << " (Precio: $" << precio << ", Peso: " << peso << "kg)" << endl;
+}
