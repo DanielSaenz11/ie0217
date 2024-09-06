@@ -17,11 +17,11 @@ HEADER = $(SRC_DIR)/Producto.hpp $(SRC_DIR)/ProductoDigital.hpp $(SRC_DIR)/Produ
 
 # Detectar el sistema operativo para comando de clean
 ifeq ($(OS),Windows_NT)
-    RM = del
+    RM = if exist $(TARGET) del $(subst /,\,$(TARGET))
 	MKDIR = if not exist $(BUILD_DIR) mkdir $(BUILD_DIR)
 else
 # Comandos para Linux
-    RM = rm
+    RM = rm $(TARGET)
 	MKDIR = mkdir -p $(BUILD_DIR)
 endif
 
@@ -42,4 +42,4 @@ run:
 
 # Comando para eliminar los ejecutables
 clean:
-	$(RM) ./$(TARGET)
+	$(RM)
