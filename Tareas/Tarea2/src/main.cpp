@@ -81,7 +81,7 @@ int main() {
     // Ciclo do-while para mostrar el menú hasta que se ingrese la opción de salida
     do {
         // Imprimir el menú
-        cout << "Sistema de Gestión de Tienda en Línea" << endl;
+        cout << "\nSistema de Gestión de Tienda en Línea" << endl;
         cout << "1. Agregar producto" << endl;
         cout << "2. Registrar cliente" << endl;
         cout << "3. Agregar producto al carrito" << endl;
@@ -106,7 +106,7 @@ int main() {
                 cin >> tipoProducto;
 
                 cout << "Nombre del producto: ";
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar buffer de entrada cuando antes hubo un ingreso con cin
                 getline(cin, nombreProducto); // Leer línea
 
                 cout << "Precio: ";
@@ -147,7 +147,7 @@ int main() {
                 cin >> tipoCliente;
 
                 cout << "Nombre del cliente: ";
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Limpiar buffer de entrada
                 getline(cin, nombreCliente); // Leer línea
 
                 // Caso en que el tipo de cliente es regular
