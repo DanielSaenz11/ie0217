@@ -53,6 +53,15 @@ class ProductoDigital : public Producto {
          * @return El ID del producto digital en cuestión.
          */
         std::string getId() const;
+
+        /**
+         * @brief Muestra en un string la información del producto.
+         * 
+         * Imprime el nombre, precio e ID del producto digital.
+         * 
+         * @return void
+         */
+        void mostrarInformacion() const override;
 };
 
 #endif // PRODUCTO_DIGITAL_HPP
