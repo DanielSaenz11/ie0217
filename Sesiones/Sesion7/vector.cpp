@@ -10,6 +10,7 @@
 
 using namespace std;
 
+// Funcion main(): Punto de entrada de ejecución del programa
 int main() {
     // Declaracion de vector numbers de tipo entero
     vector<int> numbers = {1, 100, 10, 70, 100};
