@@ -1,5 +1,5 @@
 /**
- * Mapa: Contener asociativo
+ * Mapa: Contenedor asociativo
  * 
  * Pares llave-valor -> Se accede a los valores por medio de las llaves
  * 

@@ -1,5 +1,5 @@
 /**
- * Set: Contener asociativo
+ * Set: Contenedor asociativo
  * 
  * No permite la repetición de elementos y el orden no depende de cuándo fue insertado
  * Su implementación garantiza que los elementos están ordenados de forma ascendente
