@@ -56,6 +56,7 @@ void imprimirArray(int array[], int tamano) {
     cout << endl;
 }
 
+// Función main(): Punto de entrada del programa
 int main() {
     // Declaración de array
     int array[] = {10, 80, 30, 90, 40, 50, 70};
