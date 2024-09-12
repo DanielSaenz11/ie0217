@@ -43,3 +43,7 @@ del nombrePrograma.exe
 __Nota__: Si se compilan los archivos en el sistema operativo Windows, es posible que al ejecutar o especificar direcciones de archivos, se requiera utilizar `\` en lugar de `/`.
 
 Además, se presentan algunos casos especiales de archivos que utilizan propiedades que no se presentan en la versión predeterminada de C++ utilizada por el compilador, como sintaxis modernas. Por lo tanto, se recomienda compilar con el flag `-std=c++11`, con el fin de evitar este problema.
+
+## Demostración de la ejecución
+
+<img src="./images/ejemploEjecucion.png" width="750"/>
