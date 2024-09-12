@@ -65,3 +65,9 @@ del nombrePrograma.exe
 __Nota__: Si se compilan los archivos en el sistema operativo Windows, es posible que al ejecutar o especificar direcciones de archivos, se requiera utilizar `\` en lugar de `/`.
 
 Además, se presentan algunos casos especiales de archivos que utilizan propiedades que no se presentan en la versión predeterminada de C++ utilizada por el compilador, como _containers_ y _for_ loops con `auto`. Por lo tanto, se recomienda compilar con el flag `-std=c++11`, con el fin de evitar este problema.
+
+## Demostración de la ejecución
+
+Se compilaron y ejecutaron algunos programadas de C++ del presente directorio para demostrar la funcionalidad apropiada de cada uno de ellos, a modo de ejemplo.
+
+<img src="./images/ejemploEjecucion.png" width="750"/>
