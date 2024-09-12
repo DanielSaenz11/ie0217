@@ -1,5 +1,4 @@
 /**
- *
  * Algoritmo Bubble Sort Optimizado:
  * Recorre el arreglo varias veces, de tal forma que, realiza comparaciones
  * para intercambiar las posiciones adyacentes en el arreglo si el valor de
