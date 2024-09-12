@@ -43,7 +43,7 @@ Para ejecutar los programas, es necesario que se tenga instalado el compilador `
 A modo general, los programas contienen únicamente un archivo de fuente. Por ende, se sugiere el siguiente comando, dentro del directorio actual `./ie0217/Sesiones/Sesion7/`:
 
 ```
-g++ -o -std=c++11 nombrePrograma.exe nombrePrograma.cpp
+g++ -o nombrePrograma.exe -std=c++11 nombrePrograma.cpp
 ```
 
 Para ejecutarlos, se requiere el comando a continuación:
