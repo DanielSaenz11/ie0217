@@ -153,6 +153,10 @@ Usualmente se utiliza `malloc()` cuando se busca la compatibilidad con C. Sin em
 
 ### 9. Explique el concepto de punteros inteligentes (smart pointers) y proporcione ejemplos de su uso.
 
+Los _smart pointers_ fueron implementados en C++, para facilitar el manejo de memoria dinámica, pues evitan fugas de memoria y __dangling pointers__. Este tipo de punteros maneja automáticamente la liberación de la memoria reservada del heap. Esto se debe a que, los punteros inteligentes, en términos sencillos, son clases que rodean punteros.
+
+# Pendiente
+
 
 ### 10. Mencione qué es un algoritmo y explique qué características básicas debería tener.
 
@@ -178,8 +182,17 @@ Para la medición de la complejidad de los algoritmos, se utiliza comúnmente la
 
 ### 12. ¿Cuál es la diferencia entre las estructuras de datos lineales y no-lineales? Mencione dos ejemplos de cada una.
 
+Las estructuras de datos lineales y no lineales difieren en la forma en la que organizan los elementos y permiten accederlos.
+
+- __Estructuras de datos lineales__: Como su nombre lo indica, se organizan de forma secuencial. Para recorrerlos, se tiene inicia en el primer elemento hasta el final. Como ejemplos, se tienen los _arreglos_ y _listas enlazadas_, pues estos poseen una clara relación entre el elemento anterior, el actual y el siguiente.
+
+- __Estructuras de datos no lineales__: La principal característica de este tipo de estructuras es que los elementos no se organizan de forma secuencial (al contrario que los lineales). Por lo tanto, los elementos que los componen pueden tener varias relaciones con otros elementos; puede ser de tipo jerárquica, por ejemplo. Dos ejemplos de estas estructuras consisten en los árboles y grafos. Note que ambos se pueden recorrer de distintas formas.
+
+
 
 ### 13. Explique cómo funciona la estructura Stack.
+
+
 
 
 ### 14. Explique cómo funciona la estructura Queue.
