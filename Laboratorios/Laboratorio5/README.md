@@ -7,7 +7,7 @@ Este directorio corresponde al Laboratorio 5 realizado el 13 de setiembre del 20
 - __Insertion sort__
 - __STL sort__
 
-Se compara el tiempo de ejecución de los 4 algoritmos para distintas entradas de datos.
+Se compara el tiempo de ejecución de los 4 algoritmos para distintas entradas de datos. Brevemente, en cuanto a la implementación, se tiene que se utilizó la biblioteca `chrono` para medir el tiempo de ejecución total de cada uno de los algoritmos y se empleó `random` para generar números aleatorios para la entrada de los algoritmos.
 
 ## Modo de uso
 
