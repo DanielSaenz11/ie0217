@@ -3,7 +3,7 @@
 using namespace std;
 
 // Función para medir tiempo de ejecución de un algoritmo de ordenamiento
-template <typename Func>
+template <typename Func> // Uso de template Func para pasar función como parámetro
 long long measure_sort_time(Func sort_function, vector<int>& data) {
     
     // Tiempo de inicio del cronómetro
