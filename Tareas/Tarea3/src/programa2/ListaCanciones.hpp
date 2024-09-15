@@ -40,45 +40,69 @@ class ListaCanciones {
         /**
          * @brief Constructor de la clase ListaCanciones
          * 
-         * Inicializa un objeto de la clase ListaCanciones y el nodo inicial de la lista.
+         * Inicializa un objeto de la clase ListaCanciones y el nodo inicial de la lista como nullptr.
          */
         ListaCanciones();
 
         /**
          * @brief Destructor de la clase ListaCanciones
          * 
-         * Libera la memoria dinámica de las canciones que se almacenan.
+         * Libera la memoria dinámica de las canciones que se almacenan, por medio de un recorrido de la lista.
          */
         ~ListaCanciones();
 
         /**
+         * @brief Función miembro para insertar una canción en la lista enlazada
+         * 
+         * Solicita al usuario que indique el tipo de inserción que quiere hacer: al inicio, al final
+         * o en una posición en específico. Además, valida las entradas dependiendo del tipo escogido.
+         * Realiza el llamado de las funciones respectivas en cada caso. 
+         * 
+         * @param cancion Objeto Cancion que se desea agregar a la lista
+         * @return void
+         */
+        void insertarCancion(const Cancion &cancion);
+
+        /**
          * @brief Función para insertar un objeto Cancion al inicio de la lista enlazada
+         * 
+         * Se agrega el nuevo nodo antes del nodo cabeza previo. De forma que, se coloca como siguiente nodo
+         * al nodo cabeza y luego, se cambia la dirección a la apunta cabeza al nuevo nodo.
          * 
          * @param cancion Objeto Cancion para insertar en la primera posición
          * @return void
          */
-        void insertarInicio(const Cancion& cancion);
+        void insertarInicio(const Cancion &cancion);
 
         /**
          * @brief Función para insertar un objeto Cancion al final de la lista enlazada
          * 
+         * Se recorre la lista hasta llegar al último valor. Se coloca como siguiente nodo del último, el nodo
+         * recién creado.
+         * 
          * @param cancion Objeto Cancion para insertar en la última posición
          * @return void
          */
-        void insertarFinal(const Cancion& cancion);
+        void insertarFinal(const Cancion &cancion);
 
         /**
          * @brief Función para insertar un objeto Cancion en una posición específica de la lista enlazada.
+         * 
+         * Se recorre la lista hasta alcanzar la posición deseada, mientras se rastrea el nodo anterior. Al alcanzar la posición,
+         * se ajustan los punteros al nodo siguiente de cada uno (anterior y actual) para que la lista siga funcionando correctamente.
          * 
          * @param cancion Objeto Cancion para insertar en la primera posición
          * @param posicion Entero que representa la posición a insertar (0 -> Inicio)
          * @return void
          */
-        void insertarPosicion(const Cancion& cancion, int posicion);
+        void insertarPosicion(const Cancion &cancion, int posicion);
 
         /**
          * @brief Función miembro para eliminar una canción de la lista
          * 
+         * Se recorre la lista enlazada en busca del nodo con el valor de interés. Si se encuentra, se analiza el caso de si
+         * corresponde al nodo head (no tiene nodo anterior) o si es un nodo en el resto de la lista, que se tiene que manejar 
+         * el puntero siguiente del nodo anterior para ajustar la lista correctamente. 
          * Se recibe el nombre de la canción a eliminar, se busca para ver si existe y se elimina, de ser así.
          * 
          * @param nombre Nombre de la canción a eliminar
@@ -89,6 +113,9 @@ class ListaCanciones {
         /**
          * @brief Función miembro para modificar los atributos de un elemento de la lista
          * 
+         * Se busca la canción para determinar si existe. De ser así, se solicitan los datos nuevos de la canción
+         * y se utilizan las funciones setter del objeto Cancion para modificar cada uno de sus atributos.
+         * 
          * @param nombre Nombre de la canción a modificar
          * @return void
          */
@@ -97,7 +124,8 @@ class ListaCanciones {
         /**
          * @brief Función miembro para imprimir todos los elementos de la lista
          * 
-         * Se muestran las canciones de forma secuencial, según el orden en el que fueron agregadas.
+         * Se muestran las canciones de forma secuencial, según el orden en el que fueron agregadas, por medio de
+         * un recorrido de la lista enlazada con un while loop.
          * 
          * @return void
          */
@@ -105,6 +133,9 @@ class ListaCanciones {
 
         /**
          * @brief Función miembro para buscar una canción en la lista, a partir de su nombre
+         * 
+         * Se recorre la lista enlazada para determinar si existe un nodo que contenga el nombre de la canción buscada.
+         * De ser así, se retorna ese nodo.
          * 
          * @param nombre Nombre de la canción a buscar
          * @return Nodo donde se encuentra la canción
