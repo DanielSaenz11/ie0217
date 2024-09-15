@@ -33,6 +33,50 @@ ListaCanciones::~ListaCanciones() {
     }
 }
 
+// Definición de la función miembro insertarCancion()
+void ListaCanciones::insertarCancion(const Cancion &cancion) {
+    // Variable para almacenar la opción escogida por el usuario
+    int opcion;
+
+    // Imprimir el menú para insertar nuevo nodo
+    cout << "Tipos de inserción" << endl;
+    cout << "1. Al inicio" << endl;
+    cout << "2. Al final" << endl;
+    cout << "3. En una posición específica" << endl;
+
+    // Input de la opción
+    cout << "Seleccione una opción: ";
+    cin >> opcion;
+
+    // Validación de la opción ingresada
+    switch (opcion) {
+        case 1:
+            // Llamar función para insertar al inicio
+            insertarInicio(cancion);
+            break;
+        case 2:
+            // Llamar función para insertar al final
+            insertarFinal(cancion);
+            break;
+        case 3: {
+            // Posición donde se desea agregar
+            int posicion;
+
+            // Input de la posición
+            cout << "Ingrese la posición: ";
+            cin >> posicion;
+
+            // Llamar a la función para insertar en una posición específica
+            insertarPosicion(cancion, posicion);
+            break;
+        }
+        default:
+            // Ingreso de opción inválida
+            cout << "Opción no válida." << endl;
+            break;
+    }
+}
+
 // Definición de función miembro insertarInicio()
 void ListaCanciones::insertarInicio(const Cancion &cancion) {
     Nodo *nuevoNodo = new Nodo(cancion); // Asignar memoria del nuevo nodo
@@ -65,7 +109,7 @@ void ListaCanciones::insertarFinal(const Cancion &cancion) {
 // Definición de función miembro insertarPosicion()
 void ListaCanciones::insertarPosicion(const Cancion &cancion, int posicion) {
     // Si la posición es al inicio de la lista
-    if (posicion == 0) {
+    if (posicion == 1) {
         insertarInicio(cancion); // Se inserta al inicio
         return;
     }
@@ -74,7 +118,7 @@ void ListaCanciones::insertarPosicion(const Cancion &cancion, int posicion) {
     Nodo *actual = cabeza; // Nodo para recorrer la lista desde el inicio
 
     // Recorrido de la lista hasta la posicion indicada
-    for (int i = 0; actual != nullptr && i < posicion - 1; i++) {
+    for (int i = 1; actual != nullptr && i < posicion - 1; i++) {
         actual = actual->siguiente;
     }
 
@@ -137,13 +181,13 @@ void ListaCanciones::modificarCancion(const string &nombre) {
         /* Input de nuevos elementos */
 
         cout << "Nuevo nombre: ";
-        cin >> nuevoNombre;
+        getline(cin, nuevoNombre); // Leer línea
 
         cout << "Nuevo artista: ";
-        cin >> nuevoArtista;
-
+        getline(cin, nuevoArtista); // Leer línea
+        
         cout << "Nueva duración: ";
-        cin >> nuevaDuracion;
+        cin >> nuevaDuracion; // Leer línea
 
         // Modificar los valores de las variables miembro de la canción
         nodo->cancion.setNombre(nuevoNombre);
@@ -167,13 +211,14 @@ Nodo* ListaCanciones::buscarCancion(const string &nombre) const {
 // Definición de función miembro imprimirLista()
 void ListaCanciones::imprimirLista() const {
     Nodo *actual = cabeza; // Declaración de nodo para recorrer la lista
-
+    int contador = 1; // Contador para imprimir canciones
     // Recorrido de la lista completa
     while (actual) {
         // Imprimir atributos de las canciones con formato solicitado
-        cout << actual->cancion.getNombre() << " - " << actual->cancion.getArtista()
+        cout << contador << ". " << actual->cancion.getNombre() << " - " << actual->cancion.getArtista()
              << " (" << actual->cancion.getDuracion() << " min)" << endl;
         
+        contador++;
         actual = actual->siguiente; // Cambio a la siguiente canción de la lista
     }
 }
