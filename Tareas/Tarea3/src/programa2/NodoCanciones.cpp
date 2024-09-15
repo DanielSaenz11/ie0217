@@ -15,8 +15,8 @@
 
 #include "NodoCanciones.hpp" // Declaración de struct Nodo
 
-/**
- * Definición del constructor del struct Nodo: 
- * Recibe una canción e inicializa el valor del puntero al siguiente nodo a nullptr
+/*
+ Definición del constructor del struct Nodo: 
+ Recibe una canción e inicializa el valor del puntero al siguiente nodo a nullptr
  */
 Nodo::Nodo(const Cancion &cancion) : cancion(cancion), siguiente(nullptr) {}
