@@ -317,9 +317,7 @@ Un árbol corresponde a una estructura de datos no lineal. Permite la organizaci
 - __Hojas__: Nodos sin hijos (al final del árbol).
 - __Altura__: Camino más largo entre la raíz y una hoja.
 
-Por lo tanto, cada nodo contiene el valor que guarda, un puntero al nodo izquierdo y derecho (si no hay nodo en esa posición, se coloca `nullptr`),
-
-Otra característica de los árboles es que no poseen ciclos y se suele utilizar recursividad para operar sobre ellos. 
+Por lo tanto, cada nodo contiene el valor que guarda, un puntero al nodo izquierdo y derecho (si no hay nodo en esa posición, se coloca `nullptr`). Otra característica de los árboles es que no poseen ciclos y se suele utilizar recursividad para operar sobre ellos. 
 
 Algunas operaciones comunes en árboles corresponden a insertar un nuevo nodo, eliminar, recorrer el árbol (existen diferentes formas pues no es lineal).
 
