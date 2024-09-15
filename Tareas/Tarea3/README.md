@@ -1,10 +1,36 @@
 # Tarea 3
 
-Esta corresponde a la _Tarea 3_ del curso IE-0217, en la cual se trata la implementación de . La asignación está dividida en tres partes:
+Esta corresponde a la _Tarea 3_ del curso IE-0217, en la cual se trata la implementación de un programa sobre árboles binarios de búsqueda y listas enlazadas. La asignación está dividida en cuatro partes principales:
 
+1) Modo de uso
+2) Parte teórica
+3) Árbol Binario de Búsqueda con Verificación y Balance
+4) Gestión de una Lista Enlazada Dinámica de Canciones
 
+<ins>__Documentación del código__</ins>: Para acceder a documentación detallada en Doxygen sobre el código implementado, ingrese a este [link](https://tarea3-ie0217.netlify.app). Acá se encuentra documentado cada archivo, clase y función de ambos programas realizados.
 
 ## Modo de uso
+
+El proceso de compilación se realiza a partir de la herramienta _Makefile_ y se utiliza el compilador `g++`. Por lo tanto, es importante que se tenga instalado en el dispositivo para la ejecución.
+
+La compilación del programa está dada por el siguiente comando:
+```
+make
+```
+
+Asegúrese de estar en el directorio `./ie0217/Tareas/Tarea3/` para ejecutar el comando. Este se encarga de crear un directorio nuevo (si no existe), denominado `./build/`, en donde se va a encontrar el archivo ejecutable. Por lo tanto, los archivo ejecutables se deben encontrar en la dirección `./ie0217/Tareas/Tarea2/build/canciones.exe` y `./ie0217/Tareas/Tarea2/build/ABB.exe`.
+
+Para eliminar el archivo ejecutable, utilice el comando a continuación:
+```
+make clean
+```
+
+Si ya compiló el programa previamente y desea volver a ejecutarlo, sírvase del comando:
+```
+make run
+```
+
+El _Makefile_ fue diseñado de manera que funciona en dispositivos con sistema operativo Windows y Linux. Se agregó dentro del archivo el flag de compilación `-std=c++11` para indicarle a `g++` qué versión utilizar.
 
 ## Parte teórica
 
@@ -153,10 +179,49 @@ Usualmente se utiliza `malloc()` cuando se busca la compatibilidad con C. Sin em
 
 ### 9. Explique el concepto de punteros inteligentes (smart pointers) y proporcione ejemplos de su uso.
 
-Los _smart pointers_ fueron implementados en C++, para facilitar el manejo de memoria dinámica, pues evitan fugas de memoria y __dangling pointers__. Este tipo de punteros maneja automáticamente la liberación de la memoria reservada del heap. Esto se debe a que, los punteros inteligentes, en términos sencillos, son clases que rodean punteros.
+Los _smart pointers_ fueron implementados en C++, para facilitar el manejo de memoria dinámica, pues evitan fugas de memoria y __dangling pointers__. Este tipo de punteros maneja automáticamente la liberación de la memoria reservada del heap. Esto se debe a que, los punteros inteligentes, en términos sencillos, son objetos de clases que rodean punteros, entonces posee un destructor incluido.
 
-# Pendiente
+Existen diferentes tipos de _smart pointers_:
 
+- `std::unique_ptr`: Almacena únicamente un puntero. Entonces, se utiliza cuando se requiere sólo un propietario, como en la gestión de archivos, por ejemplo.
+
+- `std::shared_ptr`: Almacena más de un puntero a la vez, pues mantiene un _Reference counter_. Se libera la memoria cuando el contador llega a 0. Se emplea cuando se requiere que un recurso pueda ser accedido entre varias partes del programa sin preocuparse por la liberación, por ejemplo, cuando varios objetos requieren acceso a los mismos datos.
+
+- `std::weak_ptr`: Es un puntero que no afecta al contador de referencias de un `std::shared_pointer` y se utiliza para evitar ciclos de refencia. Puede ser utilizado en árboles cuando los nodos hijos requieren de una referencia a sus padres pero no se desea que el padre controle la vida de los nodos hijos (ser propietario de la memoria).
+
+Un ejemplo del uso del puntero `std::unique_ptr` se muestra a continuación:
+
+```
+#include <iostream>
+#include <memory>  // Para usar smart pointers
+
+class Persona {
+public:
+    Persona(const std::string& nombre) : nombre_(nombre) {
+        std::cout << "Constructor de " << nombre_ << std::endl;
+    }
+    ~Persona() {
+        std::cout << "Destructor de " << nombre_ << std::endl;
+    }
+    void mostrarNombre() const {
+        std::cout << "Mi nombre es " << nombre_ << std::endl;
+    }
+private:
+    std::string nombre_;
+};
+
+int main() {
+    // Crear un std::unique_ptr que maneje un objeto Persona
+    std::unique_ptr<Persona> personaPtr = std::make_unique<Persona>("Juan");
+
+    // Usar el objeto a través del puntero
+    personaPtr->mostrarNombre();
+
+    // No es necesario liberar la memoria; el unique_ptr lo hará automáticamente
+    return 0;
+} 
+// Al salir de este scope, se llama automáticamente al destructor
+```
 
 ### 10. Mencione qué es un algoritmo y explique qué características básicas debería tener.
 
@@ -189,24 +254,207 @@ Las estructuras de datos lineales y no lineales difieren en la forma en la que o
 - __Estructuras de datos no lineales__: La principal característica de este tipo de estructuras es que los elementos no se organizan de forma secuencial (al contrario que los lineales). Por lo tanto, los elementos que los componen pueden tener varias relaciones con otros elementos; puede ser de tipo jerárquica, por ejemplo. Dos ejemplos de estas estructuras consisten en los árboles y grafos. Note que ambos se pueden recorrer de distintas formas.
 
 
-
 ### 13. Explique cómo funciona la estructura Stack.
 
+La estructura __stack__, también llamada pila, corresponde a una estructura lineal que se rige por el principio LIFO (_last in, first out_). Esto se refiere a que el último elemento agregado al stack, es el primero en salir.
 
+En cuanto a su modo de uso, se tiene que este posee 4 funcionalidades principales: `push` (agregar elemento al final), `pop` (eliminar el último elemento), `top` (se obtiene el valor del último elemento) y `isEmpty` (verificar si está vacío o no). Por lo tanto, usualmente su acceso está limitado al último elemento.
 
+Su funcionamiento también se puede entender por su nombre, pues en una pila sólo se puede acceder al último elemento. Si se quieren acceder a elementos más abajo, se tiene que quitar los superiores primero.
+
+```
+#include <stack>
+
+int main() {
+    // Declaración de stack tipo entero
+    std::stack<int> pila;
+
+    return 0;
+}
+```
 
 ### 14. Explique cómo funciona la estructura Queue.
+
+La estructura __Queue__ (traducido a español como cola) consiste en una estructura de datos lineal que sigue el principio FIFO (__first in, first out__). Presenta una diferencia importante respecto a la pila, pues el primer elemento añadido es el primero que puede salir; es decir, se agregan elementos de un extremo de la cola y de otro se sacan.
+
+En cuanto a las operaciones comunes, se tiene `enqueue` para insertar un elemento al final de la cola y `dequeue` para eliminar el elemento del frente de la cola. También, se permite acceder al elemento frontal con `front` y verificar si la cola está vacía con `isEmpty`.
+
+Su funcionamiento se puede entender intuitivamente al asociarlo con una cola común, pues las primeras en ingresar a la cola, son las primeras en salir de ella.
+
+```
+#include <queue>
+
+int main() {
+    // Declaración de queue tipo entero
+    std::queue<int> cola;
+
+    return 0;
+}
+```
 
 
 ### 15. Explique cómo funciona la estructura Lista Enlazada.
 
+Una lista enlazada es una estructura de datos lineal también, la cual está conformada secuencialmente por nodos, que corresponden a cada uno de los elementos de la lista. Cada nodo contiene el valor de la lista en ese punto y un puntero al siguiente nodo (si lo hay).
+
+Un ejemplo para visualizar una lista enlazada corresponde al siguiente:
+```
+nodo1 -> nodo2 -> nodo3 -> nullptr
+```
+
+Observe que la lista está conformada por 3 nodos, que apuntan al nodo siguiente a ellos únicamente. El último nodo apunta a `nullptr`.
+
+Para crear listas enlazadas, se utiliza memoria dinámica para cada nodo. Además, como cada nodo apunta al siguiente, significa que la memoria no es contigua en la lista enlazada, lo cual permite redimensionar la lista (añadir o eliminar nodos) sin tener que realocar memoria del heap. Como contraparte, el acceso a los elementos es menos eficiente.
+
+Usualmente, se tienen funcionalidades para insertar un nodo en distintas posiciones de la lista, eliminar un nodo, recorrer la lista y buscar un nodo con un valor específico.
 
 ### 16. Explique cómo funciona la estructura Árbol. ¿Qué características presenta esta estructura?
+
+Un árbol corresponde a una estructura de datos no lineal. Permite la organización de datos de forma jerárquica a partir de nodos. Los elementos que conforman un árbol son:
+
+- __Nodos__: Contiene los datos y las conexiones con otros nodos.
+- __Raíz__: Nodo principal, se suele colocar en la parte superior. No posee nodos padre.
+- __Hojas__: Nodos sin hijos (al final del árbol).
+- __Altura__: Camino más largo entre la raíz y una hoja.
+
+Por lo tanto, cada nodo contiene el valor que guarda, un puntero al nodo izquierdo y derecho (si no hay nodo en esa posición, se coloca `nullptr`),
+
+Otra característica de los árboles es que no poseen ciclos y se suele utilizar recursividad para operar sobre ellos. 
+
+Algunas operaciones comunes en árboles corresponden a insertar un nuevo nodo, eliminar, recorrer el árbol (existen diferentes formas pues no es lineal).
 
 
 ### 17. Explique los tipos de recorridos que se le pueden aplicar a un árbol.
 
+Como se mencionó, los árboles son estructuras de datos no lineales, eso implica que no existe una forma secuencial de recorrerlos. De ahí es que se definen ciertas formas comunes de recorrerlos con un propósito en específico. Estos emplean la _recursividad_ para visitar cada uno de los nodos. Los principales tipos se describen a continuación: 
+
+- __Pre-order Traversal__: El recorrido en preorden consiste que se visita primero el nodo raíz, luego el subárbol izquierdo y después el subárbol derecho. 
+
+- __In-order Traversal__: Este corresponde a recorrer el árbol de la siguiente manera: subárbol izquierdo, raíz, subárbol derecho. Se utiliza en los árboles binarios de búsqueda, para imprimir sus elementos en orden.
+
+- __Post-order Traversal__: El recorrido en postorden funciona de tal forma que se recorre recursivamente el subárbol izquierdo, luego el subárbol derecho y finalmente, la raíz. Es común utilizar esta técnica para liberar la memoria del árbol.
+
+- __Level order Traversal__: Consiste en la visita de nodos por nivel, de izquierda a derecha, partiendo de la raíz. Se puede implementar este recorrido de forma iterativa.
+
+Obtenido de [Tree Traversal Techniques - GeeksForGeeks](https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/).
 
 ### 18. ¿Cuál es la diferencia entre un árbol y un árbol binario? Mencione y explique tres tipos de árboles binarios.
 
+La diferencia principal entre un árbol y un árbol binario consiste en que los __árboles__ representan una jerarquía general, de forma que los nodos pueden tener cualquier número de hijos. Mientras que, los __árboles  binarios__ es un tipo especial de árbol en el que cada nodo tiene como máximo dos hijos (izquierdo y derecho).
 
+En cuanto a los tipos de árboles binarios, se tiene el __árbol binario lleno__, el cual consiste en que cada nodo puede tener únicamente 0 o 2 nodos. 
+
+Luego, se encuentra el __árbol binario completo__, en el que todos los niveles del árbol están llenos, menos el último. Además, los nodos del último se llenan de izquierda a derecha. Entonces, todos los elementos hoja deben de estar colocados hacia la izquierda.
+
+Finalmente, el __árbol binario perfecto__ consiste en un árbol organizado de tal forma que cada nodo interno tiene dos nodos secundarios y todos los nodos hojas están organizados al mismo nivel.
+
+
+## Explicación Formato Markdown utilizado
+
+En el enunciado, se menciona que hay que investigar y agregar explicaciones para el formato Markdown. Por lo tanto, en esta sección se va a agregar una guía general para la elaboración de archivos con extensión `.md`.
+
+- __Headers (#)__:
+Para colocar títulos en Markdown se utiliza `#`, dependiendo de cuantos caracteres de este tipo se coloquen, indica el nivel del título. Note que `#` indica el encabezado de mayor tamaño (nivel 1), mientras que `######` indica el encabezado de menor tamaño (nivel 6).
+
+- __Listas sin orden__:
+Para colocar listas sin un orden, se utilizó el caracter `-`. Cada ítem de la lista, se encuentra indicado por este. Se pueden usar también otros caracteres como `*` y `+`, los cuales funcionan de la misma forma.
+
+- __Listas ordenadas__:
+El formato para colocar listas ordenadas corresponde a colocar los números del ítem para el cual se está poniendo. Por ejemplo: `1.`, `2.` y así sucesivamente.
+
+- __Itálica__:
+Para colocar palabras en itálica, se rodea la palabra con `_` o `*` en ambos lados. Por ejemplo: `_italica_` o `*italica*`.
+
+- __Negrita__:
+En cuanto a las negritas, funciona de forma similar que itálica, se colocan `_` o `*` dobles alrededor de la palabra. Por ejemplo: `**negrita**` o `__negrita__`.
+
+- __Código__:
+El código multilínea se escribe al rodear el bloque de código con tres caracteres de \`. Mientras que, el código en una línea simple, se escribe al rodearlo con \` una única vez.
+
+- __Hipervínculos__:
+Para agregar enlaces en Markdown, se utiliza el siguiente formato:
+
+```
+[Palabras con hipervinculo](enlace)
+```
+
+## Árbol Binario de Búsqueda con Verificación y Balance
+
+La primera solución programada consiste en la __aplicación de un Árbol Binario de Búsqueda__ para la verificación y balance de sus propiedades. Se realizó una clase denominada `ABB` y un struct `Nodo`, que son las herramientas con las que se maneja el programa y en donde se distribuyeron las funcionalidades solicitadas. Estas fueron divididas en un total de 5 archivos de código fuente (`.cpp`) y de encabecera (`.hpp`), ubicados en la dirección `./ie0217/Tareas/Tarea3/src/programa1`. 
+
+Como se respondió en las preguntas teóricas, un árbol binario de búsqueda es un tipo de estructura no lineal que permite almacenar números, de tal manera que, en cada nodo, su nodo vecino izquierdo debe ser menor que él; y su nodo vecino derecho debe ser mayor.
+
+Entonces, en este programa, se implementaron funciones para operar sobre árboles binarios de búsqueda, de manera que están organizadas en la clase `ABB`. A continuación, se muestra la estructura que presenta el contenido de los archivos de código:
+
+- `NodoABB.hpp` y `NodoABB.cpp`: Estos archivos abarcan la declaración y definición del `struct Nodo` empleado para representar cada uno de los nodos del ABB.
+
+- `ABB.hpp` y `ABB.cpp`: En los presentes archivos se realizó la implementación de la clase `ABB`, la cual representa, como se mencionó anteriormente, al árbol binario de búsqueda. En estos se indicaron funcionalidades como: insertar y eliminar nodos, recorrer en orden el ABB, calcular la altura del árbol y verificar si este se encuentra balanceado. Cada una de estas fue implementada como una función miembro pública y privada dentro de la clase (para proporcionar encapsulamiento).
+
+- `main.cpp`: Este archivo contiene el menú del programa recurrentemente, así como que se realiza la validación de las entradas del usuario para escoger opciones e ingresar valores para las funciones del programa. Corresponde al punto de entrada de ejecución del programa.
+
+
+## Gestión de una Lista Enlazada Dinámica de Canciones
+
+Con respecto a la segunda solución programada, se tiene que esta corresponde a la implementación de una _Lista Enlazada Dinámica de Canciones___. Para ello, se realizaron 2 clases: `Cancion`, que contiene los atributos de cada canción; y `ListaCanciones`, en el cual se desarrollan las funcionalidades de una lista enlazada simple. Además, se tiene una estructura `Nodo`, que representa cada uno de los nodos de la lista. Fueron divididas en un total de 7 archivos de código fuente (`.cpp`) y de encabecera (`.hpp`). 
+
+La distribución empleada para la estructura del programa se encuentra bajo el directorio `./ie0217/Tareas/Tarea3/src/programa2` y se describe a continuación:
+
+- `Cancion.hpp` y `Cancion.cpp`: Contienen la implementación de la clase `Cancion`, que corresponde al valor de cada uno de los nodos de la lista enlazada. En esta se colocaron los atributos privados propios de cada canción de la lista, así como un constructor y funciones _getters_ y _setters_ de los atributos.
+
+- `ListaCanciones.hpp` y `ListaCanciones.cpp`: En estos archivos se realizó la declaración y definición de la clase `ListaCanciones`, la cual corresponde a la lista enlazada del programa. Se desarrollaron funcionalidades básicas de listas enfocado en canciones: insertar (en diferentes partes) y eliminar canciones, modificar los atributos de una canción a partir de su nombre (si se encuentra), e imprimir los elementos que conforman la lista. La _POO_ facilita la agrupación de métodos en la lista enlazada y permite simplificar su interacción. 
+
+- `NodoCanciones.hpp` y `NodoCanciones.cpp`: Contienen la implementación del `struct Nodo`, que representa cada elemento de la lista enlazada. Está conformado por su contenido (objeto `Cancion`) y un puntero hacia el siguiente elemento de la lista. 
+
+- `main.cpp`: Este archivo contiene el menú del programa recurrentemente, así como que se realiza la validación de las entradas del usuario para escoger opciones e ingresar valores para las funciones del programa. Corresponde al punto de entrada de ejecución del programa.
+
+## Convención de nombre de variables utilizada
+
+A partir de la investigación de una convención de nombramiento de variables, funciones y clases general, se llegó a la conclusión que no existe una respuesta clara, pues dependiendo del proyecto y gustos personales, los desarrolladores se adaptan a la convención preferida. Sin embargo, se determinó que existen tendencias en el nombramiento de las variables, las cuales fueron implementadas en el código.
+
+* __Nombres de clases__: Se utilizó la convención _PascalCase_ para nombrar las clases. Los nombres de las clases corresponden a sustantivos e inician en mayúscula, cada palabra siguiente también se coloca en mayúscula.
+
+* __Nombres de atributos y métodos__: Los atributos y métodos siguen la convención _camelCase_. Se determinó que los métodos se le debe colocar un nombre de forma que, inicie con un verbo para describir la acción que realiza.
+
+* __Nombres de enum__: Los enum fueron nombrados, de manera que, su nombre sigue la convención _PascalCase_. Además, los elementos dentro del enum son nombrados en mayúscula y cada palabra separada por un guion bajo (`_`).
+
+* __Nombres de archivos__: Los archivos son nombrados con la convención _PascalCase_; es decir, comienzan en mayúscula y para distinguir entre palabras también se coloca la letra en mayúscula.
+
+* __Variables locales__: Las variables locales siguen la convención _camelCase_.
+
+* __Punteros__: Los punteros son declarados de manera que, el `*` está contiguo al nombre de la variable, no al tipo de dato.
+
+## Ejemplo de una ejecución de los programas
+
+A continuación se muestran imágenes con un ejemplo de ejecución para cada uno de los programas desarrollados en la tarea.
+
+### Compilación con el comando `make`
+
+Primero, se muestra la compilación de ambos programas en la imagen a continuación con el comando `make`.
+<img src="./images/compilacion.png" width="750"/>
+
+### Ejecución de programa 1
+
+En la primera imagen de ejecución, se muestra el proceso de inserción de nodos al árbol binario de búsqueda a partir del árbol inicial predefinido. Nótese que al imprimir los elementos, se muestran en orden ascendente.
+
+<img src="./images/insertarNodos.png" width="750"/>
+
+En la siguiente imagen, se muestra la eliminación de un nodo existente y uno inexistente en el árbol y el resultado que queda al imprimirlo.
+
+<img src="./images/eliminarNodos.png" width="750"/>
+
+Finalmente, se muestra el resultado de la condición de estar balanceado o no y el incremento de altura al agregar un nodo nuevo.
+
+<img src="./images/balanceo_altura.png" width="750"/>
+
+### Ejecución de programa 2
+
+En la primera imagen, se agrega una canción al final de la lista enlazada y se imprime la lista enlazada para ver del resultado. Luego, se inserta otra canción en la segunda posición y se vuelve a imprimir para ver el impacto de la operación en la visualización de la lista. 
+
+<img src="./images/agregarCanciones.png" width="750"/>
+
+Posteriormente, se elimina la canción `C1` y se modifica la canción `C2`. Finalmente, se imprime la lista enlazada para ver cómo se reflejan los cambios en la lista enlazada. 
+
+<img src="./images/eliminarCanciones.png" width="750"/>
+
+
+Se concluyó que para ambos programas, las operaciones se ejecutan de la forma esperada y adecuada.
