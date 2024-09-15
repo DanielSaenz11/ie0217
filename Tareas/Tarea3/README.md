@@ -70,8 +70,8 @@ int main() {
 }
 ```
 
-Considerando que existen cuatro variables en el código (`globalVar`, `staticVar`, `localVar` y `dynamicVar`), mencione en qué sección de la memoria se almacena cada variable y explique el porqué.
----
+### Considerando que existen cuatro variables en el código (`globalVar`, `staticVar`, `localVar` y `dynamicVar`), mencione en qué sección de la memoria se almacena cada variable y explique el porqué.
+
 
 En primer lugar, se tiene la variable en el código `globalVar`, como se observa esta corresponde a una variable global inicializada con el valor de 42. Por lo tanto, pertenece a la sección de memoria __Initialized Data Segment__, pues como se describió en la pregunta anterior, acá se almacenan variables globales y estáticas inicializadas.
 
