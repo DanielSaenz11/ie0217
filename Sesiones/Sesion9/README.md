@@ -1,6 +1,6 @@
 # Sesión 9: Expresiones regulares y Makefiles
 
-Esta sesión corresponde a la realizada para el 20 de setiembre del 2024, correspondiente a la implementación de expresiones regulares (_regex_) y el uso de la herramiento de compilación __Makefile__.
+Esta sesión corresponde a la realizada para el 20 de setiembre del 2024, la cual incluye la implementación de expresiones regulares (_regex_) y el uso de la herramiento de compilación __Makefile__.
 
 En el directorio actual, se encuentran los siguientes subtemas desarrollados:
 
