@@ -1,6 +1,6 @@
 # Sesión 8: Templates y Excepciones
 
-Esta sesión corresponde a la realizada para el 20 de setiembre del 2024, correspondiente al uso e implementación de __templates__ y excepciones en C++.
+Esta sesión corresponde a la realizada para el 20 de setiembre del 2024, que abarca el uso e implementación de __templates__ y excepciones en C++.
 
 En el directorio actual, se encuentran los siguientes subtemas desarrollados:
 
