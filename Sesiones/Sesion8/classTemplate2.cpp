@@ -19,8 +19,14 @@ returnType ClassName<T>::functionName() {
 
 template <class T> // Template de clase
 class Number {
-    // Prototipo de función
-    T getnum();
+    private:
+        T num;
+    public:
+        // Constructor
+        Number(T n) : num(n) {}
+
+        // Prototipo de función
+        T getnum();
 };
 
 // Definición de función
