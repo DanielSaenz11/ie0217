@@ -1,6 +1,8 @@
 /*
 Ejemplo realizado en el video de Function Templates
- */
+
+Con mensaje al imprimir cada resultado
+*/
 
 #include <iostream>
 using namespace std;
