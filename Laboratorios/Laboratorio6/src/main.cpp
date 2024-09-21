@@ -6,7 +6,8 @@ Programa que contiene a la función main() y corresponde al punto de entrada de 
 1) Se revisa la entrada de argumentos por la línea de comandos
 2) Lee el archivo línea por línea
 3) Procesa el texto de las líneas
-4) 
+4) Busca líneas con números
+5) Cambia líneas con números por etiquetas
 
 */
 #include <iostream>
