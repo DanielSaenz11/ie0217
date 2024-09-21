@@ -1,10 +1,21 @@
 # Variables
-CXX = g++ # Compilador
-CXXFLAGS = -std=c++17 -Wall -Wextra -O2 # Flags: versión, warnings
-SRCDIR = src # Directorio de código fuente (Source)
-OBJDIR = obj # Directorio con los archivos objeto resultado de la compilación
-BINDIR = bin # Directorio con los archivos binarios ejecutables
-TARGET = $(BINDIR)/text_processor.exe # Target file
+# Compilador
+CXX = g++
+
+# Flags: versión, warnings
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2
+
+# Directorio de código fuente (Source)
+SRCDIR = src
+
+# Directorio con los archivos objeto resultado de la compilación
+OBJDIR = obj
+
+# Directorio con los archivos binarios ejecutables
+BINDIR = bin
+
+# Target file
+TARGET = $(BINDIR)/text_processor.exe 
 
 # Archivos fuente y objetos
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
