@@ -4,8 +4,6 @@ Esta sesión corresponde a la realizada para el 27 de setiembre del 2024, la cua
 
 La dinámica de trabajo en __Visual Studio 2022__ se realiza a partir de soluciones (`.sln`). Estos corresponden a contenedores de proyectos que comparten información de compilación, configuración de ventanas, entre otros. Se trabajó de tal forma que cada proyecto posee su solución para dividir claramente los archivos entregados para la presente sesión.
 
-Por lo tanto, en el directorio actual, se encuentran los siguientes subdirectorios desarrollados
-
 ## Modo de uso
 
 Para ejecutar los programas creados en esta sesión, se debe de tener la herramienta __Visual Studio 2022__ instalada, la cual se encuentra disponible únicamente para Windows (_supported_).
