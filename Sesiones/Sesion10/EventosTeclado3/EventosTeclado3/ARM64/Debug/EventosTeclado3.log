@@ -1,0 +1,6 @@
+﻿  MainFrame.cpp
+  MyApp.cpp
+  MyApp.hpp
+  Generando código...
+EventosTeclado3\ARM64\Debug\MyApp.obj : warning LNK4042: objeto especificado más de una vez; omitidos los sobrantes
+  EventosTeclado3.vcxproj -> C:\Users\danielsaenzobando\repos\ie0217\Sesiones\Sesion10\EventosTeclado3\ARM64\Debug\EventosTeclado3.exe
