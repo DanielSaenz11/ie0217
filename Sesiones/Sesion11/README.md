@@ -72,7 +72,7 @@ que identifican de manera única cada tupla en una tabla.
 
 Este comando es utilizado para seleccionar columnas a partir de una tabla; es decir, permite filtrar información de la tabla original. La sintaxis más básica es la siguiente:
 
-```
+```sql
 SELECT first_name, last_name
 FROM Customers;
 ```
@@ -83,7 +83,7 @@ Se seleccionan las columnas `first_name`, `last_name` de la tabla `Customers`. A
 
 Si se desea __filtrar datos__ a partir de la información de una cierta columna, se utiliza el comando `WHERE` seguido de la condición de filtrado. Por ejemplo:
 
-```
+```sql
 SELECT *
 FROM Customers
 WHERE last_name = 'Doe';
@@ -107,7 +107,7 @@ Si se desea contar la cantidad de valores únicos, se utiliza `COUNT(DISTINCT <n
 
 Esta indicación permite seleccionar columnas y trabajar __como__ una forma determinada. Se tiene el siguiente ejemplo que concatena el primer nombre y el apellido y se trabaja con esa columna como el nombre completo:
 
-```
+```sql
 SELECT CONCAT(first_name, ' ', last_name) AS full_name
 FROM Customers;
 ```
@@ -116,7 +116,7 @@ FROM Customers;
 
 En motores como MySQL, PostgreSQL, SQLite, se utiliza el comando `LIMIT` para seleccionar una determinada cantidad de filas a partir de una búsquda con `SELECT`. Se puede también realizar `OFFSET n` de _n_ cantidad de filas para buscar a partir de la (n+1)-ésima fila.
 
-```
+```sql
 SELECT first_name, last_name
 FROM Customers
 LIMIT 2 OFFSET 3;
@@ -124,7 +124,7 @@ LIMIT 2 OFFSET 3;
 
 En los motores SQL Server, MS Access, se utiliza el comando `TOP` para realizar una función similar. En el ejemplo siguiente, se seleccionan las primeras dos filas completas (indicado por `*`).
 
-```
+```sql
 SELECT TOP 2 *
 FROM Customers;
 ```
@@ -133,7 +133,7 @@ FROM Customers;
 
 Se utiliza para realizar una búsqueda donde se desea que un elemento se encuentre __en__ otro. Por ejemplo, en el siguiente ejemplo, se busca que el país se encuentre en `'USA'` o `'UK'`.
 
-```
+```sql
 SELECT first_name, last_name
 FROM Customers
 WHERE country in ('USA', 'UK');
@@ -159,7 +159,7 @@ En el caso de que se quiera buscar cuáles filas contienen el valor mínimo (pue
 
 `SUM()` se encarga de calcular la suma de los valores de la columna indicada como parámetro. Mientras que, `AVG()` calcula el promedio de los datos. Un ejemplo del uso de `SUM` se muestra a continuación:
 
-```
+```sql
 SELECT SUM(amount) as total_sales
 FROM Orders;
 ```
@@ -170,7 +170,7 @@ Se indica explícitamente que se tome como `total_sales`.
 
 La directiva `GROUP BY` sirve para agrupar los elementos de la tabla a partir de la columna indicada. En el siguiente ejemplo, se agrupan las órdenes de compra por el ID del cliente:
 
-```
+```sql
 SELECT customer_id, AVG(amount) AS average_spends
 FROM Orders
 GROUP BY customer_id;
@@ -178,7 +178,7 @@ GROUP BY customer_id;
 
 La directiva `ORDER BY` se encarga de ordenar los elementos de la(s) columna(s) a partir de cierta columna indicada. Se puede ordenar tanto numéricamente como alfabéticamente. La forma de indicar el tipo de ordenamiento (ascendente o descendente) se coloca después del nombre de la columna que define el criterio. 
 
-```
+```sql
 SELECT *
 FROM Customers
 ORDER BY age DESC;
@@ -196,7 +196,7 @@ Esta directiva es utilizada como condición de filtrado con `WHERE`. Sirve para 
 
 Es utilizada cuando se requiere hacer análisis o consultas para dos tablas, por ejemplo. Entonces, consiste en que se __unen__ dos columnas de dos tablas de interés. Sin embargo, observe que los elementos repetidos se incluyen una vez únicamente. Si se quieren incluir los repetidos, se utiliza el comando `UNION ALL`.
 
-```
+```sql
 SELECT age
 FROM Teachers
 UNION
@@ -212,7 +212,7 @@ Es similar a un entorno de tabla virtual creado a partir de una o más tablas pa
 
 Se utiliza la siguiente sintaxis:
 
-```
+```sql
 CREATE VIEW us_customers AS
 SELECT customer_id, first_name
 FROM Customers
@@ -227,7 +227,7 @@ Permite crear una columna extra a la salida de `SELECT` que aplica las condicion
 
 Un ejemplo de su uso se muestra a continuación, donde utiliza `CASE` para definir una serie de casos que se colocan en la columna `country_name`.
 
-```
+```sql
 SELECT customer_id, first_name
 CASE
     WHEN country = 'USA' THEN 'United States of America'
