@@ -257,3 +257,109 @@ HAVING COUNT(customer_id) > 1;
 ```
 
 #### Operador `EXISTS`
+
+Este operador funciona de tal forma que verifica primero el _query_ interno y dependiendo de la salida, se ejecuta o no el externo (si es `NULL`).
+
+En el ejemplo a continuación, se utiliza la presente directiva para determinar las coincidencias entre los clientes con órdenes y clientes en la base de datos. Finalmente, los que __existen__ se coloca su `customer_id` y `first_name` como salida.
+
+```sql
+SELECT customer_id, first_name
+FROM Customers
+WHERE EXISTS (
+    SELECT order_id
+    FROM Orders
+    WHERE Orders.customer_id = Customer.customer_id
+);
+```
+
+### Comando `JOIN`
+
+Este comando es utilizado para combinar filas de dos tablas en función de una columna en común. Selecciona los registros que poseen valores coincidentes en estas columnas.
+
+```sql
+SELECT Customers.customer_id, Customers.first_name, Orders.amount
+FROM Customers
+JOIN Orders
+ON Customers.customer_id = Orders.customer
+```
+
+En el ejemplo anterior, se unen las tablas `Customers` y `Orders`, a partir del criterio de su `customer_id`. Entonces, los clientes que están presentes en ambas tablas se colocan en la salida.
+
+#### Comando `INNER JOIN`
+
+Este comando se encarga de unir dos tablas de una columna común y selecciona filas que tienen valores coincidentes en estas columnas.
+
+```sql
+SELECT Customers.customer_id, Customers.first_name, Orders.amount
+FROM Customers
+INNER JOIN Orders
+ON Customers.customer_id = Orders.customer
+```
+
+Es equivalente a `SQL JOIN`.
+
+#### Comando `LEFT JOIN`
+
+Se encarga de combinar dos tablas basadas en una columna común. Selecciona los registros que tienen valores coincidentes en estas columnas y filas restas de la tabla de la izquierda.
+
+Los elementos presentes en ambas tablas (a partir del criterio de comparación) se les coloca el valor de la tabla comparada. Los que no se encuentran en al tabla comparada, quedan vacíos en la nueva columna agregada.
+
+Se toma la tabla izquierda como las de la tabla base.
+
+#### Comando `RIGHT JOIN`
+
+Funciona de forma similar al comando anterior. con la diferencia que selecciona registros que tienen valores coincidentes en las columnas y las filas restantes de la columna derecha (lo que sobró).
+
+Entonces, las columnas que hicieron _match_ se muestran con toda la información. Las que no hicieron, se muestran las restantes filas de la tabla comparada (distinta de la base).
+
+#### Comando `FULL OUTER JOIN`
+
+Este comando es similar a combinar el comando `LEFT JOIN` con `RIGHT JOIN`, pues se seleccionan registros que tienen valores coincidentes y las filas restantes de ambas tablas.
+
+#### Comando `CROSS JOIN`
+
+Permite combinar filas de dos o más tablas sin ninguna relación específica entre ellas. Básicamente, se encarga de relacionar todos los elementos de una tabla con todos los elementos de la otra.
+
+#### Comando `Self JOIN`
+
+Permite unir una tabla __consigo misma__, creando una relación entre filas dentro de una misma tabla. 
+
+```sql
+SELECT
+    c1.first_name,
+    c1.country,
+    c2.first_name AS friend_name
+FROM Customers c1
+JOIN Customers c2 ON c1.country = c2.country
+WHERE c1.customer_id <> c2.customer_id;
+```
+
+En el ejemplo anterior, se selecciona los clientes con el mismo país y diferente `customer_id`.
+
+### Database y Tables
+
+#### Comando `CREATE DATABASE`
+
+Es utilizado para crear bases de datos, como su nombre lo indica. Después de este, se indica su nombre. Se puede aplicar `CREATE DATABASE IF NOT EXISTS` para crearla en caso de que no exista una con el mismo nombre, como forma de prevención.
+
+Para comenzar a usarla, se utiliza `USE <nombreDB>;`.
+
+#### Comando `CREATE TABLE`
+
+Se emplea para crear una tabla de una base de datos, la cual es utilizada para almacenar registros.
+
+La sintaxis para el comando se muestra a continuación:
+
+```sql
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+    ...
+);
+```
+
+Al igual que el comando de crear una base de datos, se puede utilizar `CREATE TABLE IF NOT EXISTS` como forma de prevención, en caso de que ya existiera una tabla con ese nombre.
+
+#### Comando `DROP`
+
