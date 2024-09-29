@@ -136,7 +136,7 @@ Se utiliza para realizar una búsqueda donde se desea que un elemento se encuent
 ```sql
 SELECT first_name, last_name
 FROM Customers
-WHERE country in ('USA', 'UK');
+WHERE country IN ('USA', 'UK');
 ```
 
 También, se puede unir la funcionalidad de `IN` con `NOT` para buscar elementos que NO se encuentren en el otro elemento.
@@ -148,6 +148,12 @@ Se utiliza junto a `WHERE` para buscar elementos __dentro de un rango__. Este ra
 #### Valor `NULL`
 
 Permite asignar campos que no contienen un valor definido. Se puede filtrar con `WHERE` para buscar elementos nulos o no nulos.
+
+```sql
+SELECT *
+FROM Employee
+WHERE email is NULL;
+```
 
 #### Directiva `MAX()` y `MIN()`
 
