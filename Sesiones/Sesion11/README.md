@@ -26,7 +26,9 @@ De forma generl, consiste de una tabla compuesta por filas (registros) y columna
 
 - __Vista/_View_:__ Tabla virtual que resulta de una consulta sobre las tablas.
 
-<img src="./images/tabla.png" width="500"/>
+<p align="center">
+  <img width="500" src="./images/tabla.png">
+</p>
 
 ### __Bases de datos no relacionales__
 
@@ -411,14 +413,179 @@ La sintaxis utilizada para este caso se muestra a continuación:
 
 ```sql
 BACKUP LOG database_name
-TO <medium> = 'path/filename'
+TO <medium> = 'path/filename';
 ```
 
 Para restaurar la base de datos a cierto _backup_ previo, se utiliza:
 
 ```sql
 RESTORE DATABASE database_name
-FROM <medium> = 'path/filename'
+FROM <medium> = 'path/filename';
 ```
 
+### Comandos `INSERT`, `UPDATE` y `DELETE`
 
+#### Comando `INSERT INTO`
+
+Este comando es utilizado para insertar nuevas filas en una tabla de base de datos. Se utiliza la siguiente sintaxis:
+
+```sql
+INSERT INTO Customers(customer_id, first_name, last_name, age, country)
+VALUES (5, 'Harry', 'Potter', 31, 'USA');
+```
+
+Como se observa, se coloca la tabla a la que se desea agregar y las columnas para las que se va a agregar el valor. Luego, en `VALUES` se indican los valores específicos a almacenar. Si no se indica un valor, se coloca de forma predeterminada como `NULL` (a menos que de que indique lo contrario).
+
+#### Comando `UPDATE`
+
+Este comando se encarga de modificar registros existentes en una tabla de bases de datos. Se utiliza la sintaxis a continuación:
+
+```sql
+UPDATE Customers
+SET first_name = 'Johnny', last_name = 'Depp'
+WHERE customer_id = 1;
+```
+
+Entonces, en el ejemplo anterior, se actualiza la tabla `Customers`, para el cliente con `customer_id = 1`, pues se cambia su nombre y apellido.
+
+Dependiendo de la condición de búsqueda `WHERE`, se puede modificar el valor de varios registros con un comando. Si no se indica esta condición, se cambia los valores de todas las filas de la tabla.
+
+#### Comando `SELECT INTO`
+
+El presente comando se utiliza para copiar los datos de una tabla a otra. Se utiliza la sintaxis:
+
+```sql
+SELECT column1, column2, column3, ...
+INTO destination_table
+FROM source_table
+```
+
+Se pueden copiar columnas específicas ingresadas como `column1`, `column2`, entre otros. Asimismo, se puede copiar filas a partir de una condición de filtrado con `WHERE`.
+
+Este comando también es posible mezclarlo con `JOIN` para copiar el contenido de dos tablas en una tabla nueva.
+
+#### Comando `INSERT INTO SELECT`
+
+Esta directiva es utilizada para copiar registros de una tabla a otra __existente__. Emplea la siguiente sintaxis:
+
+```sql
+INSERT INTO destination_table (column1, column2, column3, ...)
+SELECT column1, column2, column3, ...
+FROM source_table;
+```
+
+Como aclaración, en la parte de `SELECT`, se colocan las columnas de la tabla fuente.
+
+Hay distintas formas de implementar este comando, pues depende de las necesidades específicas del momento. Se pueden copiar columnas específicas de la tabla, filas que cumplan una condición de filtrado con `WHERE`, copiar los contenidos al unir otras dos tablas, entre otros.
+
+#### Comando `DELETE``
+
+Se utiliza para eliminar filas de una tabla de una base de datos. Sigue la sintaxis que se muestra a continuación:
+
+```sql
+DELETE FROM table_name
+WHERE <condition>;
+```
+
+Si no se indica condición `WHERE`, se elimina toda la tabla. Otra forma de hacer esto es con `TRUNCATE TABLE`.
+
+### Constraints (Restricciones)
+
+En una tabla, se pueden agregar reglas a una columna, para controlar los datos que se pueden almacenar en esta.
+
+Se utiliza la siguiente sintaxis:
+
+```sql
+CREATE TABLE table_name (
+    column1 data_type,
+    ... ,
+    CONSTRAINT <constraint_name> <CONSTRAINT_TYPE> (<column_name>)
+);
+```
+
+Algunas restricciones corresponden a:
+
+- __`NOT NULL`__: Limita los valores para que sean distintos de `NULL`.
+
+- __`UNIQUE`__: Indica que los valores no pueden ser iguales a otros almacenados previamente.
+
+- __`PRIMARY KEY`__: Sirve para identificar de forma única una fila o registro de una tabla. Un _primary key_ envuelve los conceptos de que sean únicos y no nulos.
+
+```sql
+CREATE TABLE Colleges (
+    college_id INT,
+    college_code VARCHAR(20) NOT NULL,
+    college_name VARCHAR(50),
+    CONSTRAINT CollegePK PRIMARY KEY (college_id)
+);
+```
+> Indica que el código del _college_ no puede ser nulo y añade una restricción al _college\_id_ que tiene que ser único.
+
+- __`FOREIGN KEY`__: Para añadir una restricción de llave foránea, se agrega la directiva `FOREIGN KEY (column_name)` al crear la tabla, junto con la referencia a la tabla de la que se desea obtener la llave con `REFERENCES referenced_table_name (referenced_column_name)`. Un ejemplo de su uso corresponde al caso de la tabla de clientes y órdenes, pues se realiza la referencia en la tabla de órdenes a los clientes almacenados, por medio de una llave foránea.
+
+- __`CHECK`__: Esta restricción es utilizada para verificar que se cumpla una condición determinada. Por ejemplo, si se requiere que un elemento únicamente contenga elementos positivos, se utiliza: `number INT CHECK (number > 0)`. Por lo tanto, resulta en un error si se ingresa un valor que no cumple con la condición.
+
+- __`DEFAULT`__: Agrega un valor por defecto si no se especifica el valor de esa columna al insertar un registro a la tabla. Sigue la sintaxis: `column_name data_type DEFAULT default_value` dentro de la creación de la tabla.
+
+- __`CREATE INDEX`__: Acelera el proceso de obtención de datos al consultar la columna en cuestión. La creación del `INDEX` se coloca después de la creación de la tabla. Sigue la sintaxis:
+
+```sql
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+```
+
+### Contenido extra de SQL
+
+#### Comentarios
+
+Para hacer __comentarios multilínea__ se rodea este con `/* */`, de forma similar a C/C++.
+
+En cuanto a los __comentarios de una línea__, se emplea `--` al inicio del comentario. 
+
+#### Tipos de datos
+
+En SQL, se pueden almacenar varios tipos de datos. A continuación se muestra un resumen de estos:
+
+- __BIT(x)__: 1 - 64
+- __TINYINT__: -128 - 127
+- __SMALLINT__: -32768 - 32767
+- __MEDIUMINT__: -8388608 - 8388607
+- __INT__: -2147483648 - 2147483647
+- __BIGINT__: -9223372036854775808 - 9223372036854775807
+- __DECIMAL(x,y)__: Número decimal con un total máximo de 65 dígitos (x), de los cuales como máximo 30 pueden estar después del punto decimal (y).
+- __CHAR(x)__: Caracteres de un largo fijo (máximo 8000).
+- __VARCHAR(x)__: Caracteres hasta un largo (máximo 8000).
+- __BINARY(x)__: Strings binarios de un tamaño fijo.
+- __VARBINARY(x)__: Strings binarios hasta un tamaño establecido.
+- __TINYTEXT__: Hasta 255 caracteres.
+- __TEXT(x)__: Caracteres hasta un límite (máximo 65535 bytes).
+- __MEDIUMTEXT__: Hasta 16777215 caracteres.
+- __LONGTEXT__: Hasta 4294967295 caracteres.
+- __BLOB(x)__: _Binary large object_ hasta 65535 bytes.
+- __MEDIUMBLOB__: _Binary large object_ hasta 16777215 bytes.
+- __LONGBLOB__: _Binary large object_ hasta 4294967295 bytes.
+- __DATE__: Fecha en formato `YYYY-MM-DD`.
+- __DATETIME__: Fecha y hora en formato `YYYY-MM-DD hh:mm:ss`.
+- __TIME__: Hora en formato `hh:mm:ss`.
+- __YEAR__: Año en formato de 4 dígitos. Rango va de 1901-2155 pues únicamente utiliza 1 byte para almacenarlos.
+- __TIMESTAMP__: Franja temporal actual respecto al UTC.
+
+#### Operadores
+
+Entre los operadores utilizados en SQL, se encuentran los siguientes:
+
+- __`+`__: Suma
+- __`-`__: Resta
+- __`*`__: Multiplicación
+- __`/`__: División
+- __`%`__: Residuo
+- __`=`__: Igual a
+- __`<`__: Menor que
+- __`>`__: Mayor que
+- __`<=`__: Menor o igual que
+- __`>=`__: Mayor o igual que
+- __`<>` o `!=`__: Distinto de
+
+#### SQL Injection
+
+Corresponde a un tipo de piratería donde si la búsqueda en la base de datos no está implementada correctamente, es posible ejecutar comandos SQL a partir de está y eliminar la base de datos, dar acceso a personas no deseadas, modificar credenciales, entre otros.
