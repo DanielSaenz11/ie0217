@@ -363,3 +363,62 @@ Al igual que el comando de crear una base de datos, se puede utilizar `CREATE TA
 
 #### Comando `DROP`
 
+Se utiliza para eliminar bases de datos o tablas. En el caso de las bases de datos, la sintaxis es la siguiente:
+
+```sql
+DROP DATABASE database_name;
+```
+
+Para las tablas, se utiliza la siguiente sintaxis:
+
+```sql
+DROP TABLE table_name;
+```
+
+También, se puede aplicar el comando `DROP TABLE IF EXISTS` para eliminar únicamente si ya existe una tabla con el nombre ingresado.
+
+#### Comando `ALTER TABLE`
+
+Es utilizada para modificar la estructura de una tabla existente. Entre las acciones se encuentra: agregar y eliminar columnas, cambiar el nombre de la tabla o columnas, modificar una columna, entre otros.
+
+Se utiliza la sintaxis a continuación:
+
+```sql
+ALTER TABLE table_name
+ADD <column_name> datatype
+RENAME COLUMN <column_name> TO <new_column_name>
+DROP COLUMN <column_name>
+RENAME TO <new_table_name>
+... ;
+```
+
+#### Comando `BACKUP DATABASE`
+
+Este comando es utilizado para crear copias de seguridad (respaldos) de las bases de datos.
+
+La sintaxis empleada es la siguiente:
+
+```sql
+BACKUP DATABASE database_name
+TO <medium> = 'path\file_name';
+```
+
+Si se quiere guardar los últimos cambios realizados a la base de datos, se le agrega al final del bloque anterior `WITH DIFFERENTIAL`.
+
+Ahora bien, una copia de seguridad del registro de transacciones captura todos los cambios realizados en la base de datos desde la última copia de seguridad del registro de transacciones o la creación de la base de datos. Permite crear una copia de seguridad de un momento determinado de su base de datos.
+
+La sintaxis utilizada para este caso se muestra a continuación:
+
+```sql
+BACKUP LOG database_name
+TO <medium> = 'path/filename'
+```
+
+Para restaurar la base de datos a cierto _backup_ previo, se utiliza:
+
+```sql
+RESTORE DATABASE database_name
+FROM <medium> = 'path/filename'
+```
+
+
