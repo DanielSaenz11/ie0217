@@ -478,7 +478,7 @@ Como aclaración, en la parte de `SELECT`, se colocan las columnas de la tabla f
 
 Hay distintas formas de implementar este comando, pues depende de las necesidades específicas del momento. Se pueden copiar columnas específicas de la tabla, filas que cumplan una condición de filtrado con `WHERE`, copiar los contenidos al unir otras dos tablas, entre otros.
 
-#### Comando `DELETE``
+#### Comando `DELETE`
 
 Se utiliza para eliminar filas de una tabla de una base de datos. Sigue la sintaxis que se muestra a continuación:
 
