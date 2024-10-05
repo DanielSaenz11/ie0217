@@ -46,4 +46,38 @@ void bubbleSort(vector<T>& arr) {
 }
 
 
+/**
+ * @brief Implementación del algoritmo Selection Sort.
+ *
+ * Ordena un vector seleccionando repetidamente el elemento mínimo y colocándolo al principio.
+ *
+ * @tparam T Tipo de datos almacenados en el vector.
+ * @param arr Referencia al vector que se va a ordenar.
+ * @return void
+ */
+template <typename T>
+void selectionSort(vector<T>& arr) {
+
+    // Recorrido del arreglo
+    for (size_t i = 0; i < arr.size() - 1; i++) {
+        
+        // Índice mínimo
+        size_t minIndex = i;
+
+        // Recorrido para comparar si hay un elemento menor que el elemento en el índice mínimo
+        // Se coloca el menor elemento en la posición correcta
+        for (size_t j = i + 1; j < arr.size(); j++) {
+            
+            // Si hay un elemento en el arreglo menor que el elemento mínimo guardado en el índice mínimo
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j; // Cambio de índice mínimo
+            }
+        }
+
+        // Swap de variables para acomodar el elemento mínimo en la posición adecuada
+        swap(arr[i], arr[minIndex]);
+    }
+}
+
+
 #endif // SORTING_HPP
