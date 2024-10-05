@@ -79,5 +79,99 @@ void selectionSort(vector<T>& arr) {
     }
 }
 
+/**
+ * @brief Implementación del algoritmo Insertion Sort.
+ *
+ * Ordena un vector construyendo gradualmente una porción ordenada y insertando elementos en su posición correcta.
+ *
+ * @tparam T Tipo de datos almacenados en el vector.
+ * @param arr Referencia al vector que se va a ordenar.
+ * @return void
+ */
+template <typename T>
+void insertionSort(vector<T>& arr) {
+
+    // Recorrido del arreglo desde el índice 1 hasta el final
+    for (size_t i = 1; i < arr.size(); i++) {
+        // Valor de va a ser insertado en su posición correcta dentro del arreglo ordenado
+        T key = arr[i];
+
+        // Índice para insertar a key en el arreglo ordenado (izquierda)
+        int j = i - 1;
+
+        // Insertar key en su valor correspondiente en el arreglo ordenado
+        while (j >= 0 && arr[j] > key) {
+
+            // Si key es menor que array[j], se mueve array[j] a la siguiente posición
+            arr[j + 1] = arr[j];
+            j--; // Disminuir j
+        }
+
+        // Cuando se sale del loop, se encontró la posición correcta
+        arr[j + 1] = key; 
+    }
+}
+
+/**
+ * @brief Función auxiliar para Quick Sort que divide el vector.
+ *
+ * Reorganiza el vector de forma que los elementos menores o iguales al pivote estén a la izquierda y los
+ * mayores a la derecha.
+ *
+ * @tparam T Tipo de datos almacenados en el vector.
+ * @param arr Referencia al vector a particionar.
+ * @param low Índice inicial del segmento a particionar.
+ * @param high Índice final del segmento a particionar.
+ * @return Índice del pivote después de la partición.
+ */
+template <typename T>
+int partition(std::vector<T>& arr, int low, int high) {
+    T pivot = arr[high]; // Pivote
+    int i = low -1; // Índice del elemento más pequeño
+    for (int j = low; j <= high -1; ++j){
+        if (arr[j] <= pivot){
+            ++i;
+            std::swap(arr[i], arr[j]); // Cambio de variables
+        }
+    }
+    std::swap(arr[i+1], arr[high]);
+    return (i+1);
+}
+
+/**
+ * @brief Implementación recursiva del algoritmo Quick Sort.
+ *
+ * Ordena un segmento del vector utilizando Quick Sort de forma recursiva.
+ *
+ * @tparam T Tipo de datos almacenados en el vector.
+ * @param arr Referencia al vector que se va a ordenar.
+ * @param low Índice inicial del segmento a ordenar.
+ * @param high Índice final del segmento a ordenar.
+ * @return void
+ */
+template <typename T>
+void quickSort(std::vector<T>& arr, int low, int high) {
+    if (low < high){
+        // Realiza la partición y llama recursivamente para las dos mitades nuevas
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi -1);
+        quickSort(arr, pi +1, high);
+    }
+}
+
+/**
+ * @brief Implementación del algoritmo Quick Sort.
+ *
+ * Ordena un vector completo utilizando Quick Sort.
+ *
+ * @tparam T Tipo de datos almacenados en el vector.
+ * @param arr Referencia al vector que se va a ordenar.
+ * @return void
+ */
+template <typename T>
+void quickSortWrapper(std::vector<T>& arr) {
+    quickSort(arr, 0, arr.size() -1); // Llamada de quicksort con argumentos iniciales
+}
+
 
 #endif // SORTING_HPP
