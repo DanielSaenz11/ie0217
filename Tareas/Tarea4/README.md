@@ -7,9 +7,7 @@ Esta corresponde a la _Tarea 4_ del curso IE-0217, en la cual se trata la implem
 3) Benchmarking de algoritmos de ordenamiento
 4) Simulador de gestión de proyectos de construcción
 
-
-# Pendiente agregar link de documentación
-<ins>__Documentación del código__</ins>: Para acceder a documentación detallada en Doxygen sobre el código implementado, ingrese a este [link](). Acá se encuentra documentado cada archivo, clase y función de ambos programas realizados.
+<ins>__Documentación del código__</ins>: Para acceder a documentación detallada en Doxygen sobre el código implementado, ingrese a este [link](https://tarea4-ie0217.netlify.app). Acá se encuentra documentado cada archivo, clase y función de ambos programas realizados.
 
 ## Modo de uso
 
@@ -29,23 +27,39 @@ Como se mencionó, con este comando se calcula el tiempo promedio para los tama�
 
 La primera modificación corresponde a indicar un tamaño personalizado para el vector a ordenar. Esto se realiza a partir del siguiente comando:
 
-```
-make -f Makefile1 SIZE=<n>
+```shell
+make -f Makefile1 SIZE=n
 ```
 
 Donde `n` corresponde al tamaño nuevo. Cada algoritmo en este caso se ejecuta únicamente para el tamaño ingresado.
 
 Ahora bien, si se desea cambiar cuáles algoritmos se ejecutan en la ejecución, se utiliza el siguiente comando:
 
-```
+```shell
 make -f Makefile1 ALGORITHMS="bubble-selection-insertion-quick-stl"
 ```
 
 Elimine en el comando anterior los nombres de los algoritmos que no quiere ejecutar.
 
-Ambos comandos de compilación anteriores se pueden unir para personalizar áun más el resultado deseado.
+La tercera opción corresponde a modificar el número de repeticiones (_RUNS_) del algoritmo, está colocado de forma predeterminada como 10, pero se puede cambiar de la siguiente forma:
+
+```shell
+make -f Makefile1 RUNS=n
+```
+
+Donde `n` corresponde a la nueva cantidad de ejecuciones ingresada. 
+
+Los 3 comandos de compilación anteriores se pueden unir para personalizar áun más el resultado deseado.
 
 Después de ingresar el comando, se muestran el tiempo de cada una de las ejecuciones conforme terminan.
+
+Si desea redigir la salida del programa a un archivo `.txt` para conservar los datos obtenidos, puede realizarlo de la siguiente forma:
+
+```
+make -f Makefile1 > output.txt
+```
+
+Este comando crea el archivo `output.txt` y coloca las salidas allí.
 
 ### Ejercicio 2
 
@@ -53,11 +67,16 @@ Con respecto al segundo ejercicio, correspondiente al programa de gestión de pr
 
 El comando sugerido para ejecutar las reglas contenidas dentro del archivo `Makefile2` corresponde a:
 
-```
+```shell
 make -f Makefile2
 ```
 
 A partir de este paso, se muestra un menú con las instrucciones solicitadas. 
+
+> [!TIP]
+> Si se encuentra en un ambiente Windows con `MinGW`, es posible que tenga que sustituir `make` por `mingw32-make` en los comadnos anteriores.
+
+Además, se colocaron las reglas `make run` y `make clean`, para ejecutar (sin compilar nuevamente) y limpiar los archivos generados. Utilice la misma sintaxis de los comandos anteriores para indicar el Makefile respecto y agregue estas palabras claves dependiendo de lo deseado.
 
 ## Parte teórica
 
@@ -582,11 +601,31 @@ Ahora bien, respecto a los algoritmos del tipo $O(n\log(n))$, que son QuickSort 
   <img width="500" src="./images/STLSort-dividido.png">
 </p>
 
-En cuanto a estos dos algoritmos, se determinó que en la gráfica de $t(n)$ en función de $n$, ambos presentan una tendencia relativamente lineal, lo cual difiere con lo esperado en la teoría. Por esto es que los gráficos de $\frac{t(n)}{n\log(n)}$ vs $n$ no se observan como un valor constante. Entre las posibles razones para explicar el presente resultado, se tiene que estos algoritmos son de los más rápidos y fueron diseñados y optimizados para ser de esta forma. Para evidenciar el comportamiento de la forma $O(n\log(n))$ podría intentar con tamaños mayores del arreglo, con el fin de aumentar los tiempos de ordenamiento de ambos y así apreciar de una mejor forma su comportamiento.
+En cuanto a estos dos algoritmos, se determinó que en la gráfica de $t(n)$ en función de $n$, ambos presentan una tendencia relativamente lineal, lo cual difiere con lo esperado en la teoría. Por esto es que los gráficos de $\frac{t(n)}{n\log(n)}$ vs $n$ no se observan como un valor constante. Entre las posibles razones para explicar el presente resultado, se tiene que estos algoritmos son de los más rápidos y fueron diseñados y optimizados para ser de esta forma. Para evidenciar el comportamiento de la forma $O(n\log(n))$ podría intentar con tamaños mayores del arreglo, con el fin de aumentar los tiempos de ordenamiento de ambos y así apreciar de una mejor forma su comportamiento; pues si se observa, los tiempos de ejecución no son mayores a pocos segundos.
 
 ## Simulador de Gestión de Proyectos de Construcción
 
+Este ejercicio consiste en la creación de un sistema de gestión de proyectos de construcción, en el cual se proporcionan las siguientes funcionalidades:
 
+```
+1. Agregar un nuevo proyecto.
+2. Agregar una tarea a un proyecto existente.
+3. Eliminar una tarea de un proyecto.
+4. Ordenar tareas por costo, tiempo o prioridad.
+5. Mostrar el resumen de un proyecto (número de tareas, costo total y tiempo total).
+6. Eliminar un proyecto.
+7. Salir del programa.
+```
+
+El programa funciona a partir de _templates_ para trabajar con diferentes tipos en los recursos de las tareas. Todas las tareas del proyecto son almacenadas en un vector.
+
+La implementación del proyecto está compuesta por los siguientes archivos donde se dividen las funcionalidades:
+
+- __`main.cpp`__: Presenta el menú y realiza la validación de las entradas del usuario, llamado de funciones y manejo de excepciones.
+- __`TareaBase.hpp`__: Clase abstracta para manejar las tareas dentro del vector contenido en la clase `Proyecto`.
+- __`Tarea.hpp`__: _Class template_ que contiene la implementación de las funciones de la clase `Tarea` solicitada en el enunciado.
+- __`Proyecto.hpp` y `Proyecto.cpp`__: Contiene la declaración y la implementación de la clase `Proyecto` que almacena tareas.
+- __`Funciones.hpp` y `Funciones.cpp`__: Declaración y definición de funciones relacionadas con el funcionamiento del programa. 
 
 ## Convención de nombre de variables utilizada
 
@@ -607,3 +646,38 @@ A partir de la investigación de una convención de nombramiento de variables, f
 Sin embargo, en el enunciado se dan los nombres de ciertas funciones miembro o atributos dentro de la clase, especialmente del segundo programa, entonces se utilizaron los nombres indicados. 
 
 ## Ejemplo de una ejecución de los programas
+
+### Ejercicio 1
+
+En cuanto al apartado del ejercicio 1, como la ejecución de todo el algoritmo toma bastante tiempo, para la demostración del funcionamiento se van a tomar los primeros elementos. De igual forma, se adjuntó el enlace al _Google Sheets_ donde se guardaron todos los resultados y se realizaron las gráficas del programa. Entonces eso también funciona como demostración.
+
+En el siguiente ejemplo, se compila de forma normal, sin ninguna bandera. 
+
+<p align="center">
+  <img width="500" src="./images/ejecucion1_Ej1.png">
+</p>
+
+Observe que se indica al inicio el número de repetición que se encuentra y empieza a tomar las mediciones temporales para cada algoritmo y cada tamaño de datos.
+
+En el siguiente se utilizan los flags implementados para demostrar su funcionamiento:
+
+<p align="center">
+  <img width="500" src="./images/ejecucion2_Ej1.png">
+</p>
+
+En la imagen anterior, se ingresó un tamaño personalizado con `SIZE=15000`, para los algoritmos QuickSort y STL Sort, para 3 repeticiones. Por esta razón, la salida es la mostrada. Entonces, los flags funcionan de la forma esperada.
+
+### Ejercicio 2
+
+En esta sección se muestra la ejecución regular del programa de gestión de proyectos de construcción. Las siguientes imágenes abarcan los eventos de agregar un proyecto y tareas a proyectos existentes. Luego, se ordenan las tareas con base a diferentes criterios. Finalmente, se muestra un resumen del proyecto con las tareas agregadas y se eliminan los contenidos para mostrar el funcionamiento.
+
+<p align="center">
+  <img width="500" src="./images/compilacionEj2.png">
+  <img width="500" src="./images/agregarTareasEj2.png">
+</p>
+<p align="center">
+  <img width="500" src="./images/ordenarTareasEj2.png">
+</p>
+<p align="center">
+  <img width="500" src="./images/resumen_eliminacionEj2.png">
+</p>
