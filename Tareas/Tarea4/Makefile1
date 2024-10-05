@@ -1,0 +1,56 @@
+# Definir compilador y banderas
+CC = g++
+CFLAGS = -Wall -std=c++11
+
+# Source directories
+SRC_DIR = ./src/Ejercicio1
+
+# Source files
+SRC = $(SRC_DIR)/main.cpp
+
+# Header files
+HEADER = $(SRC_DIR)/sorting.hpp
+
+# Directorio build
+BUILD_DIR = build
+
+# Archivo ejecutable
+TARGET = $(BUILD_DIR)/benchmark.exe
+
+# Flags personalizados
+SIZE_FLAG = $(if $(SIZE),--size $(SIZE),)
+ALGORITHMS_FLAG = $(if $(ALGORITHMS),--algorithms $(ALGORITHMS),)
+RUNS_FLAG = $(if $(RUNS),--runs $(RUNS),)
+
+# Detectar el sistema operativo para comando de clean
+ifeq ($(OS),Windows_NT)
+    RM = if exist $(subst /,\,$(TARGET)) del $(subst /,\,$(TARGET))
+	MKDIR = if not exist $(BUILD_DIR) mkdir $(BUILD_DIR)
+else
+# Comandos para Linux
+    RM = rm $(TARGET)
+	MKDIR = mkdir -p $(BUILD_DIR)
+endif
+
+# Ejecución de todos los targets
+all: $(TARGET)
+	./$(TARGET) $(SIZE_FLAG) $(ALGORITHMS_FLAG) $(RUNS_FLAG)
+
+# Construccion de directorio build
+$(BUILD_DIR):
+	$(MKDIR)
+
+# Regla para compilar TARGET
+$(TARGET): $(BUILD_DIR) $(SRC) $(HEADER)
+	$(CC) $(CFLAGS) -o ./$(TARGET) $(SRC)
+
+# Comando para correr los ejecutables
+run:
+	./$(TARGET) $(SIZE_FLAG) $(ALGORITHMS_FLAG) $(RUNS_FLAG)
+
+# Regla para limpiar los archivos generados
+.PHONY: clean
+
+# Comando para eliminar los ejecutables
+clean:
+	$(RM)

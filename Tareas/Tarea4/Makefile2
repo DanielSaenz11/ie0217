@@ -1,0 +1,51 @@
+# Definir compilador y banderas
+CC = g++
+CFLAGS = -Wall -std=c++11
+
+# Source directories
+SRC_DIR = ./src/Ejercicio2
+
+# Source files
+SRC = $(SRC_DIR)/main.cpp $(SRC_DIR)/Funciones.cpp $(SRC_DIR)/Proyecto.cpp
+
+# Header files
+HEADER = $(SRC_DIR)/Funciones.hpp $(SRC_DIR)/Proyecto.hpp $(SRC_DIR)/Tarea.hpp $(SRC_DIR)/TareaBase.hpp 
+
+# Directorio build
+BUILD_DIR = build
+
+# Archivo ejecutable
+TARGET = $(BUILD_DIR)/gestion.exe
+
+# Detectar el sistema operativo para comando de clean
+ifeq ($(OS),Windows_NT)
+    RM = if exist $(subst /,\,$(TARGET)) del $(subst /,\,$(TARGET))
+	MKDIR = if not exist $(BUILD_DIR) mkdir $(BUILD_DIR)
+else
+# Comandos para Linux
+    RM = rm $(TARGET)
+	MKDIR = mkdir -p $(BUILD_DIR)
+endif
+
+# Ejecución de todos los targets
+all: $(TARGET)
+	./$(TARGET)
+
+# Construccion de directorio build
+$(BUILD_DIR):
+	$(MKDIR)
+
+# Regla para compilar TARGET
+$(TARGET): $(BUILD_DIR) $(SRC) $(HEADER)
+	$(CC) $(CFLAGS) -o ./$(TARGET) $(SRC)
+
+# Comando para correr los ejecutables
+run:
+	./$(TARGET)
+
+# Regla para limpiar los archivos generados
+.PHONY: clean
+
+# Comando para eliminar los ejecutables
+clean:
+	$(RM)
