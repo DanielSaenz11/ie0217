@@ -174,4 +174,35 @@ void quickSortWrapper(std::vector<T>& arr) {
 }
 
 
+
+/**
+ * @brief Genera un vector de números aleatorios.
+ *
+ * Crea y devuelve un vector del tamaño especificado, lleno de números aleatorios en un rango definido.
+ *
+ * @tparam T Tipo de datos almacenados en el vector.
+ * @param size Tamaño del vector a generar.
+ * @return Un vector de tamaño 'size' con números aleatorios.
+ */
+template <typename T>
+vector<T> generateRandomVector(size_t size) {
+    
+    // Declaración del vector que contiene los datos aleatorios
+    vector<T> vec(size);
+
+    // Configuración del generador de números aleatorios
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dist(1, 10000); // Rango de generación de números aleatorios
+
+    // Agregar elementos aleatorios al vector
+    for (size_t i = 0; i < size; ++i) {
+        vec[i] = dist(gen);
+    }
+    return vec; // Retornar el vector
+}
+
+
+
+
 #endif // SORTING_HPP
