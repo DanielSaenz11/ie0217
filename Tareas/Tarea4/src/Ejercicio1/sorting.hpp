@@ -1,3 +1,19 @@
+/**
+ * @file sorting.hpp
+ * @brief Contiene implementaciones de varios algoritmos de ordenamiento.
+ *
+ * @details Este archivo proporciona implementaciones de los algoritmos Bubble Sort, Selection Sort,
+ * Insertion Sort y Quick Sort, además de una función para generar vectores de números aleatorios.
+ * 
+ * Software bajo la licencia de MIT.
+ * En términos generales, se concede permiso para utilizar este Software sin ninguna restricción, pero se proporciona sin
+ * ninguna garantía. 
+ * El aviso de copyright anterior y este aviso de permiso deberán incluirse en todas
+ * las copias o partes sustanciales del Software.
+ * 
+ * @author Daniel Alberto Sáenz Obando
+ * @date 04/10/2024
+ */
 
 
 // Directiva de preprocesador
@@ -44,7 +60,6 @@ void bubbleSort(vector<T>& arr) {
             break;
     }
 }
-
 
 /**
  * @brief Implementación del algoritmo Selection Sort.
@@ -173,8 +188,6 @@ void quickSortWrapper(std::vector<T>& arr) {
     quickSort(arr, 0, arr.size() -1); // Llamada de quicksort con argumentos iniciales
 }
 
-
-
 /**
  * @brief Genera un vector de números aleatorios.
  *
@@ -201,8 +214,6 @@ vector<T> generateRandomVector(size_t size) {
     }
     return vec; // Retornar el vector
 }
-
-
 
 
 #endif // SORTING_HPP
