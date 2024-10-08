@@ -19,7 +19,7 @@ int main() {
 
         // Conectarse a la base de datos de Amazon RDS
         driver = sql::mysql::get_mysql_driver_instance();
-        con = driver->connect("tcp://db-ie0217.cxecqq0wcyiv.us-east-2.rds.amazonaws.com:3306", "admin", "gabrielaobando");
+        con = driver->connect("tcp://db-ie0217.cxecqq0wcyiv.us-east-2.rds.amazonaws.com:3306", "<nombreUsuario>", "<masterPassword>");
 
         // Seleccionar base de datos
         con->setSchema("IE0217");

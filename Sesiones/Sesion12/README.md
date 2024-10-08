@@ -223,7 +223,9 @@ Posteriormente, en la sección de servicios, selecciona `RDS` y luego `Create da
 
 Para esta sección, es importante tener instalado el conector de MySQl para C++, como se mencionó en la instalación de los recursos de MySQL.
 
-En caso de tener problemas con la conexión entre la computadora y AWS, revise la página [Troubleshooting for Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Troubleshooting.html#CHAP_Troubleshooting.Connecting). 
+En caso de tener problemas con la conexión entre la computadora y AWS, revise la página [Troubleshooting for Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Troubleshooting.html#CHAP_Troubleshooting.Connecting).
+
+Como sugerencia, coloque dentro de `VPC Security Groups`, su dirección IP como _Inbound rule_.
 
 ### Configuración en la computadora
 
