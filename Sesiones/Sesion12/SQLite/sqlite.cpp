@@ -1,3 +1,14 @@
+/*
+Este programa es utilizado para interactuar con SQLite
+
+1) Se crea una base de datos llamada test.db (si no existe).
+2) Se crea una tabla con el nombre COMPANY para almacenar los empleados de una empresa
+3) Se insertan la información de los empleados en la tabla (poseen una llave primaria única -> ID)
+4) Selecciona todo el contenido de la tabla y lo muestra en la terminal
+
+Después de cada operación, se verifica con un if, si ocurrieron errores en la operación.
+*/
+
 #include <iostream>
 #include <sqlite3.h>
 
