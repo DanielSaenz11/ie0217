@@ -231,9 +231,9 @@ Para que las bibliotecas utilizadas en el programa sean reconocidas por Visual S
 
 ```shell
 export PATH="/usr/local/mysql-connector-c++-9.0.0/bin:$PATH"
-export CPLUS_INCLUDE_PATH="/usr/local/mysql-connector-c++-9.0.0/include:$CPLUS_INCLUDE_PATH$
+export CPLUS_INCLUDE_PATH="/usr/local/mysql-connector-c++-9.0.0/include:$CPLUS_INCLUDE_PATH$"
 export LIBRARY_PATH="/usr/local/mysql-connector-c++-9.0.0/lib64:$LIBRARY_PATH"
-export DYLD_LIBRARY_PATH=/usr/local/mysql-connector-c++/lib64:$DYLD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH="/usr/local/mysql-connector-c++/lib64:$DYLD_LIBRARY_PATH"
 ```
 
 La primera corresponde a la ruta de los binarios del conector para C++. La segunda consiste en el directorio de `include` del conector. La tercera es el path de la biblioteca (`lib`). La cuarta es utilizada para reconocer los recursos durante la compilación para las bibliotecas dinámicas.
