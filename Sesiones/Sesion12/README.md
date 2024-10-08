@@ -203,6 +203,8 @@ Para ejecutar, de la forma usual para programas de C++, se utiliza el comando:
   <img width="500" src="./images/SQLite1.png">
 </p>
 
+Se debió crear un archivo `test.db` en el directorio donde fue ejecutado el comando, correspondiente a la base de datos utilizada por el programa.
+
 En la segunda ejecución del programa, se muestra el error que ya existe la tabla `COMPANY` dentro de la base de datos `test.db` y que ya existen los valores dentro de la tabla ingresados, entonces se continúa con los siguientes comandos para mostrar la salida:
 
 <p align="center">
@@ -226,6 +228,12 @@ Para esta sección, es importante tener instalado el conector de MySQl para C++,
 En caso de tener problemas con la conexión entre la computadora y AWS, revise la página [Troubleshooting for Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Troubleshooting.html#CHAP_Troubleshooting.Connecting).
 
 Como sugerencia, coloque dentro de `VPC Security Groups`, su dirección IP como _Inbound rule_.
+
+La información de la base de datos, se debería ver de la siguiente forma. Importante mencionar que el estado de la base de datos debe ser `Available` para poder interactuar con ella a través del puerto 3306.
+
+<p align="center">
+  <img width="500" src="./images/AWS_info.png">
+</p>
 
 ### Configuración en la computadora
 
