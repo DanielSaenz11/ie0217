@@ -232,7 +232,13 @@ Como sugerencia, coloque dentro de `VPC Security Groups`, su dirección IP como 
 La información de la base de datos, se debería ver de la siguiente forma. Importante mencionar que el estado de la base de datos debe ser `Available` para poder interactuar con ella a través del puerto 3306.
 
 <p align="center">
-  <img width="500" src="./images/AWS_info.png">
+  <img width="500" src="./images/AWS_info1.png">
+</p>
+
+En cuanto a la información de conectividad, se debe observar de la siguiente forma, especialmente en la sección de puerto y acceso público.
+
+<p align="center">
+  <img width="500" src="./images/AWS_info2.png">
 </p>
 
 ### Configuración en la computadora
