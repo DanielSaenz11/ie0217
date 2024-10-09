@@ -1,6 +1,6 @@
 # Laboratorio 7
 
-Este directorio corresponde al Laboratorio 7 realizado el 8 de octubre del 2024, que consiste en 
+Este directorio corresponde al Laboratorio 7 realizado el 8 de octubre del 2024, que consiste en el uso de MySQL y SQLite. 
 
 ## Ejercicio 1
 
