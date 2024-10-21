@@ -38,7 +38,7 @@ Una unidad de ejecución dentro de un proceso. Todos los hilos de un proceso __c
 - Pueden comunicarse directamente entre sí, a través de la memoria compartida. 
 - Pueden ser cada pestaña de un navegador web, el autoguardado de un editor de texto, el renderizado en un juego, entre otros.
 
-### Multitarea (_Time-sharing)
+### Multitarea (_Time-sharing_)
 
 Corresponde a la capacidad de un sistema operativo para ejecutar múltiples tareas (procesos) de manera __concurrente__.
 
