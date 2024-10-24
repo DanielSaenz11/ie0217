@@ -14,7 +14,7 @@ void insertarPublicacion(mongocxx::collection& collection, const std::string& au
 
 void consultarPublicaciones(mongocxx::collection& collection);
 
-void consultarPublicacionesPorAutor(mongocxx::collection& collection, std::string& autor);
+void consultarPublicacionesPorAutor(mongocxx::collection& collection, const std::string& autor);
 
 void consultarPublicacionesPorFecha(mongocxx::collection& collection);
 
@@ -27,5 +27,7 @@ void eliminarPublicacion(mongocxx::collection& collection, const std::string& au
 void marcarDestacada(mongocxx::collection& collection, const std::string& autor, const std::string& fecha, bool destacada);
 
 bool verificarFormatoFecha(const std::string& fecha);
+
+bool verificarPublicacionExiste(mongocxx::collection& collection, const std::string& autor, const std::string& fecha);
 
 #endif // SOCIAL_NETWORK_HPP

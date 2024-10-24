@@ -6,6 +6,12 @@ using bsoncxx::builder::stream::document;
 
 void insertarPublicacion(mongocxx::collection& collection, const std::string& autor, const std::string& contenido, const std::string& fecha) {
     try {
+
+        if (verificarPublicacionExiste(collection, autor, fecha)) {
+            std::cout << "Ya existe una publicación para ese autor y fecha." << std::endl;
+            return;
+        }
+
         document publicacion{};
         publicacion << "autor" << autor
                     << "contenido" << contenido
@@ -63,6 +69,12 @@ void consultarPublicacionesPorFecha(mongocxx::collection& collection) {
 
 void agregarComentario(mongocxx::collection& collection, const std::string& autor, const std::string& fecha, const std::string& usuario, const std::string& comentario, const std::string& fechaComentario) {
     try {
+
+        if (!verificarPublicacionExiste(collection, autor, fecha)) {
+            std::cout << "La publicación no existe. No se puede agregar el comentario." << std::endl;
+            return;
+        }
+
         document filtro{};
         filtro << "autor" << autor
                << "fecha" << fecha;
@@ -86,6 +98,12 @@ void agregarComentario(mongocxx::collection& collection, const std::string& auto
 
 void actualizarPublicacion(mongocxx::collection& collection, const std::string& autor, const std::string& fecha, const std::string& nuevoContenido) {
     try {
+
+        if (!verificarPublicacionExiste(collection, autor, fecha)) {
+            std::cout << "La publicación no existe. No se puede actualizar el contenido." << std::endl;
+            return;
+        }
+
         document filtro{};
         filtro << "autor" << autor
                << "fecha" << fecha;
@@ -104,6 +122,12 @@ void actualizarPublicacion(mongocxx::collection& collection, const std::string& 
 
 void eliminarPublicacion(mongocxx::collection& collection, const std::string& autor, const std::string& fecha) {
     try {
+
+        if (!verificarPublicacionExiste(collection, autor, fecha)) {
+            std::cout << "La publicación no existe para ese autor y fecha." << std::endl;
+            return;
+        }
+
         document filtro{};
         filtro << "autor" << autor
                << "fecha" << fecha;
@@ -119,6 +143,12 @@ void eliminarPublicacion(mongocxx::collection& collection, const std::string& au
 
 void marcarDestacada(mongocxx::collection& collection, const std::string& autor, const std::string& fecha, bool destacada) {
     try {
+
+        if (!verificarPublicacionExiste(collection, autor, fecha)) {
+            std::cout << "La publicación no existe. No se puede marcar/desmarcar como destacada." << std::endl;
+            return;
+        }
+
         document filtro{};
         filtro << "autor" << autor
                << "fecha" << fecha;
@@ -138,4 +168,13 @@ void marcarDestacada(mongocxx::collection& collection, const std::string& autor,
 bool verificarFormatoFecha(const std::string& fecha) {
     std::regex formatoFecha("\\d{4}-\\d{2}-\\d{2}");
     return std::regex_match(fecha, formatoFecha);
+}
+
+bool verificarPublicacionExiste(mongocxx::collection& collection, const std::string& autor, const std::string& fecha) {
+    document filter{};
+    filter << "autor" << autor << "fecha" << fecha;
+
+    auto result = collection.find_one(filter.view());
+
+    return result ? true : false; // Uso de operador ternario para validar la salida
 }
