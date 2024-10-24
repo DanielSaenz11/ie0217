@@ -1,8 +1,5 @@
 #include "social_network.hpp"
 
-// using namespace bsoncxx::builder::stream;
-// using bsoncxx::builder::stream::document;
-
 enum opcionesMenu {
     OPT_INSERTAR_PUBLICACION = 1,
     OPT_CONSULTAR_TODAS_PUBLICACIONES,
@@ -32,7 +29,7 @@ int main() {
         std::cout << "5. Agregar Comentario a una Publicación" << std::endl;
         std::cout << "6. Actualizar Contenido de una Publicación" << std::endl;
         std::cout << "7. Eliminar Publicación" << std::endl;
-        std::cout << "8. Marcar Publicación como Destacada" << std::endl;
+        std::cout << "8. Marcar/Desmarcar Publicación como Destacada" << std::endl;
         std::cout << "9. Salir" << std::endl;
         std::cout << "Seleccione una opción: ";
 
