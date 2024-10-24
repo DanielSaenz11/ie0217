@@ -27,42 +27,62 @@ void insertarPublicacion(mongocxx::collection& collection, const std::string& au
 
 void consultarPublicaciones(mongocxx::collection& collection) {
     try {
+        // Obtener todos los documentos de la colección posts
         auto cursor = collection.find({});
 
+        // Imprimir cada documento con formato autor, contenido, fecha
         for (auto&& doc : cursor) {
-            std::cout << bsoncxx::to_json(doc) << std::endl;
+            std::cout << "Autor: " << doc["autor"].get_utf8().value << "\n"
+                      << "Contenido: " << doc["contenido"].get_utf8().value << "\n"
+                      << "Fecha: " << doc["fecha"].get_utf8().value << "\n"
+                      << "-----------------------" << std::endl;
         }
-    } catch(const std::exception& e) {
+    } catch (const std::exception& e) {
+        // Manejo de errores en caso de fallo al consultar
         std::cerr << "Error al consultar publicaciones: " << e.what() << std::endl;
     }
 }
 
 void consultarPublicacionesPorAutor(mongocxx::collection& collection, const std::string& autor) {
     try {
-        document filtro{};
-        filtro << "autor" << autor;
+        // Crear filtro para buscar publicaciones por autor
+        document filter{};
+        filter << "autor" << autor;
 
-        auto cursor = collection.find(filtro.view());
+        // Obtener los documentos que coincidan con el filtro
+        auto cursor = collection.find(filter.view());
 
+        // Imprimir cada documento con formato autor, contenido, fecha
         for (auto&& doc : cursor) {
-            std::cout << bsoncxx::to_json(doc) << std::endl;
+            std::cout << "Autor: " << doc["autor"].get_utf8().value << "\n"
+                      << "Contenido: " << doc["contenido"].get_utf8().value << "\n"
+                      << "Fecha: " << doc["fecha"].get_utf8().value << "\n"
+                      << "-----------------------" << std::endl;
         }
-    } catch(const std::exception& e) {
-        std::cerr << "Error al consultar por autor: " << e.what() << '\n';
-    }   
+    } catch (const std::exception& e) {
+        // Manejo de errores en caso de fallo al consultar
+        std::cerr << "Error al consultar por autor: " << e.what() << std::endl;
+    }
 }
 
 void consultarPublicacionesPorFecha(mongocxx::collection& collection) {
     try {
+        // Crear el documento de opciones para ordenar por fecha de manera descendente
         document sortOptions{};
         sortOptions << "fecha" << -1;
-        
+
+        // Obtener los documentos ordenados por fecha
         auto cursor = collection.find({}, mongocxx::options::find{}.sort(sortOptions.view()));
         
+        // Imprimir cada documento con formato específico
         for (auto&& doc : cursor) {
-            std::cout << bsoncxx::to_json(doc) << std::endl;
+            std::cout << "Autor: " << doc["autor"].get_utf8().value << "\n"
+                      << "Contenido: " << doc["contenido"].get_utf8().value << "\n"
+                      << "Fecha: " << doc["fecha"].get_utf8().value << "\n"
+                      << "-----------------------" << std::endl;
         }
     } catch (const std::exception& e) {
+        // Manejo de errores en caso de fallo al consultar
         std::cerr << "Error al consultar publicaciones por fecha: " << e.what() << std::endl;
     }
 }
