@@ -67,7 +67,7 @@ int main() {
         while (!(std::cin >> opcion)) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Entrada inválida. Ingrese un valor numérico entre las opciones.";
+            std::cout << "Entrada inválida. Ingrese un valor numérico entre las opciones: ";
         }
 
         // Ejecutar la acción correspondiente a la opción seleccionada
