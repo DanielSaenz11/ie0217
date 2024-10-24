@@ -53,9 +53,9 @@ void consultarPublicaciones(mongocxx::collection& collection) {
 
         // Imprimir cada documento con formato autor, contenido, fecha
         for (auto&& doc : cursor) {
-            std::cout << "Autor: " << doc["autor"].get_utf8().value << "\n"
-                      << "Contenido: " << doc["contenido"].get_utf8().value << "\n"
-                      << "Fecha: " << doc["fecha"].get_utf8().value << "\n"
+            std::cout << "Autor: " << doc["autor"].get_string().value << "\n"
+                      << "Contenido: " << doc["contenido"].get_string().value << "\n"
+                      << "Fecha: " << doc["fecha"].get_string().value << "\n"
                       << "-----------------------" << std::endl;
         }
     } catch (const std::exception& e) {
@@ -75,9 +75,9 @@ void consultarPublicacionesPorAutor(mongocxx::collection& collection, const std:
 
         // Imprimir cada documento con formato autor, contenido, fecha
         for (auto&& doc : cursor) {
-            std::cout << "Autor: " << doc["autor"].get_utf8().value << "\n"
-                      << "Contenido: " << doc["contenido"].get_utf8().value << "\n"
-                      << "Fecha: " << doc["fecha"].get_utf8().value << "\n"
+            std::cout << "Autor: " << doc["autor"].get_string().value << "\n"
+                      << "Contenido: " << doc["contenido"].get_string().value << "\n"
+                      << "Fecha: " << doc["fecha"].get_string().value << "\n"
                       << "-----------------------" << std::endl;
         }
     } catch (const std::exception& e) {
@@ -97,9 +97,9 @@ void consultarPublicacionesPorFecha(mongocxx::collection& collection) {
 
         // Imprimir cada documento con formato específico
         for (auto&& doc : cursor) {
-            std::cout << "Autor: " << doc["autor"].get_utf8().value << "\n"
-                      << "Contenido: " << doc["contenido"].get_utf8().value << "\n"
-                      << "Fecha: " << doc["fecha"].get_utf8().value << "\n"
+            std::cout << "Autor: " << doc["autor"].get_string().value << "\n"
+                      << "Contenido: " << doc["contenido"].get_string().value << "\n"
+                      << "Fecha: " << doc["fecha"].get_string().value << "\n"
                       << "-----------------------" << std::endl;
         }
     } catch (const std::exception& e) {
