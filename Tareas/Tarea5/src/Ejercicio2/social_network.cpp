@@ -46,6 +46,21 @@ void consultarPublicacionesPorAutor(mongocxx::collection& collection, const std:
     }   
 }
 
+void consultarPublicacionesPorFecha(mongocxx::collection& collection) {
+    try {
+        document sortOptions{};
+        sortOptions << "fecha" << -1;
+        
+        auto cursor = collection.find({}, mongocxx::options::find{}.sort(sortOptions.view()));
+        
+        for (auto&& doc : cursor) {
+            std::cout << bsoncxx::to_json(doc) << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error al consultar publicaciones por fecha: " << e.what() << std::endl;
+    }
+}
+
 void agregarComentario(mongocxx::collection& collection, const std::string& autor, const std::string& fecha, const std::string& usuario, const std::string& comentario, const std::string& fechaComentario) {
     try {
         document filtro{};
