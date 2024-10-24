@@ -16,6 +16,8 @@ void consultarPublicaciones(mongocxx::collection& collection);
 
 void consultarPublicacionesPorAutor(mongocxx::collection& collection, std::string& autor);
 
+void consultarPublicacionesPorFecha(mongocxx::collection& collection);
+
 void agregarComentario(mongocxx::collection& collection, const std::string& autor, const std::string& fecha, const std::string& usuario, const std::string& comentario, const std::string& fechaComentario);
 
 void actualizarPublicacion(mongocxx::collection& collection, const std::string& autor, const std::string& fecha, const std::string& nuevoContenido);
