@@ -424,7 +424,7 @@ Con respecto a la primera consulta requerida, correspondiente filtrar por curso 
 Se utilizó el comando mostrado en la imagen anterior. Este consiste en que se selecciona el nombre del profesor en la tabla `Profesores` y el promedio de la calificación general en la tabla `Resenas`. Se utilizan `JOIN` para unir los resultados que coincidan, de la tabla `Profesores` con el calificación de las reseñas (tabla `Resenas`) y el nombre del curso (tabla `Cursos`). Para obtener el resultado esperado con el promedio agrupado por profesor, se utiliza la indicación `GROUP BY Profesores.nombre`.
 
 <p align="center">
-  <img width="1000" src="./images/1_salida1.png">
+  <img width="750" src="./images/1_salida1.png">
 </p>
 
 En el caso de la escuela de `Ingeniería Eléctrica` y el curso `Electrónica I`, se tuvo la siguiente información como salida. Se puede verificar manualmente que los cálculos son correctos y esos son los promedios ingresados a la tabla en las reseñas.
