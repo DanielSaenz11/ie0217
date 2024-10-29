@@ -11,7 +11,7 @@ void funcion1() {
 
     int* q = new int[10];
     delete[] q;
-    std::cout << q[0] << std::endl; // Uso de q después de liberar su memoria
+    std::cout << q[0] << std::endl; // Uso después de liberar su memoria
 }
 
 int main() {
