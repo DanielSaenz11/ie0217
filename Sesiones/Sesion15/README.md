@@ -4,6 +4,88 @@ El presente directorio corresponde a la sesión realizada para el martes 29 de o
 
 ## Modo de uso
 
+Para la compilación de los programas, es importante señalar que se utiliza el flag `-g` con `g++` para indicar que se va a utilizar en modo de debugging.
+
+Además, asegúrese de estar en el directorio `./ie0217/Sesiones/Sesion15` para la compilación. Por simplificidad, los archivos generados se van a encontrar en este directorio si se utilizan los comandos indicados a continuación. 
+
+### `gdb`
+
+La primera herramienta utilizada corresponde a `gdb` (_GNU Debugger_). Para ello, se utiliza el programa `gdb.cpp`que contiene un error de división por 0.
+
+Para la compilación, se utiliza el siguiente comando:
+
+```shell
+g++ -g -o prueba_gdb ./src/gdb.cpp
+```
+
+Luego, para la ejecución con `gdb`, se utiliza el siguiente comando:
+
+```shell
+gdb prueba_gdb
+```
+
+### Valgrind
+
+Para utilizar `valgrind` para realizar debugging con el manejo de la memoria del programa, se va a utilizar el archivo `valgrind.cpp`.
+
+Para compilar, se sugiere el siguiente comando:
+
+```shell
+g++ -g -o prueba_valgrind ./src/valgrind.cpp
+```
+
+Posteriormente, para ejecutarlo:
+
+```shell
+valgrind --leak-check=yes ./prueba_valgrind
+```
+
+### `ASan`
+
+Para la demostración del uso de los _AdressSanitizers_, se usó el programa `asan.cpp`. Para la compilación, se sugiere el siguiente comando:
+
+```shell
+g++ -fsanitize=address -g -o asan ./src/asan.cpp
+```
+
+Para la ejecución:
+
+```shell
+./asan
+```
+
+### `TSan`
+
+En cuanto a los _ThreadSanitizer_, se va a emplear el archivo `hilos1.cpp` para la verificación de existencia de condiciones de carrera. Utilice el siguiente comando de compilación:
+
+```shell
+g++ -fsanitize=thread -g -o hilos1 ./src/hilos1.cpp
+```
+
+Respecto a la ejecución, se realiza de forma regular, como se muestra a continuación:
+
+```shell
+./hilos1
+```
+
+### Helgrind
+
+Finalmente, para probar el funcionamiento de `helgrind`, se van a utilizar dos archivos. El primero es el mismo utilizado para `TSan` para comprobar la existencia de condiciones de carrera (`hilos1.cpp`) El segundo corresponde a un programa donde no hay condiciones de carrera (`hilos2.cpp`).
+
+El comando de compilación requerido es el siguiente:
+
+```shell
+g++ -g -o <nombre_ejecutable> ./src/<nombre_archivo_fuente>
+```
+
+En cuanto a la ejecución, se utiliza el comando a continuación:
+
+```shell
+valgrind --tool=helgrind ./<nombre_ejecutable>
+```
+
+> [!WARNING]
+> Los comandos sugeridos fueron utilizados en un entorno Unix. Por lo que es posible que varíen si se utilizan en el sistema operativo Windows. Por ejemplo, en la colocación de una extensión definida al archivo compilado.
 
 ## Descripción de conceptos importantes
 
@@ -112,14 +194,83 @@ Se utiliza el flag `-fsanitize=thread`. Entonces, en la salida de la ejecución 
 
 ### Helgrind
 
-Está diseñada para detectar problemas en programas
-multihilo, tales como condiciones de carrera, bloqueos y otros errores relacionados con el uso de hilos. Se encuentra en el marco de herramientas de Valgrind.
+Está diseñada para detectar problemas en programas multihilo, tales como condiciones de carrera, bloqueos y otros errores relacionados con el uso de hilos. Se encuentra en el marco de herramientas de Valgrind.
 
 ## Demostración de ejecución de los programas
+
+### `gdb`
+
+Para probar el funcionamiento de `gdb`, se utilizaron dos métodos:
+
+- De forma local
+- En línea
+
+Inicialmente, con el método local, se siguieron las instrucciones de compilación y ejecución indicadas en el modo de uso. Posteriormente, ya en la ejecución, se colocó un `breakpoint` en la función `funcion1()` y se ejecutó línea por línea para ir analizando el comportamiento del programa. El resultado se muestra en la imagen a continuación:
+
+<p align="center">
+  <img width="750" src="./images/gdb.png">
+</p>
+
+Observe que al ocurrir la división por 0 y se imprime el valor de `c`, se obtiene que el programa toma un comportamiento indefinido. Según la investigación realizada, en ciertas arquitecturas puede ocurrir este comportamiento y que el programa no falle. De ahí que sea también importante utilizar este tipo de herramientas para validar estos comportamientos inesperados.
+
+Aparte de eso, se utilizó el comando `backtrace` para observar el _call stack_ en ese momento de ejecución.
+
+Ahora bien, al colocar el código en línea en la página [onlinegdb](https://www.onlinegdb.com/), se obtuvo la salida a continuación:
 
 <p align="center">
   <img width="750" src="./images/gdb-online.png">
 </p>
+
+En este caso, sí se genera el error aritmético y se detiene la ejecución del programa.
+
+### Valgrind
+
+Para la demostración de ejecución de `valgrind`, se compiló y ejecutó con las instrucciones mencionadas para obtener la siguiente salida:
+
+<p align="center">
+  <img width="750" src="./images/valgrind.png">
+</p>
+
+Observe que hubo errores por acceso a variables no inicializadas, que es justamente lo que ocurrió en el programa. Además, se muestra que se perdió memoria por no haberla liberado (`valgrind.cpp:8`), lo cual coincide con la línea donde se reservó la memoria no liberada.
+
+### `ASan`
+
+De igual manera, para los _AddressSanitizers_, se tiene que hubo un acceso fuera de los límites del arreglo y un acceso después de liberar la memoria. En la imagen a continuación se muestra la salida de la ejecución:
+
+<p align="center">
+  <img width="750" src="./images/asan.png">
+</p>
+
+En el primer bloque, se muestra un `heap-buffer-overflow`, que indica un acceso fuera de los límites del arreglo. Además, se muestra _shadow bytes_, que corresponde al estado de los bytes alrededor de la dirección problemática.
+
+### `TSan`
+
+En cuanto a los _ThreadSanitizers_, se tiene que en la salida, se muestra justamente en dónde están ocurriendo las condiciones de carrera por los _threads_, en la sección `data_race`. Se muestra que el thread T1 y el thread T2 están leyendo y escribiendo a la variable `counter`, lo cual genera _race conditions_.
+
+<p align="center">
+  <img width="750" src="./images/tsan.png">
+</p>
+
+### Helgrind
+
+Finalmente, para Helgrind, se tiene que la salida para el programa donde hay _race conditions_ es la siguiente:
+
+<p align="center">
+  <img width="750" src="./images/helgrind1.png">
+</p>
+
+<p align="center">
+  <img width="750" src="./images/helgrind2.png">
+</p>
+
+En las anteriores, se muestra que los threads están entrando en conflicto e intentan leer y escribir a la vez, lo cual implica _race conditions_.
+
+Para el programa `hilos2.cpp`, se tiene la siguiente salida, donde no hay errores de _race conditions_.
+
+<p align="center">
+  <img width="750" src="./images/helgrind3.png">
+</p>
+
 
 
 
