@@ -117,6 +117,9 @@ multihilo, tales como condiciones de carrera, bloqueos y otros errores relaciona
 
 ## Demostración de ejecución de los programas
 
+<p align="center">
+  <img width="750" src="./images/gdb-online.png">
+</p>
 
 
 
