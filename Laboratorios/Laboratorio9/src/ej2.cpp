@@ -15,9 +15,8 @@ int main() {
     }
     cout << endl;
 
+    delete[] arr; // Se libera la memoria asignada para arr
+
     return 0;
 }
 
-
-// g++ -g -o memory_leak memory_leak.cpp
-// valgrind --leak-check=yes ./memory_leak
