@@ -9,11 +9,11 @@ int main() {
         arr[i] = i * 10;
     }
 
-    cout << "Valor fuera de límites: " << arr[10] << endl;
+    // Se accede a un valor fuera de los límites del arreglo (el índice máximo es 4)
+    // Se arregló al acceder a un valor que sí está dentro de los límites del arreglo
+    cout << "Valor dentro de límites: " << arr[4] << endl;
 
     delete[] arr;  // Libera la memoria asignada
     return 0;
 }
 
-// g++ -g -fsanitize=address -o out_of_bounds out_of_bounds.cpp
-// ./out_of_bounds
