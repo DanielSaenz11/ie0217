@@ -27,7 +27,7 @@ Esto abre el menú de `gdb` y permite utilizar sus comandos específicos para op
 
 ### Ejercicio 2
 
-Respecto al segundo programa, se sugiere el siguiente comando de compilación:
+Respecto al segundo programa, se va a utilizar `valgrind` para checkear la memoria. Por lo que, se sugiere el siguiente comando de compilación:
 
 ```shell
 g++ -g -o ej2 ./src/ej2.cpp
@@ -41,7 +41,7 @@ valgrind --leak-check=yes ./ej2
 
 ### Ejercicio 3
 
-Para la compilación del ejercicio 3, se utiliza el siguiente comando de compilación:
+Se utiliza la herramienta `ASan` para revisar accesos fuera de los límites de un arreglo. Para la compilación, se utiliza el siguiente comando de compilación:
 
 ```shell
 g++ -g -fsanitize=address -o ej3 ./src/ej3.cpp
@@ -55,7 +55,7 @@ Para la ejecución, se utiliza el comando:
 
 ### Ejercicio 4 y 5
 
-Respecto al cuarto y quinto programa, se tiene el mismo programa correspondiente a `ej4_5.cpp`.
+Respecto al cuarto y quinto programa, se tiene el mismo programa correspondiente a `ej4_5.cpp`, para verificar la existencia de condiciones de carrera con _threads_.
 
 Inicialmente, para la herramienta `helgrind`, se utiliza el siguiente comando de compilación:
 
