@@ -29,5 +29,5 @@ jobs:
        
       - name: Run tests
         run: |
-          cd Laboratorios/Laboratorio10/build
+          cd Laboratorios/Laboratorio10/build/tests
           ./run_tests
