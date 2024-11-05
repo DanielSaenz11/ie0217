@@ -1,8 +1,16 @@
-// Calculator.hpp
+/*
+Header file que contiene la declaración de la clase Calculator
+
+- add
+- substract
+- multiply
+- divide
+*/
 
 #ifndef CALCULATOR_HPP
 #define CALCULATOR_HPP
 
+// Declaración de clase Calculator
 class Calculator {
 public:
     // Métodos para operaciones básicas
