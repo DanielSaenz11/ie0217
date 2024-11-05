@@ -24,7 +24,7 @@ jobs:
       run: |
         mkdir -p ie0217/Sesiones/Sesion16/unit_testing/build
         cd ie0217/Sesiones/Sesion16/unit_testing/build
-        cmake ..
+        cmake ../
         make
         ./test_calculator
 
