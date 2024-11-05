@@ -61,3 +61,26 @@ void cliente(int id, int num_solicitudes) {
     cv_operador.notify_all();
 }
 
+// Función para los hilos de los operadores (consumidores)
+void operador(int id) {
+    while (true) {
+        full_slots.acquire();
+
+        std::unique_lock<std::mutex> lock(mtx);
+        cv_operador.wait(lock, [] { return !buffer.empty() || produccion_finalizada; });
+
+        if (buffer.empty() && produccion_finalizada) break; // Terminar si no hay más solicitudes
+
+        int solicitud = buffer.front();
+        buffer.pop();
+        total_solicitudes_procesadas++;
+        cout << "Operador " << id << " procesó la solicitud " << solicitud << endl;
+
+        lock.unlock();
+        empty_slots.release();
+        cv_cliente.notify_one();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Tiempo de procesamiento simulado
+    }
+}
+
