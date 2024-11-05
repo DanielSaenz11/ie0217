@@ -22,9 +22,9 @@ jobs:
 
     - name: Build and run tests
       run: |
-        mkdir -p ie0217/Sesiones/Sesion16/unit_testing/build
-        cd ie0217/Sesiones/Sesion16/unit_testing/build
-        cmake ../
+        mkdir -p Sesiones/Sesion16/unit_testing/build
+        cd Sesiones/Sesion16/unit_testing/build
+        cmake ..
         make
         ./test_calculator
 
