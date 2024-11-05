@@ -23,10 +23,10 @@ jobs:
       - name: Build project
         run: |
           mkdir Laboratorios/Laboratorio10/build
-          cd build
+          cd Laboratorios/Laboratorio10/build
           cmake ..
           make
-
+       
       - name: Run tests
         run: |
           cd build
