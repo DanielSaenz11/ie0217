@@ -50,5 +50,5 @@ jobs:
       # Paso 6: Ejecutar las pruebas
       - name: Run tests
         run: |
-          cd Laboratorio/Laboratorio10/build/tests
+          cd Laboratorios/Laboratorio10/build/tests
           ./run_tests
