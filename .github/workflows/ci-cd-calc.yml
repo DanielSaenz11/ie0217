@@ -43,8 +43,8 @@ jobs:
       # Paso 5: Crear directorio de compilación y compilar el proyecto
       - name: Build project
         run: |
-          mkdir -p Laboratorios/Laboratorio10/googletest/build
-          cd Laboratorios/Laboratorio10/googletest/build
+          mkdir -p Laboratorios/Laboratorio10/build
+          cd Laboratorios/Laboratorio10/build
           cmake ..
           make
       # Paso 6: Ejecutar las pruebas
