@@ -40,3 +40,6 @@ En la imagen a continuación, se muestra el resultado de realizar un `push` al r
 <p align="center">
   <img width="750" src="./images/demostracion.png">
 </p>
+
+> [!NOTE]
+> También se puede verificar el funcionamiento al acceder directamente a GitHub Actions dentro del repositorio en línea.
