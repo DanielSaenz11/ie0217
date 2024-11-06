@@ -43,3 +43,9 @@ En la imagen a continuación, se muestra el resultado de realizar un `push` al r
 
 > [!NOTE]
 > También se puede verificar el funcionamiento al acceder directamente a GitHub Actions dentro del repositorio en línea.
+
+De forma local, se ejecutan los _tests_, a partir de las instrucciones descritas en el __Modo de uso__, como se muestran en la imagen a continuación:
+
+<p align="center">
+  <img width="750" src="./images/ejecucion_local.png">
+</p>
