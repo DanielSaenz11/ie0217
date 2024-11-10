@@ -1,79 +1,102 @@
+/**
+ * @file DataProcessor.cpp
+ * @brief Implementación de los métodos de la clase DataProcessor.
+ * 
+ * Este archivo contiene la implementación de la clase DataProcessor. Las funciones incluyen el cálculo de la suma y el promedio,
+ * así como opciones para procesar los datos de forma concurrente.
+ * 
+ * @author Daniel Alberto Sáenz Obando
+ * @copyright MIT License
+ * @date 10/11/2024
+ */
+
+#include "DataProcessor.hpp"
 #include <iostream>
 #include <vector>
 #include <thread>
-#include <mutex>
 
-class DataProcessor {
-public:
-    DataProcessor(int size) : size(size), data(nullptr) {
-        if (size > 0) {
-            data = new int[size];
-        } else {
-            std::cout << "Error: invalid size\n";
-        }
+// Definición del constructor
+DataProcessor::DataProcessor(int size) : size(size), data(nullptr) {
+    // Si el tamaño es positivo, se reserva la memoria para el arreglo data
+    if (size > 0) {
+        data = new int[size];
+    } else {
+        // Mostrar error
+        std::cout << "Error: invalid size\n";
     }
+}
 
-    ~DataProcessor() {
-        if (data != nullptr) {
-            delete[] data;
-        }
+// Definición del destructor de la clase DataProcessor
+DataProcessor::~DataProcessor() {
+    // Si data es distinto de nullptr
+    if (data != nullptr) {
+        delete[] data;  // Liberar la memoria de arreglo data
+        data = nullptr; // Apuntar data a nullptr
     }
+}
 
-    void populateData() {
-        for (int i = 0; i <= size; ++i) {
-            data[i] = i * 10;
-        }
+// Definición de método para rellenar el arreglo data
+void DataProcessor::populateData() {
+    // Si data es igual de nullptr
+    if (data == nullptr) return;
+
+    // Recorrer el arreglo y asignar a las entradas el índice multiplicado por 10
+    for (int i = 0; i < size; ++i) {
+        data[i] = i * 10;
     }
+}
 
-    int calculateSum() {
-        int sum = 0;
-        for (int i = 0; i < size; ++i) {
-            sum += data[i];
-        }
-        return sum;
+int DataProcessor::calculateSum() {
+    // Si data es igual a nullptr, se retorna 0
+    if (data == nullptr) return 0;
+
+    int sum = 0; // Suma total
+
+    // Recorrer el arreglo data y agregar cada índice a sum
+    for (int i = 0; i < size; ++i) {
+        sum += data[i];
     }
+    return sum;
+}
 
-    double calculateAverage() {
-        return static_cast<double>(calculateSum()) / size; 
+double DataProcessor::calculateAverage() {
+    // Si data es igual a nullptr o el tamaño es menor que 0, se retorna 0
+    if (data == nullptr || size < 0) return 0.0;
+
+    // Retornar el cálculo del promedio
+    return static_cast<double>(calculateSum()) / size; 
+}
+
+void DataProcessor::concurrentProcess() {
+    // Si data es igual a nullptr
+    if (data == nullptr) return;
+
+    // Declarar dos hilos que ejecuten el método processData de forma concurrente
+    std::thread t1(&DataProcessor::processData, this);
+    std::thread t2(&DataProcessor::processData, this);
+
+    // Esperar a que ambos hilos terminen su ejecución
+    t1.join();
+    t2.join();
+}
+
+void DataProcessor::printData() {
+    // Si data es igual a nullptr
+    if (data == nullptr) return;
+
+    // Imprimir el contenido de cada índice del arreglo
+    for (int i = 0; i < size; i++) {
+        std::cout << "Data[" << i << "] = " << data[i] << std::endl;
     }
+}
 
-    void concurrentProcess() {
-        std::thread t1(&DataProcessor::processData, this);
-        std::thread t2(&DataProcessor::processData, this);
+void DataProcessor::processData() {
+    // Si data es igual a nullptr
+    if (data == nullptr) return;
 
-        t1.join();
-        t2.join();
+    // Recorrer el arreglo
+    for (int i = 0; i < size; ++i) {
+        std::lock_guard<std::mutex> lock(mtx); // Proteger el acceso
+        data[i] *= 2; // Duplicar entrada
     }
-
-    void printData() {
-        for (int i = 0; i < size; i++) {
-            std::cout << "Data[" << i << "] = " << data[i] << std::endl;
-        }
-    }
-
-private:
-    int* data;
-    int size;
-    std::mutex mtx;
-
-    void processData() {
-        for (int i = 0; i < size; ++i) {
-            data[i] *= 2;
-        }
-    }
-};
-
-int main() {
-    int size;
-    std::cout << "Enter size of data: ";
-    std::cin >> size;
-
-    DataProcessor* processor = new DataProcessor(size);
-
-    processor->populateData();
-    processor->concurrentProcess();
-    std::cout << "Average: " << processor->calculateAverage() << std::endl;
-
-    delete processor;
-    return 0;
 }
