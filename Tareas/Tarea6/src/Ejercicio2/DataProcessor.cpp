@@ -66,7 +66,7 @@ int DataProcessor::calculateSum() {
 // Definición de método para calcular el promedio de los elementos de data
 double DataProcessor::calculateAverage() {
     // Si data es igual a nullptr o el tamaño es menor que 0, se retorna 0
-    if (data == nullptr || size < 0) return 0.0;
+    if (data == nullptr || size <= 0) return 0.0;
 
     // Retornar el cálculo del promedio
     return static_cast<double>(calculateSum()) / size; 
