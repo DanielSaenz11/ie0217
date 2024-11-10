@@ -46,6 +46,7 @@ void DataProcessor::populateData() {
     }
 }
 
+// Definición del método para calcular la suma de los elementos de data
 int DataProcessor::calculateSum() {
     // Si data es igual a nullptr, se retorna 0
     if (data == nullptr) return 0;
@@ -59,6 +60,7 @@ int DataProcessor::calculateSum() {
     return sum;
 }
 
+// Definición de método para calcular el promedio de los elementos de data
 double DataProcessor::calculateAverage() {
     // Si data es igual a nullptr o el tamaño es menor que 0, se retorna 0
     if (data == nullptr || size < 0) return 0.0;
@@ -67,6 +69,7 @@ double DataProcessor::calculateAverage() {
     return static_cast<double>(calculateSum()) / size; 
 }
 
+// Definición de método para realizar un proceso concurrente de 2 hilos
 void DataProcessor::concurrentProcess() {
     // Si data es igual a nullptr
     if (data == nullptr) return;
@@ -80,6 +83,7 @@ void DataProcessor::concurrentProcess() {
     t2.join();
 }
 
+// Definición de método para imprimir los elementos del arreglo
 void DataProcessor::printData() {
     // Si data es igual a nullptr
     if (data == nullptr) return;
@@ -90,6 +94,7 @@ void DataProcessor::printData() {
     }
 }
 
+// Definición de método para procesar los datos
 void DataProcessor::processData() {
     // Si data es igual a nullptr
     if (data == nullptr) return;
