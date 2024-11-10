@@ -23,6 +23,9 @@ DataProcessor::DataProcessor(int size) : size(size), data(nullptr) {
     } else {
         // Mostrar error
         std::cout << "Error: invalid size\n";
+        
+        // Apuntar data a nullptr
+        data = nullptr;
     }
 }
 
