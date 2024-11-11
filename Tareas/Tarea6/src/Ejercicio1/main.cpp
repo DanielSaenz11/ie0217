@@ -16,7 +16,16 @@
 #include <thread>
 #include <vector>
 
-
+/**
+ * @brief Función principal para el sistema de soporte técnico paralelo.
+ * @details La función principal configura e inicia los hilos de clientes y operadores, los cuales simulan
+ *          el proceso de generación y atención de solicitudes en un sistema concurrente. Los hilos de clientes
+ *          generan solicitudes que se almacenan en un buffer compartido, mientras que los operadores procesan
+ *          dichas solicitudes. Una vez que todos los clientes han terminado de generar solicitudes, se marca el
+ *          final de la producción y se notifica a todos los operadores para que finalicen su ejecución.
+ * 
+ * @return `int` Código de estado de la aplicación, retorna 0 si la ejecución fue exitosa.
+ */
 int main() {
     // Declaración de vector de threads para clientes y operadores
     std::vector<std::thread> clientes, operadores;
