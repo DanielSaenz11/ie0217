@@ -87,8 +87,15 @@ void cliente(int id, int num_solicitudes) {
 void operador(int id) {
     // Bucle infinito que consume tareas
     while (true) {
-        // Decrementa el valor del contador full_slots: Se consumió una solicitud
-        full_slots.acquire();
+        // Salida rápida si la producción finalizó y el buffer está vacío, así se evita que espere innecesariamente
+        if (produccion_finalizada && buffer.empty()) {
+            break; // Salir si no hay más solicitudes y la producción ha finalizado
+        }
+
+        // Decrementa el valor del contador full_slots: Se consumió una solicitud si la producción no ha terminado
+        if (!produccion_finalizada) {
+            full_slots.acquire();
+        }
 
         // Bloqueo exclusivo sobre mtx para que únicamente un hilo pueda acceder
         std::unique_lock<std::mutex> lock(mtx);
@@ -97,11 +104,8 @@ void operador(int id) {
         // Permite que otros hilos accedan al buffer durante la espera
         cv_operador.wait(lock, [] { return !buffer.empty() || produccion_finalizada; });
 
-        if (buffer.empty() && produccion_finalizada) {
-            lock.unlock();
-            empty_slots.release();  // Liberar el espacio ocupado en caso de estar dentro del buffer
-            break; // Terminar si no hay más solicitudes
-        }
+        // Si el estado del buffer cambió mientras el hilo estaba en espera
+        if (produccion_finalizada && buffer.empty()) break;
 
         // Si el buffer no está vacío
         if (!buffer.empty()) {
@@ -113,10 +117,10 @@ void operador(int id) {
             empty_slots.release(); // Incrementa el contador de espacios libres en el buffer
         }
         
+        lock.unlock(); // Desbloquea el lock
+        
         // Notificar a un cliente en espera de un espacio en el buffer
         cv_cliente.notify_one();
-
-        lock.unlock(); // Desbloquea el lock
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Tiempo de procesamiento simulado
     }
