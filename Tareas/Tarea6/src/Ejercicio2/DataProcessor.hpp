@@ -89,14 +89,14 @@ public:
     void printData();
 
 private:
-    /// @brief Puntero del arreglo de datos
-    int* data;
-
     /// @brief Tamaño del arreglo de datos
     int size;
 
+    /// @brief Puntero del arreglo de datos
+    int* data;
+
     /// @brief Número de elementos inicializados en el arreglo;
-    int initializedElements = 0;
+    int initializedElements;
 
     /// @brief Mutex para la sincronización entre hilos
     std::mutex mtx;
