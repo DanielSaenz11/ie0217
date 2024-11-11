@@ -95,6 +95,9 @@ private:
     /// @brief Tamaño del arreglo de datos
     int size;
 
+    /// @brief Número de elementos inicializados en el arreglo;
+    int initializedElements = 0;
+
     /// @brief Mutex para la sincronización entre hilos
     std::mutex mtx;
 

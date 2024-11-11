@@ -46,6 +46,7 @@ void DataProcessor::populateData() {
     // Recorrer el arreglo y asignar a las entradas el índice multiplicado por 10
     for (int i = 0; i < size; ++i) {
         data[i] = i * 10;
+        ++initializedElements; // Incrementar el contador de elementos inicializados
     }
 }
 
@@ -92,7 +93,7 @@ void DataProcessor::printData() {
     if (data == nullptr) return;
 
     // Imprimir el contenido de cada índice del arreglo
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < initializedElements; i++) {
         std::cout << "Data[" << i << "] = " << data[i] << std::endl;
     }
 }
@@ -103,7 +104,7 @@ void DataProcessor::processData() {
     if (data == nullptr) return;
 
     // Recorrer el arreglo
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < initializedElements; ++i) {
         std::lock_guard<std::mutex> lock(mtx); // Proteger el acceso
         data[i] *= 2; // Duplicar entrada
     }
