@@ -47,6 +47,8 @@ int main() {
 
     // Indicar que todos los clientes terminaron de generar solicitudes
     produccion_finalizada = true;
+
+    full_slots.release(NUM_OPERADORES);
     
     // Notifica a todos los hilos de operadores en espera
     cv_operador.notify_all();

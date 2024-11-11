@@ -26,7 +26,6 @@
 #include <random>
 
 // Configuración inicial
-constexpr int TAMANO_BUFFER = 10; // Tamaño del buffer
 std::queue<int> buffer; // Buffer modelado como una cola
 std::mutex mtx; // Mutex para proteger el acceso al buffer
 std::counting_semaphore<TAMANO_BUFFER> empty_slots(TAMANO_BUFFER); // Semáforo empty_slots: Tamaño inicial del buffer

@@ -17,15 +17,19 @@
 #ifndef SOPORTE_TECNICO_HPP
 #define SOPORTE_TECNICO_HPP
 
-#define NUM_CLIENTES 4
-#define NUM_OPERADORES 3
+#define NUM_CLIENTES 15
+#define NUM_OPERADORES 10
 #define SOLICITUDES_POR_CLIENTE 10
 
 #include <condition_variable>
+#include <semaphore>
 #include <atomic>
 
+constexpr int TAMANO_BUFFER = 15; // Tamaño del buffer
 extern std::condition_variable cv_cliente, cv_operador; // Variables de condición para cliente y operador
 extern std::atomic<bool> produccion_finalizada; // Booleano para indicar si la producción finalizó
+extern std::counting_semaphore<TAMANO_BUFFER> full_slots;
+extern std::counting_semaphore<TAMANO_BUFFER> empty_slots;
 
 /**
  * @brief Función para generar solicitudes por parte de los clientes.
