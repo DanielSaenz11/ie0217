@@ -1,5 +1,5 @@
 /**
- * @file soporte_tecnico.cpp
+ * @file solicitudes.cpp
  * @brief Implementación de las funciones para el sistema de soporte técnico paralelo.
  * @details Este archivo contiene la implementación de las funciones definidas en el archivo de cabecera.
  *          Aquí se desarrollan las operaciones de los hilos de clientes y operadores, que utilizan mecanismos
