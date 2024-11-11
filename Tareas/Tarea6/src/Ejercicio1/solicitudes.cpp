@@ -31,13 +31,22 @@ std::mutex mtx; // Mutex para proteger el acceso al buffer
 std::counting_semaphore<TAMANO_BUFFER> empty_slots(TAMANO_BUFFER); // Semáforo empty_slots: Tamaño inicial del buffer
 std::counting_semaphore<TAMANO_BUFFER> full_slots(0); // Semáforo full_slots: Tamaño inicial de 0
 
-// Variables de monitoreo
-std::atomic<int> total_solicitudes_procesadas{0}; // Total de solicitudes procesadas
-std::atomic<int> tiempo_espera_total_clientes{0}; // Tiempo de espera total de clientes
-std::atomic<int> tiempo_espera_total_operadores{0}; // Tiempo de espera total de operadores
+// Variables de monitoreo para operadores
+std::atomic<int> tiempo_total_procesamiento_operadores{0};
+std::atomic<int> tiempo_total_espera_operadores{0};
+std::atomic<int> num_procesos_operadores{0};
 
-// Variables compartidas
+// Variables de monitoreo para clientes
+std::atomic<int> tiempo_total_procesamiento_clientes{0};
+std::atomic<int> tiempo_total_espera_clientes{0};
+std::atomic<int> num_procesos_clientes{0};
+
+std::atomic<int> total_solicitudes_procesadas;
+
+// Condition variables
 std::condition_variable cv_cliente, cv_operador;
+
+// Estado de producción
 std::atomic<bool> produccion_finalizada{false};
 
 // Definición de función para los hilos de los clientes (productores)
@@ -62,7 +71,10 @@ void cliente(int id, int num_solicitudes) {
         auto fin = std::chrono::high_resolution_clock::now();
 
         // Cálculo del tiempo de espera para el cliente
-        tiempo_espera_total_clientes += std::chrono::duration_cast<std::chrono::milliseconds>(fin - inicio).count();
+        tiempo_total_espera_clientes += std::chrono::duration_cast<std::chrono::microseconds>(fin - inicio).count();
+
+        // Iniciar la medición del tiempo de procesamiento
+        auto inicio_procesamiento = std::chrono::high_resolution_clock::now();
 
         // Bloque de código que bloquea el lock: Crea un scope
         {
@@ -72,13 +84,19 @@ void cliente(int id, int num_solicitudes) {
             // Desbloquear lock al salir del scope
         }
 
+        // Fin del procesamiento y cálculo del tiempo de procesamiento
+        auto fin_procesamiento = std::chrono::high_resolution_clock::now();
+        int tiempo_procesamiento = std::chrono::duration_cast<std::chrono::microseconds>(fin_procesamiento - inicio_procesamiento).count();
+        tiempo_total_procesamiento_clientes += tiempo_procesamiento;
+        num_procesos_clientes++;
+
         // Incrementa el valor del contador de full_slots: Hay una nueva solicitud
         full_slots.release();
 
         // Notificar a un operador en espera de una solicitud en el buffer
         cv_operador.notify_one();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(dist(gen))); // Espera aleatoria entre solicitudes
+        std::this_thread::sleep_for(std::chrono::microseconds(dist(gen))); // Espera aleatoria entre solicitudes
     }
 }
 
@@ -88,7 +106,11 @@ void operador(int id) {
     while (true) {
         // Decrementa el valor del contador full_slots: Se consumió una solicitud si la producción no ha terminado
         if (!produccion_finalizada) {
+            auto inicio = std::chrono::high_resolution_clock::now();
             full_slots.acquire();
+            auto fin = std::chrono::high_resolution_clock::now();
+            int tiempo_espera = std::chrono::duration_cast<std::chrono::microseconds>(fin - inicio).count();
+            tiempo_total_espera_operadores += tiempo_espera;
         }
 
         {
@@ -98,36 +120,56 @@ void operador(int id) {
                 break; // Salir
             }
 
+            // Iniciar la medición del tiempo de procesamiento
+            auto inicio_procesamiento = std::chrono::high_resolution_clock::now();
+
             // Si el buffer no está vacío
             if (!buffer.empty()) {
                 int solicitud = buffer.front(); // Obtener el elemento del frente de la cola
                 buffer.pop(); // Elimina el elemento sacado previamente
-                total_solicitudes_procesadas++; // Aumenta el número de solicitudes procesadas
+                total_solicitudes_procesadas++;
                 std::cout << "Operador " << id << " procesó la solicitud " << solicitud << std::endl;
             }
+            
+            // Fin del procesamiento y cálculo del tiempo de procesamiento
+            auto fin_procesamiento = std::chrono::high_resolution_clock::now();
+
+            int tiempo_procesamiento = std::chrono::duration_cast<std::chrono::microseconds>(fin_procesamiento - inicio_procesamiento).count();
+            tiempo_total_procesamiento_operadores += tiempo_procesamiento;
+            num_procesos_operadores++;
         }
+
 
         empty_slots.release(); // Incrementa el contador de espacios libres en el buffer
 
         // Notificar a un cliente en espera de un espacio en el buffer
         cv_cliente.notify_one();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Tiempo de procesamiento simulado
+        std::this_thread::sleep_for(std::chrono::microseconds(100)); // Tiempo de procesamiento simulado
     }
 }
 
 // Monitoreo de rendimiento y métricas
 void monitorear_rendimiento(int num_clientes, int num_operadores) {
-    // Cálculo de tiempo de espera promedio entre clientes
-    int espera_promedio_clientes = tiempo_espera_total_clientes / (num_clientes * TAMANO_BUFFER);
+    int espera_promedio_clientes = (num_procesos_clientes > 0) 
+                                   ? tiempo_total_espera_clientes / num_procesos_clientes 
+                                   : 0;
+    int procesamiento_promedio_clientes = (num_procesos_clientes > 0) 
+                                          ? tiempo_total_procesamiento_clientes / num_procesos_clientes 
+                                          : 0;
 
-    // Cálculo de tiempo de espera promedio entre operadores
-    int espera_promedio_operadores = tiempo_espera_total_operadores / (num_operadores * TAMANO_BUFFER);
-    
-    // Imprimir resultados
+    int espera_promedio_operadores = (num_procesos_operadores > 0) 
+                                     ? tiempo_total_espera_operadores / num_procesos_operadores 
+                                     : 0;
+    int procesamiento_promedio_operadores = (num_procesos_operadores > 0) 
+                                            ? tiempo_total_procesamiento_operadores / num_procesos_operadores 
+                                            : 0;
+
     std::cout << "\n--- Métricas de Rendimiento ---" << std::endl;
     std::cout << "Total de solicitudes procesadas: " << total_solicitudes_procesadas << std::endl;
-    std::cout << "Tiempo de espera promedio para clientes: " << espera_promedio_clientes << " ms" << std::endl;
-    std::cout << "Tiempo de espera promedio para operadores: " << espera_promedio_operadores << " ms" << std::endl;
-    std::cout << "Tamaño del buffer: " << TAMANO_BUFFER << std::endl;
+    std::cout << "Tiempo promedio de espera para clientes: " << espera_promedio_clientes << " us" << std::endl;
+    std::cout << "Tiempo promedio de procesamiento para clientes: " << procesamiento_promedio_clientes << " us" << std::endl;
+    std::cout << "Tiempo promedio de espera para operadores: " << espera_promedio_operadores << " us" << std::endl;
+    std::cout << "Tiempo promedio de procesamiento para operadores: " << procesamiento_promedio_operadores << " us" << std::endl;
 }
+

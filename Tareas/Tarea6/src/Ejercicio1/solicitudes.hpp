@@ -17,9 +17,9 @@
 #ifndef SOPORTE_TECNICO_HPP
 #define SOPORTE_TECNICO_HPP
 
-#define NUM_CLIENTES 15
-#define NUM_OPERADORES 10
-#define SOLICITUDES_POR_CLIENTE 10
+#define NUM_CLIENTES 20
+#define NUM_OPERADORES 50
+#define SOLICITUDES_POR_CLIENTE 40
 
 #include <condition_variable>
 #include <semaphore>
@@ -30,6 +30,16 @@ extern std::condition_variable cv_cliente, cv_operador; // Variables de condici�
 extern std::atomic<bool> produccion_finalizada; // Booleano para indicar si la producción finalizó
 extern std::counting_semaphore<TAMANO_BUFFER> full_slots;
 extern std::counting_semaphore<TAMANO_BUFFER> empty_slots;
+
+// Variables de monitoreo para operadores
+extern std::atomic<int> tiempo_total_procesamiento_operadores;
+extern std::atomic<int> tiempo_total_espera_operadores;
+extern std::atomic<int> num_procesos_operadores;
+
+// Variables de monitoreo para clientes
+extern std::atomic<int> tiempo_total_procesamiento_clientes;
+extern std::atomic<int> tiempo_total_espera_clientes;
+extern std::atomic<int> num_procesos_clientes;
 
 /**
  * @brief Función para generar solicitudes por parte de los clientes.
