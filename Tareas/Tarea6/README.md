@@ -10,7 +10,7 @@ Se compone de los siguientes elementos:
 
 ## Documentación
 
-La documentación en Doxygen correspondiente a la presente asignación fue alojada en el siguiente sitio web de Netlify (Tarea 6 IE0217)[https://tarea6-ie0217.netlify.app]. 
+La documentación en Doxygen correspondiente a la presente asignación fue alojada en el siguiente sitio web de Netlify [Tarea 6 IE0217](https://tarea6-ie0217.netlify.app). 
 
 Acceda a `Archivos -> Lista de Archivos` para encontrar la documentación por archivo de cada uno de los ejercicios.
 
@@ -530,7 +530,38 @@ valgrind --tool=helgrind ./programa
 
 En la salida, se indican las líneas donde ocurren posibles condiciones de carrera, bloqueos o _deadlocks_. 
 
-## Sistema de Administración de Solicitudes en Paralelo
+## Explicación Formato Markdown utilizado
+
+En el enunciado, se menciona que hay que investigar y agregar explicaciones para el formato Markdown. Por lo tanto, en esta sección se va a agregar una guía general para la elaboración de archivos con extensión `.md`.
+
+- __Headers (#)__:
+Para colocar títulos en Markdown se utiliza `#`, dependiendo de cuantos caracteres de este tipo se coloquen, indica el nivel del título. Note que `#` indica el encabezado de mayor tamaño (nivel 1), mientras que `######` indica el encabezado de menor tamaño (nivel 6).
+
+- __Listas sin orden__:
+Para colocar listas sin un orden, se utilizó el caracter `-`. Cada ítem de la lista, se encuentra indicado por este. Se pueden usar también otros caracteres como `*` y `+`, los cuales funcionan de la misma forma.
+
+- __Listas ordenadas__:
+El formato para colocar listas ordenadas corresponde a colocar los números del ítem para el cual se está poniendo. Por ejemplo: `1.`, `2.` y así sucesivamente.
+
+- __Itálica__:
+Para colocar palabras en itálica, se rodea la palabra con `_` o `*` en ambos lados. Por ejemplo: `_italica_` o `*italica*`.
+
+- __Negrita__:
+En cuanto a las negritas, funciona de forma similar que itálica, se colocan `_` o `*` dobles alrededor de la palabra. Por ejemplo: `**negrita**` o `__negrita__`.
+
+- __Código__:
+El código multilínea se escribe al rodear el bloque de código con tres caracteres de \`. Mientras que, el código en una línea simple, se escribe al rodearlo con \` una única vez.
+
+- __Hipervínculos__:
+Para agregar enlaces en Markdown, se utiliza el siguiente formato:
+
+```
+[Palabras con hipervinculo](enlace)
+```
+
+## Ejercicio 1. Sistema de Administración de Solicitudes en Paralelo
+
+
 
 ## Ejercicio 2. Depuración Completa de Código en C++ con `GDB`, Valgrind y Sanitizers.
 
