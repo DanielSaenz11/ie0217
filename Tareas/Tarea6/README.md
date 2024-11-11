@@ -875,16 +875,16 @@ Como demostración de que el cálculo del promedio se realizó correctamente, se
 
 Al plantear la expresión para calcular el promedio, se tiene el siguiente resultado para `size = 1000`:
 
-$P = \frac{0 + 40 + 80 + 120 + \dots + 39960}{1000}$
+$$P = \frac{0 + 40 + 80 + 120 + \dots + 39960}{1000}$$
 
-$P = \frac{40 (0 + 1 + 2 + 3 + \dots + 999)}{1000}$
+$$P = \frac{40 (0 + 1 + 2 + 3 + \dots + 999)}{1000}$$
 
 Ahora, si se aplica la fórmula de Gauss para calcular la suma de números consecutivos, se obtiene lo siguiente:
 
-$P = \frac{40 \frac{999 \cdot 1000}{2}}{1000}$
+$$P = \frac{40 \frac{999 \cdot 1000}{2}}{1000}$$
 
-$P = 20 \cdot 999$
+$$P = 20 \cdot 999$$
 
-$P = 19980$
+$$P = 19980$$
 
 Por lo tanto, el cálculo del promedio se realizó de forma correcta en el algoritmo.
