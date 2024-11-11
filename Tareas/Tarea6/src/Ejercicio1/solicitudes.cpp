@@ -97,28 +97,21 @@ void operador(int id) {
             full_slots.acquire();
         }
 
-        // Bloqueo exclusivo sobre mtx para que únicamente un hilo pueda acceder
-        std::unique_lock<std::mutex> lock(mtx);
-
-        // Hilo del operador en espera mientras no se cumple la condición en la función lambda
-        // Permite que otros hilos accedan al buffer durante la espera
-        cv_operador.wait(lock, [] { return !buffer.empty() || produccion_finalizada; });
-
-        // Si el estado del buffer cambió mientras el hilo estaba en espera
-        if (produccion_finalizada && buffer.empty()) break;
-
-        // Si el buffer no está vacío
-        if (!buffer.empty()) {
-            int solicitud = buffer.front(); // Obtener el elemento del frente de la cola
-            buffer.pop(); // Elimina el elemento sacado previamente
-            total_solicitudes_procesadas++; // Aumenta el número de solicitudes procesadas
-            std::cout << "Operador " << id << " procesó la solicitud " << solicitud << std::endl;
-
-            empty_slots.release(); // Incrementa el contador de espacios libres en el buffer
+        // Fragmento protegido por el mutex
+        {
+            std::lock_guard<std::mutex> lock(mtx);
+            
+            // Si el buffer no está vacío
+            if (!buffer.empty()) {
+                int solicitud = buffer.front(); // Obtener el elemento del frente de la cola
+                buffer.pop(); // Elimina el elemento sacado previamente
+                total_solicitudes_procesadas++; // Aumenta el número de solicitudes procesadas
+                std::cout << "Operador " << id << " procesó la solicitud " << solicitud << std::endl;
+            }
         }
         
-        lock.unlock(); // Desbloquea el lock
-        
+        empty_slots.release(); // Incrementa el contador de espacios libres en el buffer
+
         // Notificar a un cliente en espera de un espacio en el buffer
         cv_cliente.notify_one();
 
