@@ -636,6 +636,8 @@ En esta configuración, se procesaron un total de 1,200 solicitudes. El tiempo p
 
 Este caso muestra una distribución equilibrada de la carga, ya que el número de operadores es suficiente para procesar las solicitudes generadas por los clientes de manera oportuna. Como resultado, se observan tiempos de espera bajos para ambos roles, lo cual indica un uso eficiente de los recursos sin saturación en ninguna de las etapas.
 
+En esta configuración, el uso de CPU se distribuye de forma equilibrada entre los clientes y los operadores. Los operadores consumen una cantidad baja de CPU, reflejada en el tiempo de procesamiento promedio de 9 microsegundos.
+
 <p align="center">
   <img width="750" src="./images/1_caso1.png">
 </p>
@@ -645,6 +647,8 @@ Este caso muestra una distribución equilibrada de la carga, ya que el número d
 En este caso, el sistema procesó 2,000 solicitudes. El tiempo de espera promedio para los clientes aumentó considerablemente a 951 microsegundos, mientras que el tiempo promedio de espera para los operadores fue de sólo 135 microsegundos. Los tiempos promedio de procesamiento fueron de 203 microsegundos para los clientes y 6 microsegundos para los operadores.
 
 La alta demanda generada por los clientes, en contraste con un número relativamente bajo de operadores, produjo un cuello de botella en el procesamiento de solicitudes. Esto generó tiempos de espera elevados para los clientes, que deben esperar a que haya operadores disponibles, mientras que los operadores tienen un tiempo de espera bajo porque siempre encuentran solicitudes en el buffer. Este escenario sugiere que el sistema requiere una proporción adecuada de operadores para manejar eficientemente la carga generada por los clientes.
+
+Los operadores se encuentran procesando solicitudes de manera continua debido a la alta demanda de los clientes. El tiempo de procesamiento promedio para los operadores es de solo 6 microsegundos, lo que indica un uso intensivo de CPU para atender las solicitudes de clientes.
 
 <p align="center">
   <img width="750" src="./images/1_caso2.png">
