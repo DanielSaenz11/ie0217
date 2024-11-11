@@ -41,14 +41,14 @@ std::atomic<int> tiempo_espera_total_operadores{0}; // Tiempo de espera total de
 std::condition_variable cv_cliente, cv_operador;
 std::atomic<bool> produccion_finalizada{false};
 
-// Generador de tiempos aleatorios para simular tiempos de espera
-std::random_device rd;
-std::mt19937 gen(rd());
-std::uniform_int_distribution<> dist(50, 150);
-
-
 // Definición de función para los hilos de los clientes (productores)
 void cliente(int id, int num_solicitudes) {
+
+    // Generador de tiempos aleatorios para simular tiempos de espera para cada hilo
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(50, 150);
+
     // Generar solicitudes por cliente
     for (int i = 0; i < num_solicitudes; ++i) {
         int solicitud = id * 100 + i; // Generación de la solicitud a partir del ID del cliente
@@ -87,20 +87,18 @@ void cliente(int id, int num_solicitudes) {
 void operador(int id) {
     // Bucle infinito que consume tareas
     while (true) {
-        // Salida rápida si la producción finalizó y el buffer está vacío, así se evita que espere innecesariamente
-        if (produccion_finalizada && buffer.empty()) {
-            break; // Salir si no hay más solicitudes y la producción ha finalizado
-        }
-
         // Decrementa el valor del contador full_slots: Se consumió una solicitud si la producción no ha terminado
         if (!produccion_finalizada) {
             full_slots.acquire();
         }
 
-        // Fragmento protegido por el mutex
         {
-            std::lock_guard<std::mutex> lock(mtx);
-            
+            std::lock_guard<std::mutex> lock(mtx); // Proteger este scope el acceso a buffer
+
+            if (produccion_finalizada && buffer.empty()) {
+                break; // Salir
+            }
+
             // Si el buffer no está vacío
             if (!buffer.empty()) {
                 int solicitud = buffer.front(); // Obtener el elemento del frente de la cola
@@ -109,7 +107,7 @@ void operador(int id) {
                 std::cout << "Operador " << id << " procesó la solicitud " << solicitud << std::endl;
             }
         }
-        
+
         empty_slots.release(); // Incrementa el contador de espacios libres en el buffer
 
         // Notificar a un cliente en espera de un espacio en el buffer
