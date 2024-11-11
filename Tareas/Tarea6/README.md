@@ -561,7 +561,148 @@ Para agregar enlaces en Markdown, se utiliza el siguiente formato:
 
 ## Ejercicio 1. Sistema de Administración de Solicitudes en Paralelo
 
+### Resumen general del programa
 
+El programa del `Ejercicio1` consiste en la simulación de un sistema de soporte técnico concurrente en el que varios clientes generan solicitudes, que se colocan en un buffer compartido. Los operadores consumen estas solicitudes para procesarlas.
+
+### Manejo de sincronización
+
+- __`BUFFER_SIZE`__: Constante que define la capacidad máxima del buffer, controlando cuántas solicitudes pueden almacenarse al mismo tiempo antes de que los clientes deban esperar por espacio.
+
+- __Buffer compartido (`buffer`)__: Cola (`std::queue<int>`) que almacena las solicitudes generadas por los clientes y que serán procesadas por los operadores. Este buffer funciona como el área de intercambio de trabajo entre los clientes y los operadores.
+
+- __`Mutex (mtx)`__: Mecanismo de exclusión mutua que protege el acceso al buffer, asegurando que un único hilo pueda acceder y modificar el buffer a la vez, evitando así condiciones de carrera y garantizando la integridad de los datos.
+
+- __Variables de condición (`cv_client` y `cv_operator`)__: Permiten que los clientes y operadores esperen de forma eficiente. `cv_client` notifica a los clientes cuando hay espacio en el buffer, mientras que `cv_operator` notifica a los operadores cuando hay nuevas solicitudes listas para procesar.
+
+- __Semáforos (`empty_slots` y `full_slots`)__: Ayudan a manejar el estado del buffer. `empty_slots` indica cuántos espacios vacíos quedan, así se evita que los clientes añadan solicitudes cuando el buffer está lleno. `full_slots` cuenta las solicitudes en el buffer y permite que los operadores sólo procesen cuando hay solicitudes disponibles.
+
+### Condiciones de carrera
+
+Como se explicó anteriormente en la sección de preguntas teóricas, una condición de carrera ocurre cuando múltiples hilos acceden y modifican un recurso compartido simultáneamente sin la debida sincronización, lo que genera resultados inconsistentes o impredecibles.
+
+Si se omite el uso de `mutex` y `condition_variable` en este caso, múltiples hilos de clientes y operadores podrían acceder al `buffer` al mismo tiempo, causando problemas como los siguientes:
+
+- __Solicitudes perdidas o duplicadas__: Dos hilos podrían insertar o eliminar solicitudes del buffer simultáneamente, corrompiendo la estructura de la cola.
+__Accesos concurrentes al buffer__: Si varios hilos intentan leer y modificar el buffer sin sincronización, podrían acceder a datos obsoletos o en estado de cambio, causando resultados inesperados.
+
+En la siguiente imagen, se muestra la ejecución al eliminar los `mutex` y `condition_variables`.
+
+<p align="center">
+  <img width="750" src="./images/1_race.png">
+</p>
+
+Se tomó únicamente un fragmento pues la salida es considerablemente grande. Sin embargo, efectivamente se obtuvo que existen condiciones de carrera si se omiten los `mutex` y `condition_variables`. Esta prueba se realizó al comentar cada uno de las apariciones de estas en el código.
+
+Ahora, ¿cómo se implementó una solución con los mecanismos de sincronización? 
+
+En el caso de los `mutex`, protegen el acceso exclusivo al buffer, permitiendo que sólo un hilo (ya sea cliente o operador) pueda modificar el buffer a la vez. Esto asegura que cuando un cliente o un operador accede al buffer, ningún otro hilo pueda interferir, lo que evita accesos concurrentes que podrían llevar a corrupción de datos.
+
+Las variables de condición permiten que los hilos esperen de forma pasiva. Si el buffer está lleno, los clientes esperan en cv_client hasta que un operador libere espacio. De forma similar, si el buffer está vacío, los operadores esperan en cv_operator hasta que un cliente agregue una nueva solicitud. Esto permite que los hilos no entren en espera activa y se sincronicen de manera eficiente.
+
+Por ejemplo, en el siguiente fragmento de código (perteneciente a `cliente`) se emplean los mutex para proteger el acceso al buffer en lo que se procesa la solicitud. Luego, se notifica a un operador en espera que se generó una nueva solicitud.
+
+```cpp
+// Bloque de código que bloquea el lock: Crea un scope
+{
+    std::lock_guard<std::mutex> lock(mtx); // Bloquear porción de memoria compartida
+    buffer.push(solicitud); // Realizar la solicitud
+    std::cout << "Cliente " << id << " generó la solicitud " << solicitud << std::endl;
+    // Desbloquear lock al salir del scope
+}
+
+// Incrementa el valor del contador de full_slots: Hay una nueva solicitud
+full_slots.release();
+
+// Notificar a un operador en espera de una solicitud en el buffer
+cv_operador.notify_one();
+```
+
+A continuación, se muestra la salida de ejecutar el programa con `TSan`.
+
+<p align="center">
+  <img width="750" src="./images/1_threadSanitizer.png">
+</p>
+
+Observe que no se producen condiciones de carrera en esta caso. Ahora bien, respecto a `helgrind` se indica como si hubiera condiciones de carrera al ejecutar el programa. Sin embargo, esta herramienta suele dar falsos positivos cuando se trabaja con `std::atomic<bool> produccion_finalizada`. Por lo tanto, es entendible que marque que al modificar/acceder a esta variable, se produzcan condiciones de carrera cuando no es así (pues está diseñada para no tener que implementar un `mutex` ni nada similar).
+
+### Medición de uso de recursos y optimización
+
+Se realizó un análisis de rendimiento en el sistema de soporte técnico concurrente bajo tres configuraciones de carga, variando el número de hilos de clientes y operadores para evaluar los tiempos promedio de espera y procesamiento en cada caso.
+
+- __Caso 1__: Balance entre clientes y operadores (30 clientes, 30 operadores)
+
+En esta configuración, se procesaron un total de 1,200 solicitudes. El tiempo promedio de espera para los clientes fue de 440 microsegundos, mientras que el de los operadores fue de 498 microsegundos. Los tiempos promedio de procesamiento fueron de 223 microsegundos para los clientes y 9 microsegundos para los operadores.
+
+Este caso muestra una distribución equilibrada de la carga, ya que el número de operadores es suficiente para procesar las solicitudes generadas por los clientes de manera oportuna. Como resultado, se observan tiempos de espera bajos para ambos roles, lo cual indica un uso eficiente de los recursos sin saturación en ninguna de las etapas.
+
+<p align="center">
+  <img width="750" src="./images/1_caso1.png">
+</p>
+
+- __Caso 2__: Más clientes que operadores (50 clientes, 20 operadores)
+
+En este caso, el sistema procesó 2,000 solicitudes. El tiempo de espera promedio para los clientes aumentó considerablemente a 951 microsegundos, mientras que el tiempo promedio de espera para los operadores fue de sólo 135 microsegundos. Los tiempos promedio de procesamiento fueron de 203 microsegundos para los clientes y 6 microsegundos para los operadores.
+
+La alta demanda generada por los clientes, en contraste con un número relativamente bajo de operadores, produjo un cuello de botella en el procesamiento de solicitudes. Esto generó tiempos de espera elevados para los clientes, que deben esperar a que haya operadores disponibles, mientras que los operadores tienen un tiempo de espera bajo porque siempre encuentran solicitudes en el buffer. Este escenario sugiere que el sistema requiere una proporción adecuada de operadores para manejar eficientemente la carga generada por los clientes.
+
+<p align="center">
+  <img width="750" src="./images/1_caso2.png">
+</p>
+
+- __Caso 3__: Más operadores que clientes (20 clientes, 50 operadores)
+
+En esta configuración, se procesaron 800 solicitudes. Los clientes experimentaron tiempos de espera muy bajos, con un promedio de 121 microsegundos, mientras que los operadores tuvieron un tiempo de espera promedio de 1,256 microsegundos. Los tiempos promedio de procesamiento fueron de 222 microsegundos para los clientes y 8 microsegundos para los operadores.
+
+Tener un número significativamente mayor de operadores que de clientes resultó en una subutilización de recursos. Los clientes pudieron completar sus solicitudes con rapidez, pero los operadores pasaron gran parte del tiempo en espera debido a la falta de solicitudes suficientes en el buffer. Esto indica que el sistema no utiliza eficientemente el exceso de operadores, lo cual resulta en un desperdicio de recursos.
+
+El análisis sugiere que la configuración más eficiente es aquella en la que el número de clientes y operadores está equilibrado, como se observó en el Caso 1.
+
+<p align="center">
+  <img width="750" src="./images/1_caso3.png">
+</p>
+
+### Justificación de `mutex`, `semaphores` y `condition_variables`
+
+Ya se explicó anteriormente el uso de `mutex` y `condition_variables` para evitar las condiciones de carrera entre distintos hilos que intenten acceder a la vez.
+
+En el caso de los semáforos, fueron utilizados para controlar la disponibilidad de espacios en el buffer (empty_slots) y el número de solicitudes en el buffer (full_slots). Esto permite que los hilos de clientes y operadores esperen automáticamente cuando el buffer está lleno o vacío. 
+
+En el caso de la función `operador`, se tiene la siguiente aplicación:
+
+```cpp
+// Decrementa el valor del contador full_slots: Se consumió una solicitud si la producción no ha terminado para operador
+if (!produccion_finalizada) {
+    full_slots.acquire();
+}
+
+/*
+Acceso a buffer
+*/
+
+empty_slots.release(); // Incrementa el contador de espacios libres en el buffer (cliente puede añadir más solicitudes)
+```
+
+### Impacto en el rendimiento
+
+- __Tamaño de buffer__
+    - _Buffer reducido_: Se determinó que provoca bloqueos frecuentes, pues los clientes deben esperar para colocar solicitudes cuando el buffer está lleno, y los operadores pueden quedarse sin solicitudes que procesar cuando el buffer está vacío.
+    - _Buffer grande_: Permite que los clientes coloquen solicitudes sin bloqueos frecuentes, pero podría incrementar el tiempo de espera si el procesamiento es más lento, pues hay solicitudes que no se atienden hasta que los operadores terminen.
+
+- __Número de clientes__: Entre más, se incrementa la carga de solicitudes, generando más trabajo para los operadores. Sin embargo, si el buffer es pequeño, puede provocar bloqueos frecuentes y tiempos de espera.
+
+- __Número de operadores__: Más operadores pueden procesar las solicitudes más rápidamente, reduciendo el tiempo de espera en el buffer. Sin embargo, si hay pocos clientes o un buffer pequeño, un exceso de operadores llevará a tiempos de inactividad extendidos.
+
+
+### Prevención de problemas potenciales (_deadlocks_, _race conditions_)
+
+Para prevenir problemas potenciales como _deadlocks_ o _race conditions_ se utilizan los mecanismos de sincronización descritos al inicio de esta subsección.
+
+Al profundizar poco, se tiene que las __condiciones de carrera__ surgen si varios hilos acceden al buffer sin sincronización, como se ha descrito en numerosas ocasiones. La solución es el uso de `mutex` para proteger el acceso al buffer y `condition_variable` para coordinar la espera y notificación de los hilos de clientes y operadores.
+
+Los __deadlocks__ pueden ocurrir si un hilo bloquea recursos necesarios para otro hilo y ambos quedan en espera indefinida. Para evitar esto, se utilizan `condition_variable` para notificar de manera controlada a los hilos de operadores y clientes.
+
+Al finalizar la producción de solicitudes, se usa `cv_operador.notify_all()` para que todos los operadores revisen la condición de finalización y terminen de manera segura, evitando que se queden bloqueados.
 
 ## Ejercicio 2. Depuración Completa de Código en C++ con `GDB`, Valgrind y Sanitizers.
 
