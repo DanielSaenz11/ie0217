@@ -47,7 +47,6 @@ int main() {
         hilo_operador.join();
     }
 
-    // monitorear_rendimiento(NUM_CLIENTES, NUM_OPERADORES);
     std::cout << "Todos los clientes y operadores han terminado." << std::endl;
 
     return 0;
