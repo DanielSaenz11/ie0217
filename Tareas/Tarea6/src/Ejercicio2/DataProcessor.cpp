@@ -16,16 +16,13 @@
 #include <thread>
 
 // Definición del constructor
-DataProcessor::DataProcessor(int size) : size(size), data(nullptr) {
+DataProcessor::DataProcessor(int size) : size(size), data(nullptr), initializedElements(0) {
     // Si el tamaño es positivo, se reserva la memoria para el arreglo data
     if (size > 0) {
         data = new int[size];
     } else {
         // Mostrar error
         std::cout << "Error: invalid size\n";
-        
-        // Apuntar data a nullptr
-        data = nullptr;
     }
 }
 
