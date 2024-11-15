@@ -18,4 +18,6 @@ double inductanciaSerie(const std::vector<double>& inductancias);
 
 double inductanciaParalelo(const std::vector<double>& inductancias);
 
+double capacitanciaEquivalenteSerieParalelo(const std::vector<std::vector<double>>& gruposCapacitancias);
+
 #endif // CIRCUITOS_HPP

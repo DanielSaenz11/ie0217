@@ -106,3 +106,19 @@ double inductanciaParalelo(const std::vector<double>& inductancias) {
     }
     return 1.0 / inversaTotal;
 }
+
+double capacitanciaEquivalenteSerieParalelo(const std::vector<std::vector<double>>& gruposCapacitancias) {
+    if (gruposCapacitancias.empty()) {
+        throw std::invalid_argument("Error: No se proporcionaron grupos de capacitancias.");
+    }
+
+    // Vector para almacenar resultados de capacitancias en paralelo
+    std::vector<double> resultadosParalelo;
+
+    // Procesar cada grupo y calcular su capacitancia equivalente en paralelo
+    for (const auto& grupo : gruposCapacitancias) {
+        resultadosParalelo.push_back(capacitanciaParalelo(grupo));
+    }
+
+    return capacitanciaSerie(resultadosParalelo);
+}

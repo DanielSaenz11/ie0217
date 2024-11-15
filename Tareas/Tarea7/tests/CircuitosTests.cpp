@@ -116,3 +116,48 @@ TEST(CircuitosTest, InductanciaParaleloVectorVacio) {
     std::vector<double> inductancias;
     ASSERT_THROW(inductanciaParalelo(inductancias), std::invalid_argument);
 }
+
+/* ------------------- Tests TDD ------------------- */
+
+// Test para Capacitancia Equivalente Serie Paralelo para parámetros válidos
+TEST(CircuitosTest, CapacitanciaEquivalenteSerieParalelo_CasoValido) {
+    // Dos grupos de capacitancias
+    std::vector<std::vector<double>> gruposCapacitancias = {
+        {10.0, 20.0},  // Primer grupo en paralelo
+        {30.0, 40.0}   // Segundo grupo en paralelo
+    };
+
+    // Cálculo manual:
+    // Paralelo: 10 + 20 = 30
+    // Paralelo: 30 + 40 = 70
+    // Serie: 1 / (1/30 + 1/70) = 21
+    ASSERT_NEAR(capacitanciaEquivalenteSerieParalelo(gruposCapacitancias), 21.0, 0.01);
+}
+
+// Test para Capacitancia Equivalente Serie Paralelo para vector vacío
+TEST(CircuitosTest, CapacitanciaEquivalenteSerieParalelo_VectorVacio) {
+    std::vector<std::vector<double>> gruposCapacitancias;
+
+    ASSERT_THROW(capacitanciaEquivalenteSerieParalelo(gruposCapacitancias), std::invalid_argument);
+}
+
+// Test para Capacitancia Equivalente Serie Paralelo para valores negativos
+TEST(CircuitosTest, CapacitanciaEquivalenteSerieParalelo_ValoresNegativos) {
+    // Un grupo contiene un valor negativo
+    std::vector<std::vector<double>> gruposCapacitancias = {
+        {10.0, -20.0}, // Valor negativo
+        {30.0, 40.0}
+    };
+    ASSERT_THROW(capacitanciaEquivalenteSerieParalelo(gruposCapacitancias), std::invalid_argument);
+}
+
+// Test para Capacitancia Equivalente Serie Paralelo un solo grupo
+TEST(CircuitosTest, CapacitanciaEquivalenteSerieParalelo_UnSoloGrupo) {
+    std::vector<std::vector<double>> gruposCapacitancias = {
+        {10.0, 20.0, 30.0}
+    };
+
+    // Cálculo manual:
+    // Paralelo: 10 + 20 + 30 = 60
+    ASSERT_NEAR(capacitanciaEquivalenteSerieParalelo(gruposCapacitancias), 60.0, 0.01);
+}
