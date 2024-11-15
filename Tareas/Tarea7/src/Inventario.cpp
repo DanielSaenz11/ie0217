@@ -14,6 +14,7 @@
 #include "Inventario.hpp"
 #include <iostream>
 #include <algorithm>
+#include <map>
 
 // Función para agregar un componente al inventario o incrementar su cantidad si ya existe
 void Inventario::agregarComponente(const std::string& nombre, int cantidad, const std::string& categoria, const std::string& descripcion) {
@@ -64,14 +65,24 @@ void Inventario::listarComponentes() const {
         throw std::runtime_error("Error: El inventario está vacío.");
     }
 
-    // Imprimir todos los componentes en el vector
-    std::cout << "=== Inventario de Componentes ===\n";
+    // Usar un map para agrupar los componentes por categorías
+    std::map<std::string, std::vector<Componente>> componentesPorCategoria;
+
+    // Llenar el map con los componentes organizados por categoría
     for (const auto& comp : componentes) {
-        std::cout << "Nombre: " << comp.getNombre() << std::endl
-                  << "Categoría: " << comp.getCategoria() << std::endl
-                  << "Cantidad: " << comp.getCantidad() << std::endl
-                  << "Descripción: " << comp.getDescripcion() << std::endl
-                  << std::endl;
+        componentesPorCategoria[comp.getCategoria()].push_back(comp);
+    }
+
+    // Imprimir los componentes agrupados por categorías
+    std::cout << "=== Inventario de Componentes por Categoría ===\n";
+    for (const auto& [categoria, listaComponentes] : componentesPorCategoria) {
+        std::cout << "Categoría: " << categoria << "\n";
+        for (const auto& comp : listaComponentes) {
+            std::cout << "  Nombre: " << comp.getNombre() << std::endl
+                      << "  Cantidad: " << comp.getCantidad() << std::endl
+                      << "  Descripción: " << comp.getDescripcion() << std::endl
+                      << std::endl;
+        }
     }
 }
 
