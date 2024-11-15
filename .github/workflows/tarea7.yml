@@ -20,7 +20,7 @@ jobs:
       # Paso 2: Configurar GoogleTest y dependencias
       - name: Clone and build GoogleTest
         run: |
-          git clone https://github.com/google/googletest.git
+          git clone https://github.com/google/googletest.git Tareas/Tarea7/googletest
           mkdir -p Tareas/Tarea7/googletest/build
           cd Tareas/Tarea7/googletest/build
           cmake ..
