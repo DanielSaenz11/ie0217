@@ -52,7 +52,7 @@ jobs:
       - name: Generate coverage report
         run: |
           cd Tareas/Tarea7/build
-          lcov --capture --directory . --output-file coverage.info --exclude '*/googletest/*' --exclude '/usr/include/*'
+          lcov --capture --directory . --output-file coverage.info --exclude '*/googletest/*' --exclude '/usr/include/*' --exclude '*/tests/*'
           genhtml coverage.info --output-directory coverage-report
           echo "Coverage report generado en el directorio Tareas/Tarea7/build/coverage-report"
 
