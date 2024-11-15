@@ -1,4 +1,14 @@
-
+/**
+ * @file Circuitos.cpp
+ * @brief Implementación de las funciones para cálculos eléctricos de circuitos.
+ * @details Este archivo contiene las implementaciones de funciones para calcular resistencias,
+ * capacitancias e inductancias en configuraciones de serie y paralelo, junto con la función 
+ * principal para combinar ambas configuraciones en el cálculo de capacitancia equivalente.
+ * 
+ * @author Daniel Alberto Sáenz Obando
+ * @copyright MIT License
+ * @date 15/11/2024
+ */
 
 #include "Circuitos.hpp"
 #include <stdexcept>
@@ -6,6 +16,7 @@
 
 // Función para calcular la resistencia equivalente en serie
 double resistenciaSerie(const std::vector<double>& resistencias) {
+    // Verificar que vector del parámetro no esté vacío
     if (resistencias.empty()) {
         throw std::invalid_argument("Error: Lista de resistencias vacía.");
     }
@@ -17,13 +28,14 @@ double resistenciaSerie(const std::vector<double>& resistencias) {
         }
     }
 
-    // Sumar todos los valores de resistencias del vector
+    // Sumar todos los valores de resistencias del vector: R_1 + R_2 + R_3 + ...
     double resultado =  std::accumulate(resistencias.begin(), resistencias.end(), 0.0);
     return resultado;
 }
 
 // Función para calcular la resistencia equivalente en paralelo
 double resistenciaParalelo(const std::vector<double>& resistencias) {
+    // Verificar que vector del parámetro no esté vacío
     if (resistencias.empty()) {
         throw std::invalid_argument("Error: Lista de resistencias vacía.");
     }
@@ -43,6 +55,7 @@ double resistenciaParalelo(const std::vector<double>& resistencias) {
 
 // Función para calcular la capacitancia equivalente en serie
 double capacitanciaSerie(const std::vector<double>& capacitancias) {
+    // Verificar que vector del parámetro no esté vacío
     if (capacitancias.empty()) {
         throw std::invalid_argument("Error: Lista de capacitancias vacía.");
     }
@@ -53,11 +66,14 @@ double capacitanciaSerie(const std::vector<double>& capacitancias) {
         if (c <= 0) throw std::invalid_argument("Error: La capacitancia debe ser mayor que cero.");
         inversaTotal += 1.0 / c;
     }
+
+    // Calcular la inversa de la inversa total
     return 1.0 / inversaTotal;
 }
 
 // Función para calcular la capacitancia equivalente en paralelo
 double capacitanciaParalelo(const std::vector<double>& capacitancias) {
+    // Verificar que vector del parámetro no esté vacío
     if (capacitancias.empty()) {
         throw std::invalid_argument("Error: Lista de capacitancias vacía.");
     }
@@ -76,6 +92,7 @@ double capacitanciaParalelo(const std::vector<double>& capacitancias) {
 
 // Función para calcular la inductancia equivalente en serie
 double inductanciaSerie(const std::vector<double>& inductancias) {
+    // Verificar que vector del parámetro no esté vacío
     if (inductancias.empty()) {
         throw std::invalid_argument("Error: Lista de inductancias vacía.");
     }
@@ -94,6 +111,7 @@ double inductanciaSerie(const std::vector<double>& inductancias) {
 
 // Función para calcular la inductancia equivalente en paralelo
 double inductanciaParalelo(const std::vector<double>& inductancias) {
+    // Verificar que vector del parámetro no esté vacío
     if (inductancias.empty()) {
         throw std::invalid_argument("Error: Lista de inductancias vacía.");
     }
@@ -104,10 +122,13 @@ double inductanciaParalelo(const std::vector<double>& inductancias) {
         if (l <= 0) throw std::invalid_argument("Error: La inductancia debe ser mayor que cero.");
         inversaTotal += 1.0 / l;
     }
+
+    // Calcular la inversa de la inversa total
     return 1.0 / inversaTotal;
 }
 
 double capacitanciaEquivalenteSerieParalelo(const std::vector<std::vector<double>>& gruposCapacitancias) {
+    // Verificar que vector del parámetro no esté vacío
     if (gruposCapacitancias.empty()) {
         throw std::invalid_argument("Error: No se proporcionaron grupos de capacitancias.");
     }
@@ -120,5 +141,6 @@ double capacitanciaEquivalenteSerieParalelo(const std::vector<std::vector<double
         resultadosParalelo.push_back(capacitanciaParalelo(grupo));
     }
 
+    // Combinar todas las capacitancias equivalentes en paralelo como una configuración en serie
     return capacitanciaSerie(resultadosParalelo);
 }
