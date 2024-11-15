@@ -1,4 +1,14 @@
-
+/**
+ * @file Inventario.cpp
+ * @brief Implementación de la clase Inventario.
+ * @details Este archivo contiene las implementaciones de los métodos de la clase `Inventario`, 
+ * que gestiona un conjunto de componentes electrónicos. Los métodos permiten agregar, reducir, 
+ * listar y buscar componentes en el inventario.
+ * 
+ * @author Daniel Alberto Sáenz Obando
+ * @copyright MIT License
+ * @date 15/11/2024
+ */
 
 
 #include "Inventario.hpp"
@@ -7,6 +17,7 @@
 
 // Función para agregar un componente al inventario o incrementar su cantidad si ya existe
 void Inventario::agregarComponente(const std::string& nombre, int cantidad, const std::string& categoria, const std::string& descripcion) {
+    // Validar que la cantidad sea positiva
     if (cantidad <= 0) {
         throw std::invalid_argument("Error: La cantidad debe ser mayor que cero.");
     }
@@ -27,10 +38,12 @@ void Inventario::agregarComponente(const std::string& nombre, int cantidad, cons
 
 // Reducir la cantidad de un componente específico
 bool Inventario::reducirComponente(const std::string& nombre, int cantidad) {
+    // Validar que la cantidad sea positiva
     if (cantidad <= 0) {
         throw std::invalid_argument("Error: La cantidad debe ser mayor que cero.");
     }
 
+    // Iterador que recorre el vector de componentes y busca si hay coindencia por nombre por medio de una función lambda
     auto it = std::find_if(componentes.begin(), componentes.end(), [&](const Componente& comp) {
         return comp.getNombre() == nombre;
     });
@@ -46,10 +59,12 @@ bool Inventario::reducirComponente(const std::string& nombre, int cantidad) {
 
 // Listar todos los componentes, organizados por categoría
 void Inventario::listarComponentes() const {
+    // Verificar que el vector de componentes no esté vacío
     if (componentes.empty()) {
         throw std::runtime_error("Error: El inventario está vacío.");
     }
 
+    // Imprimir todos los componentes en el vector
     std::cout << "=== Inventario de Componentes ===\n";
     for (const auto& comp : componentes) {
         std::cout << "Nombre: " << comp.getNombre() << std::endl
@@ -62,11 +77,12 @@ void Inventario::listarComponentes() const {
 
 // Buscar un componente específico por nombre y mostrar sus detalles
 const Componente& Inventario::buscarComponente(const std::string& nombre) const {
-
+    // Iterador que recorre el vector de componentes y busca si hay coindencia por nombre por medio de una función lambda
     auto it = std::find_if(componentes.begin(), componentes.end(), [&](const Componente& comp) {
         return comp.getNombre() == nombre;
     });
 
+    // Si se encontró un componente con el nombre indicado
     if (it != componentes.end()) {
         std::cout << "=== Componente encontrado ===" << std::endl
                   << "Nombre: " << it->getNombre() << std::endl
