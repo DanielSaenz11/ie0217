@@ -6,6 +6,8 @@ Se compone de los siguientes elementos:
 
 - Parte teórica
 - Desarrollo de Sistema Base
+    - Módulo 1: Simulador de Inventario de Componentes Electrónicos.
+    - Módulo 2: Cálculos de Circuitos.
 - Pruebas unitarias y cobertura de código
 - _Functional Testing y Test-Driven Development_ (TDD)
 - _Continuous Integration y Continuous Delivery_ (CI/CD)
@@ -18,9 +20,57 @@ Acceda a `Archivos -> Lista de Archivos` para encontrar la documentación por ar
 
 ## Modo de uso
 
-# PENDIENTE
+En general, la tarea consiste de diseñar de los módulos descritos inicialmente, así como _tests_ para verificar su correcto funcionamiento. Para ello, se utilizó la biblioteca `GoogleTest`.
+
+### Instalación de herramientas de _testing_
+
+#### `GoogleTest`
+
+Para instalar `GoogleTest` localmente, clone el siguiente repositorio en el presente directorio `ie0217/Tareas/Tarea7/` con el comando a continuación
+
+```shell
+git clone https://github.com/google/googletest.git
+```
+
+Después de clonar el repositorio, diríjase al directorio `ie0217/Tareas/Tarea7/googletest/` (repositorio clonado) y ejecute los siguientes comandos:
+
+```shell
+mkdir build && cd build
+cmake ..
+make
+```
+
+> [!NOTE]
+> El comando anterior se encarga de compilar la biblioteca en el directorio build
+
+#### `lcov`
+
+Además, para la medición de la cobertura de código testeado, se requiere la herramienta `lcov`. Dependiendo del sistema, varía su proceso de instalación. En el caso de Ubuntu, se utiliza el siguiente comando:
+
+```shell
+sudo apt-get install -y lcov
+```
+
+### Compilación y ejecución de los tests
+
+En primer lugar, para la compilación, diríjase al directorio `ie0217/Tareas/Tarea7/`. Ejecute el siguiente comando para compilar con `CMake`:
+
+```shell
+cmake -S . -B build
+```
+
+> [!TIP]
+> `-S .` especifica el directorio de raíz del proyecto.
+> `-B build` indica el directorio donde se colocan los archivos de construcción (se crea si no existe).
+
+
 
 ## Preguntas teóricas
+
+En esta sección, se responden a las preguntas teóricas colocadas en la primera parte del enunciado de la presente tarea.
+
+> [!NOTE]
+> Hay respuestas que corresponden a más de una subpregunta. Por lo tanto, para las subpreguntas que parecen que no están respondidas, es porque la respuesta se encuentra debajo.
 
 ### 1. ¿Cuáles son los objetivos principales del software testing?
 
@@ -504,6 +554,15 @@ Respecto al primer módulo correspondiente a la Gestión de Inventario, se imple
 7. __Reducción Mayor a la Existente:__ 
     - Comprueba que la operación falle si se intenta reducir más de lo disponible en el inventario.
 
+El resultado de la ejecución de los tests se muestra a continuación: 
+
+<p align="center">
+  <img width="750" src="./images/ComponenteTests.png">
+</p>
+
+> [!NOTE]
+> Observe que efectivamente se cumple correctamente la ejecución para cada uno de los tests establecidos.
+
 Ahora bien, la clase `Inventario` se implementaron los siguientes tests unitarios para cada una de sus funciones por separado:
 
 1. __Agregar Componente con Cantidad Negativa:__ 
@@ -523,7 +582,13 @@ Ahora bien, la clase `Inventario` se implementaron los siguientes tests unitario
 8. __Buscar Componente Inexistente:__ 
     - Valida que se lance una excepción si el componente buscado no se encuentra.
 
-Ahora bien, en cuanto al segundo módulo de cálculos de simplificación de componentes eléctricos, se consideraron los tests unitarios mostrados a continuación:
+En cuanto a la ejecución de los tests de la clase `Inventario`, se obtuvieron los siguientes resultados exitosos:
+
+<p align="center">
+  <img width="750" src="./images/InventarioTests.png">
+</p>
+
+Finalmente, en cuanto al segundo módulo de cálculos de simplificación de componentes eléctricos, se consideraron los tests unitarios mostrados a continuación:
 
 1. __Valores Válidos (Serie y Paralelo):__ 
     - Verifica que las funciones produzcan resultados correctos para vectores con valores positivos de cada tipo de componente.
@@ -532,9 +597,113 @@ Ahora bien, en cuanto al segundo módulo de cálculos de simplificación de comp
 3. __Vectores Vacíos (Serie y Paralelo):__ 
     - Valida que las funciones lancen excepciones si el vector de entrada está vacío.
 
+Al igual que en los casos anteriores, se pasaron todos los tests para cada tipo de componente, como se observa en la siguiente imagen. 
+
+<p align="center">
+  <img width="750" src="./images/CircuitosTests.png">
+</p>
+
 Es importante destacar que la naturaleza de las pruebas unitarias es probar componente por componente del programa. Por esta razón, se validaron las funcionalidades individuales, sin contemplar todavía la integración entre ellas. En la siguiente sección correspondiente a pruebas funcionales sí se analiza la integración entre las distintas funciones implementadas.
 
+### Cobertura de código `lcov`
+
+En cuanto a la cobertura de código probado con los tests, se implementó la herramienta `lcov` para realizar este trabajo. 
+
+El resultado obtenido con `lcov` se muestra a continuación:
+
+<p align="center">
+  <img width="750" src="./images/lcov.png">
+</p>
+
+Observe que se cubrieron un 100% las líneas de código, lo cual es positivo porque significa que el programa fue probado exhaustivamente y contemplado para distintos casos de error. De igual forma, se podrían implementar más tests con tipos de datos inválidos para probar el funcionamiento del sistema en ese caso, así como en más casos de funcionamiento correcto para verificar que la lógica empleado es la correcta.
+
+Para una tarea de esta magnitud, se consideró que las pruebas implementadas fueron suficientes. 
+
 ## _Functional Testing y Test-Driven Development_ (TDD)
+
+En el enunciado, se solicita implementar el proceso TDD para el desarrollo de una función correspondiente a `capacitanciaEquivalenteSerieParalelo`. Este método asegura que las pruebas se escriben antes de la implementación del código, lo cual promueve un diseño robusto y orientado a los requerimientos.
+
+Los pasos seguidos para el desarrollo de la función se muestran a continuación:
+
+### Especificaciones iniciales contempladas
+
+La función `capacitanciaEquivalenteSerieParalelo` debe calcular la capacitancia equivalente combinando grupos de capacitancias en configuraciones de paralelo y serie. Cada grupo de capacitancias se combina primero en paralelo, y luego los resultados se combinan en serie.
+
+- Recibe un vector de vectores, donde cada vector interno representa un grupo de capacitancias en paralelo.
+- Devuelve un `double` que representa la capacitancia equivalente total.
+- Valida que los valores sean positivos.
+- Lanza excepciones para vectores vacíos y valores no válidos (negativos o cero).
+
+### __Creación de los tests unitarios__
+
+Se escribieron las siguientes pruebas antes de implementar la función:
+
+1. __Caso Válido:__
+    - Verifica que la función calcule correctamente la capacitancia equivalente para varios grupos de capacitancias.
+
+2. __Vector Vacío:__
+    - Lanza una excepción si el vector principal está vacío.
+
+3. __Valores Negativos:__
+    - Lanza una excepción si algún valor dentro de los vectores internos es negativo.
+
+4. __Un Solo Grupo:__
+    - Valida que la función maneje correctamente un único grupo en paralelo.
+
+Por ejemplo, el test utilizado para el primer caso corresponde al siguiente:
+
+```cpp
+TEST(CircuitosTest, CapacitanciaEquivalenteSerieParalelo_CasoValido) {
+    std::vector<std::vector<double>> gruposCapacitancias = {
+        {10.0, 20.0},
+        {30.0, 40.0}
+    };
+
+    ASSERT_NEAR(capacitanciaEquivalenteSerieParalelo(gruposCapacitancias), 21.0, 0.01);
+}
+```
+
+> [!NOTE]
+> Se toma un error de 0.01 al tratar con valores numéricos en un entorno digital.
+
+### Implementación de la función
+
+Después de ejecutar las pruebas iniciales, se implementó la función para pasar las pruebas. La lógica se dividió en dos pasos principales:
+
+- Calcular la capacitancia equivalente para cada grupo en paralelo.
+- Combinar los resultados en serie.
+
+Por lo tanto, se pueden reutilizar las funciones establecidas para el caso individual de capacitancias en serie y paralelo.
+
+El resultado final se muestra en el fragmento de código a continuación:
+
+```cpp
+double capacitanciaEquivalenteSerieParalelo(const std::vector<std::vector<double>>& gruposCapacitancias) {
+    // Verificar que vector del parámetro no esté vacío
+    if (gruposCapacitancias.empty()) {
+        throw std::invalid_argument("Error: No se proporcionaron grupos de capacitancias.");
+    }
+
+    // Vector para almacenar resultados de capacitancias en paralelo
+    std::vector<double> resultadosParalelo;
+
+    // Procesar cada grupo y calcular su capacitancia equivalente en paralelo
+    for (const auto& grupo : gruposCapacitancias) {
+        resultadosParalelo.push_back(capacitanciaParalelo(grupo));
+    }
+
+    // Combinar todas las capacitancias equivalentes en paralelo como una configuración en serie
+    return capacitanciaSerie(resultadosParalelo);
+}
+```
+
+### Validación con los tests iniciales
+
+Después de la implementación, se verifica que efectivamente la función cumpla con los tests establecidos inicialmente. En la siguiente imagen se comprueba que efectivamente se cumplió con todos los tests establecidos y por ende, la implementación es exitosa, tanto para los casos de datos válidos como para cuando ocurren errores.
+
+<p align="center">
+  <img width="750" src="./images/TDD.png">
+</p>
 
 ## _Continuous Integration y Continuous Delivery_ (CI/CD)
 
@@ -553,8 +722,8 @@ on:
 ```
 
 - `on`: Define los eventos que activan el workflow.
-    - `push`: Se ejecuta cuando se realiza un `push` a la rama `main`.
-    - `pull_request`: Se ejecuta cuando se abre o actualiza un pull request hacia la rama `main`.
+    - `push`: Establece que se ejecuta el workflow cuando se realiza un `push` a la rama `main`.
+    - `pull_request`: También se ejecuta cuando se abre o actualiza un pull request hacia la rama `main`.
 
 2. __Job `build-and-test`__: Este trabajo clona el repositorio de `googletest`, así como que establece la configuración del entorno, la compilación del proyecto, la ejecución de los tests y la generación del reporte de cobertura.
 
