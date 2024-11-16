@@ -60,7 +60,7 @@ cmake -S . -B build
 ```
 
 > [!TIP]
-> `-S .` especifica el directorio de raíz del proyecto.
+> `-S .` especifica el directorio de raíz del proyecto.  
 > `-B build` indica el directorio donde se colocan los archivos de construcción (se crea si no existe).
 
 
