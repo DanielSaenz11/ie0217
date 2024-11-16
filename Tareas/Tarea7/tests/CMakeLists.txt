@@ -22,3 +22,14 @@ add_test(NAME CircuitosTests COMMAND CircuitosTests)
 add_test(NAME ComponenteTests COMMAND ComponenteTests)
 add_test(NAME InventarioTests COMMAND InventarioTests)
 add_test(NAME InventarioFunctionalTests COMMAND InventarioFunctionalTests)
+
+# Crear una regla personalizada para ejecutar todos los tests
+add_custom_target(run
+    COMMAND CircuitosTests
+    COMMAND ComponenteTests
+    COMMAND InventarioTests
+    COMMAND InventarioFunctionalTests
+    DEPENDS CircuitosTests ComponenteTests InventarioTests InventarioFunctionalTests
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/tests
+    COMMENT "Ejecutando todos los tests..."
+)
