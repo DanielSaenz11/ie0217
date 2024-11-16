@@ -33,3 +33,9 @@
 
 # Doxyfile
 Doxyfile
+
+# .DS_Store for macOS
+.DS_Store
+
+# .vscode settings
+.vscode
