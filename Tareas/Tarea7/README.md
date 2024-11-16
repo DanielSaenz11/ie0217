@@ -22,6 +22,9 @@ Acceda a `Archivos -> Lista de Archivos` para encontrar la documentación por ar
 
 En general, la tarea consiste de diseñar de los módulos descritos inicialmente, así como _tests_ para verificar su correcto funcionamiento. Para ello, se utilizó la biblioteca `GoogleTest`.
 
+> [!IMPORTANT]
+> Todos los comandos fueron optimizados para que sean ejecutados en el orden mostrado y desde el directorio actual `ie0217/Tareas/Tarea7`.
+
 ### Instalación de herramientas de _testing_
 
 #### `GoogleTest`
@@ -63,7 +66,67 @@ cmake -S . -B build
 > `-S .` especifica el directorio de raíz del proyecto.  
 > `-B build` indica el directorio donde se colocan los archivos de construcción (se crea si no existe).
 
+Ahora bien, para la compilación del proyecto, utilice el comando:
 
+```shell
+cmake --build build
+```
+
+Finalmente, para la ejecución de todos los tests de cada módulo, utilice:
+
+```shell
+cmake --build build --target run
+```
+
+Posteriormente a la ejecución de los tests, para capturar con `lcov` la cobertura de código, utilice el comando:
+
+```shell
+lcov --capture --directory build --output-file build/coverage.info \--exclude '*/googletest/*' \--exclude '*/tests/*' \--exclude '/usr/include/*' \--exclude '*/include/*.hpp'
+```
+
+> [!NOTE]
+> Se excluyen todos los directorios de prueba y los directorios `include` que no pertenecen al proyecto como tal, únicamente se toman en cuenta los _source files_.
+
+Verifique que no hayan ocurrido al capturar la cobertura de código de los tests ejecutados. En caso de que sí, repita el proceso de ejecución de los tests. 
+
+Para generar el reporte en HTML de la cobertura de código, utilice el siguiente comando:
+
+```shell
+genhtml build/coverage.info --output-directory build/coverage-report
+```
+
+Finalmente, para visualizar el reporte, utilice:
+
+```shell
+open build/coverage-report/index.html
+```
+
+> [!TIP]
+> Es importante mencionar que al ejecutar localmente, aparece que la cobertura de código no fue la misma que la obtenida en GitHub Actions porque no se toman en cuenta las líneas al final de las funciones.
+
+### GitHub Actions
+
+Al implementar el _workflow_ diseñado en la tarea dentro de GitHub Actions, se aplican los tests automáticamente al realizar un `push`o un `pull-request` dentro de la rama `main`. Por lo tanto, no es necesario realizar ninguna acción adicional para que se ejecuten los tests en remoto.
+
+Ingrese a la sección de `GitHub Actions` en la parte superior de la página de GitHub del repositorio actual. En la siguiente imagen, se proporciona un ejemplo de un `push` donde se ejecutaron los tests.
+
+<p align="center">
+  <img width="750" src="./images/Actions_1.png">
+</p>
+
+> [!NOTE]
+> Observe que se señaló el nombre del pipeline correspondiente al diseñado para la presente tarea: `Tarea7 CI/CD Pipeline`.  
+> Existen otros pipelines dentro del repositorio, los cuales no corresponden a la tarea.
+
+Al ingresar en un `push` o `pull-request` con este pipeline, se muestra el contenido de la siguiente imagen:
+
+<p align="center">
+  <img width="750" src="./images/Actions_2.png">
+</p>
+
+Acá se muestra el estado de la compilación, _testing_ y _deployment_ del proyecto. 
+
+En la sección marcada en la imagen correspondiente a `Artifacts`, al darle click, se muestra el reporte de cobertura generado en el propio repositorio. Se puede descargar y corroborar el estado de cobertura del código.
 
 ## Preguntas teóricas
 
