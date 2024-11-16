@@ -37,7 +37,7 @@ git clone https://github.com/google/googletest.git
 
 Después de clonar el repositorio, diríjase al directorio `ie0217/Tareas/Tarea7/googletest/` (repositorio clonado) y ejecute los siguientes comandos:
 
-```shell
+```bash
 mkdir build && cd build
 cmake ..
 make
