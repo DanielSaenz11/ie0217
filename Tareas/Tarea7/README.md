@@ -9,7 +9,8 @@ Se compone de los siguientes elementos:
     - Módulo 1: Simulador de Inventario de Componentes Electrónicos.
     - Módulo 2: Cálculos de Circuitos.
 - Pruebas unitarias y cobertura de código
-- _Functional Testing y Test-Driven Development_ (TDD)
+- _Functional Testing
+- Test-Driven Development_ (TDD)
 - _Continuous Integration y Continuous Delivery_ (CI/CD)
 
 ## Documentación
@@ -682,7 +683,45 @@ Observe que se cubrieron un 100% las líneas de código, lo cual es positivo por
 
 Para una tarea de esta magnitud, se consideró que las pruebas implementadas fueron suficientes. 
 
-## _Functional Testing y Test-Driven Development_ (TDD)
+## _Functional Testing_
+
+Respecto a las pruebas funcionales, estas aseguran que el flujo completo de operaciones de la clase `Inventario` funcione correctamente en diferentes escenarios de uso, donde se interconectan distintas funcionalidades. Las pruebas implementadas se describen a continuación:
+
+1. __Agregar y Buscar Componentes__: Verifica que un componente pueda ser agregado correctamente al inventario y que sea posible buscarlo.
+    - Crea una instancia de la clase Inventario.
+    - Agrega un componente con nombre, cantidad, categoría y descripción definidos.
+    - Busca el componente recién agregado.
+    - _Resultados esperados_: La operación de búsqueda no debe lanzar excepciones. Los atributos del componente encontrado deben coincidir con los valores proporcionados.
+
+2. __Incrementar la Cantidad de un Componente__: Valida que al agregar un componente con el mismo nombre, su cantidad se incremente correctamente.
+    - Crea una instancia de la clase `Inventario`.
+    - Agrega un componente al inventario.
+    - Agrega nuevamente el mismo componente con una cantidad adicional.
+    - Busca el componente y verifica su cantidad.
+    - _Resultados Esperados_: La cantidad del componente debe ser la suma de las cantidades agregadas.
+
+3. __Reducir la Cantidad de un Componente__: Comprueba que la cantidad de un componente pueda reducirse correctamente cuando hay suficiente stock.
+    - Crea una instancia de la clase `Inventario`.
+    - Agrega un componente al inventario.
+    - Reduce la cantidad del componente.
+    - Busca el componente y verificar su nueva cantidad.
+    - _Resultados Esperados_: La operación debe devolver `true`. La cantidad del componente debe reflejar correctamente la reducción.
+
+4. __Reducir una Cantidad Mayor a la Disponible__: Verifica que no sea posible reducir una cantidad mayor a la disponible en el inventario.
+    - Crea una instancia de la clase `Inventario`.
+    - Agrega un componente al inventario con una cantidad limitada.
+    - Intenta reducir una cantidad mayor a la disponible.
+    - _Resultados Esperados_: La operación debe devolver `false`. La cantidad del componente no debe cambiar.
+
+5. __Listar Componentes en un Inventario con Elementos__: Valida que la función `listarComponentes` funcione correctamente cuando el inventario contiene elementos.
+    - Crea una instancia de la clase `Inventario`.
+    - Agrega múltiples componentes al inventario.
+    - Llama la función `listarComponentes`.
+    - _Resultados Esperados_: La operación debe ejecutarse sin lanzar excepciones. Los detalles de los componentes deben mostrarse correctamente en la salida estándar.
+
+En resumen, estas pruebas funcionales verifican los flujos más relevantes de la clase `Inventario`, incluyendo adición, búsqueda, modificación y listado de componentes. Al cubrir escenarios realistas, se asegura que las funcionalidades del inventario se comporten correctamente bajo condiciones normales y excepcionales.
+
+## _Test-Driven Development_ (TDD)
 
 En el enunciado, se solicita implementar el proceso TDD para el desarrollo de una función correspondiente a `capacitanciaEquivalenteSerieParalelo`. Este método asegura que las pruebas se escriben antes de la implementación del código, lo cual promueve un diseño robusto y orientado a los requerimientos.
 
@@ -888,3 +927,44 @@ En un proyecto real, este flujo podría extenderse para incluir un despliegue a 
 4. __Pruebas Post-Despliegue__: Después del despliegue, el pipeline puede ejecutar un conjunto de pruebas funcionales en el servidor, asegurándose de que la aplicación funcione como se espera en el entorno final. Esto incluye la ejecución de scripts diseñados específicamente para validar la operación.
 
 5. __Notificaciones de Éxito o Error__: El pipeline puede incluir notificaciones para informar a los desarrolladores sobre el estado del despliegue. Esto ayuda a mantener a todos los involucrados informados sobre el progreso y éxito del proceso.
+
+## Explicación Formato Markdown utilizado
+
+En el enunciado, se menciona que hay que investigar y agregar explicaciones para el formato Markdown. Por lo tanto, en esta sección se va a agregar una guía general para la elaboración de archivos con extensión `.md`.
+
+- __Headers (#)__:
+Para colocar títulos en Markdown se utiliza `#`, dependiendo de cuantos caracteres de este tipo se coloquen, indica el nivel del título. Note que `#` indica el encabezado de mayor tamaño (nivel 1), mientras que `######` indica el encabezado de menor tamaño (nivel 6).
+
+- __Listas sin orden__:
+Para colocar listas sin un orden, se utilizó el caracter `-`. Cada ítem de la lista, se encuentra indicado por este. Se pueden usar también otros caracteres como `*` y `+`, los cuales funcionan de la misma forma.
+
+- __Listas ordenadas__:
+El formato para colocar listas ordenadas corresponde a colocar los números del ítem para el cual se está poniendo. Por ejemplo: `1.`, `2.` y así sucesivamente.
+
+- __Itálica__:
+Para colocar palabras en itálica, se rodea la palabra con `_` o `*` en ambos lados. Por ejemplo: `_italica_` o `*italica*`.
+
+- __Negrita__:
+En cuanto a las negritas, funciona de forma similar que itálica, se colocan `_` o `*` dobles alrededor de la palabra. Por ejemplo: `**negrita**` o `__negrita__`.
+
+- __Código__:
+El código multilínea se escribe al rodear el bloque de código con tres caracteres de \`. Mientras que, el código en una línea simple, se escribe al rodearlo con \` una única vez.
+
+- __Hipervínculos__:
+Para agregar enlaces en Markdown, se utiliza el siguiente formato:
+
+```
+[Palabras con hipervinculo](enlace)
+```
+
+## Convención de nombre de variables utilizada
+
+A partir de la investigación de una convención de nombramiento de variables, funciones y clases general, se llegó a la conclusión que no existe una respuesta clara, pues dependiendo del proyecto y gustos personales, los desarrolladores se adaptan a la convención preferida. Sin embargo, se determinó que existen tendencias en el nombramiento de las variables, las cuales fueron implementadas en el código.
+
+* __Nombres de clases__: Se utilizó la convención _PascalCase_ para nombrar las clases. Los nombres de las clases corresponden a sustantivos e inician en mayúscula, cada palabra siguiente también se coloca en mayúscula.
+
+* __Nombres de atributos y métodos__: Los atributos y métodos siguen la convención _camelCase_. Se determinó que los métodos se le debe colocar un nombre de forma que, inicie con un verbo para describir la acción que realiza.
+
+* __Nombres de archivos__: Los archivos son nombrados con la convención _PascalCase_; es decir, comienzan en mayúscula y para distinguir entre palabras también se coloca la letra en mayúscula.
+
+* __Variables locales__: Las variables locales siguen la convención _camelCase_.
